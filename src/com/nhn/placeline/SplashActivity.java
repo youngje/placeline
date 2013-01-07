@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.content.Intent;
 
 public class SplashActivity extends Activity {
 
@@ -18,6 +19,7 @@ public class SplashActivity extends Activity {
 			@Override
 			public void handleMessage(Message msg){
 				SplashActivity.this.finish();
+				startActivity(new Intent(SplashActivity.this, MainActivity.class));
 			}
 		};
 		
