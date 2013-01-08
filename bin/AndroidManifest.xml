@@ -36,7 +36,8 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity android:name="com.nhn.android.mapviewer.NMapViewer" 
-            android:configChanges="keyboardHidden|orientation"> 
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"> 
             <action android:name="android.intent.action.MAIN"/> 
             </activity>
     </application>
