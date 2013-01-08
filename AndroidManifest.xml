@@ -41,11 +41,15 @@
             android:name="com.nhn.android.mapviewer.NMapViewer"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@android:style/Theme.NoTitleBar" >
-            <action android:name="android.intent.action.MAIN" />
         </activity>
         <activity
             android:name="com.nhn.placeline.Activity.AddGroupActivity"
             android:label="@string/title_activity_add_group" >
+            </activity>
+        <activity
+            android:name="com.nhn.placeline.Activity.DetailedPinActivity"
+            android:label="@string/title_activity_detailed_pin"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
     </application>
 
