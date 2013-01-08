@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailedPinActivity" 
+    android:orientation="vertical">
+	
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailed_pin_title_bar"
+        android:background="@drawable/detailed_pin_title_bar"
+         >
+        <TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text = "와웅 첫제목"
+			android:textColor = "#FF0000FF"
+			android:textSize = "15sp"
+			android:textStyle = "italic"
+			android:singleLine = "true"   
+			android:layout_marginLeft="30dp"
+			android:layout_marginTop="8dp"
+			/>
+          <TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text = "2013.01.07 15:30"
+			android:textColor = "#FF0000FF"
+			android:textSize = "10sp"
+			android:textStyle = "italic"
+			android:singleLine = "true"   
+			android:layout_marginLeft="270dp"
+			android:layout_marginTop="10dp"
+			/>
+    </RelativeLayout>
+    
+    <HorizontalScrollView 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/horizontalScrollView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+          
+    
+
+    </HorizontalScrollView>
+     
+
+</RelativeLayout>
