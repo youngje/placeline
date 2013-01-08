@@ -2,14 +2,12 @@ package com.nhn.placeline.db;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.PinContent;
+import com.nhn.placeline.vo.PinReply;
 
 public class DatabaseConnector{
 	
