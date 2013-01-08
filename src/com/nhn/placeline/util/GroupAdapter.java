@@ -3,6 +3,7 @@ package com.nhn.placeline.util;
 import java.util.ArrayList;
 
 import com.nhn.placeline.Activity.R;
+import com.nhn.placeline.constants.Constants;
 import com.nhn.placeline.vo.Group;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GroupAdapter extends BaseAdapter {
 
@@ -25,7 +27,7 @@ public class GroupAdapter extends BaseAdapter {
 	public GroupAdapter(Context c, ArrayList<Group> groups) {
 		mContext = c;
 		this.groups = groups;
-		groups.add(new Group("AddGroup", "그룹 추가", R.drawable.groupmapadd));
+		groups.add(new Group("AddGroup", " ", R.drawable.groupmapadd));
 		/*for(Group group : groups){
 			group.setPosition(position++);
 		}*/
@@ -50,14 +52,31 @@ public class GroupAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View groupMapImage, ViewGroup parent) {
-		RelativeLayout relativeView = new RelativeLayout(mContext);
+		RelativeLayout relativeLayout = new RelativeLayout(mContext);
 		
+		RelativeLayout.LayoutParams imageViewParam = new RelativeLayout.LayoutParams(165, 400);
+		imageViewParam.leftMargin = 30;
 		
 		ImageView imageView = new ImageView(mContext);
 		imageView.setImageResource(groups.get(position).getGroupMapId());
 		imageView.setLayoutParams(new GridView.LayoutParams(165, 400));
+		imageView.setId(Constants.GROUPMAP_IMAGE_ID);
+		imageView.setAdjustViewBounds(true);
 		
-		return imageView;
+		RelativeLayout.LayoutParams textViewParam = new RelativeLayout.LayoutParams(165, 150);
+		textViewParam.leftMargin = 50;
+		textViewParam.topMargin = 270;
+		
+		TextView textView = new TextView(mContext);
+		textView.setText(groups.get(position).getName());
+		textView.setTextSize(23);
+		textView.setTextColor(0xff424251);
+		
+
+		relativeLayout.addView(imageView, imageViewParam);
+		relativeLayout.addView(textView, textViewParam);
+		
+		return relativeLayout;
 	}
 	/*public View getView(int position, View groupMapImage, ViewGroup parent) {
 		ImageView imageView = new ImageView(mContext);

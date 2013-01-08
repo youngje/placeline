@@ -7,10 +7,14 @@
 
 package com.nhn.android.mapviewer;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -27,6 +31,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
+import com.nhn.placeline.vo.Pin;
+import com.nhn.placeline.vo.User;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
@@ -43,6 +49,8 @@ import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.maps.overlay.NMapPathData;
 import com.nhn.android.maps.overlay.NMapPathLineStyle;
+import com.nhn.placeline.Activity.DetailedPinActivity;
+import com.nhn.placeline.Activity.GroupActivity;
 import com.nhn.placeline.Activity.R;
 import com.nhn.android.mapviewer.overlay.NMapCalloutCustomOverlay;
 import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
@@ -68,29 +76,25 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonFriendsList;
 	
 	private boolean flagMyLocationOnOff;
-	
-
 	private SharedPreferences mPreferences;
- 
 	private NMapOverlayManager mOverlayManager;
-
 	private NMapMyLocationOverlay mMyLocationOverlay;
 	private NMapLocationManager mMapLocationManager;
 	private NMapCompassManager mMapCompassManager;
-
 	private NMapViewerResourceProvider mMapViewerResourceProvider;
-
 	private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 	private NMapPOIitem mFloatingPOIitem;
 
-	private static boolean USE_XML_LAYOUT = false;
-	        
+	private ArrayList<Pin> pinList;
+	private String userId;
+	private String groupId;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (USE_XML_LAYOUT) {
+		if (Constants.USE_XML_LAYOUT) {
 			setContentView(R.layout.map_main);
 			mMapView = (NMapView)findViewById(R.id.mapView);
 		} else {
@@ -107,6 +111,37 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		initMap();
 		initButtons();
+		initInstance();
+	}
+	   
+	
+	private void initInstance(){
+		Intent intent = getIntent();
+		userId = intent.getStringExtra("userId");
+		groupId = intent.getStringExtra("groupId");
+		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
+		
+		pinList = new ArrayList<Pin>();
+		User user = new User("Junsun", "백준선", "010-6848-3855");
+		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
+		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
+		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);
+		Pin newPin4 = new Pin(3, user, 126.4090f, 33.2484f);
+		
+		pinList.add(newPin1);
+		pinList.add(newPin2);
+		pinList.add(newPin3);
+		pinList.add(newPin4);
+		
+		for(int i=0; i<pinList.size(); i++){
+			putPOIdataOverlay(pinList.get(i));
+		}
+	}
+	
+	
+	private void printCurrentLocation(){
+		NGeoPoint center = mMapController.getMapCenter();
+		Log.d("########## [DEBUG] ##########"," GPS Location : " + center.getLongitude() + " / " + center.getLatitude());
 	}
 
 	
@@ -190,6 +225,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		// create my location overlay
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
 		
+		
 		flagMyLocationOnOff = false;
 	}
 	
@@ -213,6 +249,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}	
 	 	else if (button.getId() == Constants.BUTTON_ID_ADD_PIN){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
+	 		printCurrentLocation();
 		}
 	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_FriendsList button is clicked");
@@ -269,13 +306,31 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 		}
 	}
-
+	
 	private void stopMyLocation() {
 		if (mMyLocationOverlay != null) {
 			mMapLocationManager.disableMyLocation();
 		}
 	}
 
+	
+	// 마커 
+	private void putPOIdataOverlay(Pin pin) {
+
+		NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+		poiData.beginPOIdata(1);
+		
+//		Log.d("############", "X: "+pin.getxLocation()+" / Y: "+pin.getyLocation());
+		NMapPOIitem item = poiData.addPOIitem(pin.getxLocation(), pin.getyLocation(), "NEW", NMapPOIflagType.PIN, pin.getPinId());
+		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		
+		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+		poiDataOverlay.selectPOIitem(0, true);
+		poiDataOverlay.showAllPOIdata(0);
+	}
+	
+	
 	// 경로선
 	private void testPathDataOverlay() {
 
@@ -583,7 +638,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 
 			// [[TEMP]] handle a click event of the callout
-			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getId(), Toast.LENGTH_LONG).show();
+			Intent intent = new Intent(NMapViewer.this, DetailedPinActivity.class);
+			intent.putExtra("pinId", item.getId());
+			startActivity(intent);
 		}
 
 		@Override
@@ -732,21 +790,6 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 	}
 
-	/* Menus */
-	private static final int MENU_ITEM_CLEAR_MAP = 10;
-	private static final int MENU_ITEM_MAP_MODE = 20;
-	private static final int MENU_ITEM_MAP_MODE_SUB_VECTOR = MENU_ITEM_MAP_MODE + 1;
-	private static final int MENU_ITEM_MAP_MODE_SUB_SATELLITE = MENU_ITEM_MAP_MODE + 2;
-	private static final int MENU_ITEM_MAP_MODE_SUB_TRAFFIC = MENU_ITEM_MAP_MODE + 3;
-	private static final int MENU_ITEM_MAP_MODE_SUB_BICYCLE = MENU_ITEM_MAP_MODE + 4;
-	private static final int MENU_ITEM_ZOOM_CONTROLS = 30;
-	private static final int MENU_ITEM_MY_LOCATION = 40;
-
-	private static final int MENU_ITEM_TEST_MODE = 50;
-	private static final int MENU_ITEM_TEST_POI_DATA = MENU_ITEM_TEST_MODE + 1;
-	private static final int MENU_ITEM_TEST_PATH_DATA = MENU_ITEM_TEST_MODE + 2;
-	private static final int MENU_ITEM_TEST_FLOATING_DATA = MENU_ITEM_TEST_MODE + 3;
-	private static final int MENU_ITEM_TEST_AUTO_ROTATE = MENU_ITEM_TEST_MODE + 4;
 
 	/**
 	 * Invoked during init to give the Activity a chance to set up its Menu.
@@ -761,54 +804,54 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		MenuItem menuItem = null;
 		SubMenu subMenu = null;
 
-		menuItem = menu.add(Menu.NONE, MENU_ITEM_CLEAR_MAP, Menu.CATEGORY_SECONDARY, "초기화");
+		menuItem = menu.add(Menu.NONE, Constants.MENU_ITEM_CLEAR_MAP, Menu.CATEGORY_SECONDARY, "초기화");
 		menuItem.setAlphabeticShortcut('c');
 		menuItem.setIcon(android.R.drawable.ic_menu_revert);
 
-		subMenu = menu.addSubMenu(Menu.NONE, MENU_ITEM_MAP_MODE, Menu.CATEGORY_SECONDARY, "지도보기");
+		subMenu = menu.addSubMenu(Menu.NONE, Constants.MENU_ITEM_MAP_MODE, Menu.CATEGORY_SECONDARY, "지도보기");
 		subMenu.setIcon(android.R.drawable.ic_menu_mapmode);
 
-		menuItem = subMenu.add(0, MENU_ITEM_MAP_MODE_SUB_VECTOR, Menu.NONE, "일반지도");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_MAP_MODE_SUB_VECTOR, Menu.NONE, "일반지도");
 		menuItem.setAlphabeticShortcut('m');
 		menuItem.setCheckable(true);
 		menuItem.setChecked(false);
 
-		menuItem = subMenu.add(0, MENU_ITEM_MAP_MODE_SUB_SATELLITE, Menu.NONE, "위성지도");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_MAP_MODE_SUB_SATELLITE, Menu.NONE, "위성지도");
 		menuItem.setAlphabeticShortcut('s');
 		menuItem.setCheckable(true);
 		menuItem.setChecked(false);
 
-		menuItem = subMenu.add(0, MENU_ITEM_MAP_MODE_SUB_TRAFFIC, Menu.NONE, "실시간교통");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_MAP_MODE_SUB_TRAFFIC, Menu.NONE, "실시간교통");
 		menuItem.setAlphabeticShortcut('t');
 		menuItem.setCheckable(true);
 		menuItem.setChecked(false);
 
-		menuItem = subMenu.add(0, MENU_ITEM_MAP_MODE_SUB_BICYCLE, Menu.NONE, "자전거지도");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_MAP_MODE_SUB_BICYCLE, Menu.NONE, "자전거지도");
 		menuItem.setAlphabeticShortcut('b');
 		menuItem.setCheckable(true);
 		menuItem.setChecked(false);
 
-		menuItem = menu.add(0, MENU_ITEM_ZOOM_CONTROLS, Menu.CATEGORY_SECONDARY, "Zoom Controls");
+		menuItem = menu.add(0, Constants.MENU_ITEM_ZOOM_CONTROLS, Menu.CATEGORY_SECONDARY, "Zoom Controls");
 		menuItem.setAlphabeticShortcut('z');
 		menuItem.setIcon(android.R.drawable.ic_menu_zoom);
 
-		menuItem = menu.add(0, MENU_ITEM_MY_LOCATION, Menu.CATEGORY_SECONDARY, "내위치");
+		menuItem = menu.add(0, Constants.MENU_ITEM_MY_LOCATION, Menu.CATEGORY_SECONDARY, "내위치");
 		menuItem.setAlphabeticShortcut('l');
 		menuItem.setIcon(android.R.drawable.ic_menu_mylocation);
 
-		subMenu = menu.addSubMenu(Menu.NONE, MENU_ITEM_TEST_MODE, Menu.CATEGORY_SECONDARY, "테스트");
+		subMenu = menu.addSubMenu(Menu.NONE, Constants.MENU_ITEM_TEST_MODE, Menu.CATEGORY_SECONDARY, "테스트");
 		subMenu.setIcon(android.R.drawable.ic_menu_more);
 
-		menuItem = subMenu.add(0, MENU_ITEM_TEST_POI_DATA, Menu.NONE, "마커 표시");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_TEST_POI_DATA, Menu.NONE, "마커 표시");
 		menuItem.setAlphabeticShortcut('p');
 
-		menuItem = subMenu.add(0, MENU_ITEM_TEST_PATH_DATA, Menu.NONE, "경로선 표시");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_TEST_PATH_DATA, Menu.NONE, "경로선 표시");
 		menuItem.setAlphabeticShortcut('t');
 
-		menuItem = subMenu.add(0, MENU_ITEM_TEST_FLOATING_DATA, Menu.NONE, "직접 지정");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_TEST_FLOATING_DATA, Menu.NONE, "직접 지정");
 		menuItem.setAlphabeticShortcut('f');
 
-		menuItem = subMenu.add(0, MENU_ITEM_TEST_AUTO_ROTATE, Menu.NONE, "지도 회전");
+		menuItem = subMenu.add(0, Constants.MENU_ITEM_TEST_AUTO_ROTATE, Menu.NONE, "지도 회전");
 		menuItem.setAlphabeticShortcut('a');
 
 		return true;
@@ -822,15 +865,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		boolean isTraffic = mMapController.getMapViewTrafficMode();
 		boolean isBicycle = mMapController.getMapViewBicycleMode();
 
-		pMenu.findItem(MENU_ITEM_CLEAR_MAP).setEnabled(
+		pMenu.findItem(Constants.MENU_ITEM_CLEAR_MAP).setEnabled(
 			(viewMode != NMapView.VIEW_MODE_VECTOR) || isTraffic || mOverlayManager.sizeofOverlays() > 0);
-		pMenu.findItem(MENU_ITEM_MAP_MODE_SUB_VECTOR).setChecked(viewMode == NMapView.VIEW_MODE_VECTOR);
-		pMenu.findItem(MENU_ITEM_MAP_MODE_SUB_SATELLITE).setChecked(viewMode == NMapView.VIEW_MODE_HYBRID);
-		pMenu.findItem(MENU_ITEM_MAP_MODE_SUB_TRAFFIC).setChecked(isTraffic);
-		pMenu.findItem(MENU_ITEM_MAP_MODE_SUB_BICYCLE).setChecked(isBicycle);
+		pMenu.findItem(Constants.MENU_ITEM_MAP_MODE_SUB_VECTOR).setChecked(viewMode == NMapView.VIEW_MODE_VECTOR);
+		pMenu.findItem(Constants.MENU_ITEM_MAP_MODE_SUB_SATELLITE).setChecked(viewMode == NMapView.VIEW_MODE_HYBRID);
+		pMenu.findItem(Constants.MENU_ITEM_MAP_MODE_SUB_TRAFFIC).setChecked(isTraffic);
+		pMenu.findItem(Constants.MENU_ITEM_MAP_MODE_SUB_BICYCLE).setChecked(isBicycle);
 
 		if (mMyLocationOverlay == null) {
-			pMenu.findItem(MENU_ITEM_MY_LOCATION).setEnabled(false);
+			pMenu.findItem(Constants.MENU_ITEM_MY_LOCATION).setEnabled(false);
 		}
 
 		return true;
@@ -847,7 +890,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-			case MENU_ITEM_CLEAR_MAP:
+			case Constants.MENU_ITEM_CLEAR_MAP:
 				if (mMyLocationOverlay != null) {
 					stopMyLocation();
 					mOverlayManager.removeOverlay(mMyLocationOverlay);
@@ -861,38 +904,38 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 				return true;
 
-			case MENU_ITEM_MAP_MODE_SUB_VECTOR:
+			case Constants.MENU_ITEM_MAP_MODE_SUB_VECTOR:
 				mMapController.setMapViewMode(NMapView.VIEW_MODE_VECTOR);
 				return true;
 
-			case MENU_ITEM_MAP_MODE_SUB_SATELLITE:
+			case Constants.MENU_ITEM_MAP_MODE_SUB_SATELLITE:
 				mMapController.setMapViewMode(NMapView.VIEW_MODE_HYBRID);
 				return true;
 
-			case MENU_ITEM_MAP_MODE_SUB_TRAFFIC:
+			case Constants.MENU_ITEM_MAP_MODE_SUB_TRAFFIC:
 				mMapController.setMapViewTrafficMode(!mMapController.getMapViewTrafficMode());
 				return true;
 
-			case MENU_ITEM_MAP_MODE_SUB_BICYCLE:
+			case Constants.MENU_ITEM_MAP_MODE_SUB_BICYCLE:
 				mMapController.setMapViewBicycleMode(!mMapController.getMapViewBicycleMode());
 				return true;
 
-			case MENU_ITEM_ZOOM_CONTROLS:
+			case Constants.MENU_ITEM_ZOOM_CONTROLS:
 				mMapView.displayZoomControls(true);
 				return true;
 
-			case MENU_ITEM_MY_LOCATION:
+			case Constants.MENU_ITEM_MY_LOCATION:
 				startMyLocation();
 				return true;
 
-			case MENU_ITEM_TEST_POI_DATA:
+			case Constants.MENU_ITEM_TEST_POI_DATA:
 				mOverlayManager.clearOverlays();
 
 				// add POI data overlay
 				testPOIdataOverlay();
 				return true;
 
-			case MENU_ITEM_TEST_PATH_DATA:
+			case Constants.MENU_ITEM_TEST_PATH_DATA:
 				mOverlayManager.clearOverlays();
 
 				// add path data overlay
@@ -902,12 +945,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				testPathPOIdataOverlay();
 				return true;
 
-			case MENU_ITEM_TEST_FLOATING_DATA:
+			case Constants.MENU_ITEM_TEST_FLOATING_DATA:
 				mOverlayManager.clearOverlays();
 				testFloatingPOIdataOverlay();
 				return true;
 
-			case MENU_ITEM_TEST_AUTO_ROTATE:
+			case Constants.MENU_ITEM_TEST_AUTO_ROTATE:
 				if (mMapView.isAutoRotateEnabled()) {
 					mMapView.setAutoRotateEnabled(false, false);
 

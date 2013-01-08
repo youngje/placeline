@@ -30,13 +30,15 @@ public class GroupActivity extends Activity {
 		GridView groupGridView = (GridView) findViewById(R.id.group_gridview);
 		
 		groupGridView.setAdapter(new GroupAdapter(GroupActivity.this, groups));
+		groupGridView.setSelected(false);
 		
 		groupGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
 				Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
-				intent.putExtra("groupId", position);
+				intent.putExtra("groupId", groups.get(position).getId());
+				intent.putExtra("userId", userid);
 				startActivity(intent);
 			}
 			
