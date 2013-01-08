@@ -7,9 +7,10 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/> 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -27,6 +28,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,11 +37,16 @@
             android:label="@string/title_activity_group"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="com.nhn.android.mapviewer.NMapViewer" 
+        <activity
+            android:name="com.nhn.android.mapviewer.NMapViewer"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.NoTitleBar"> 
-            <action android:name="android.intent.action.MAIN"/> 
-            </activity>
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <action android:name="android.intent.action.MAIN" />
+        </activity>
+        <activity
+            android:name="com.nhn.placeline.Activity.AddGroupActivity"
+            android:label="@string/title_activity_add_group" >
+        </activity>
     </application>
 
 </manifest>
