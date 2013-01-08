@@ -3,24 +3,32 @@ package com.nhn.placeline.vo;
 import java.util.Calendar;
 
 public class Pin {
-	int id;
+	int pinId;
+	int groupId;
 	float xLocation;
 	float yLocation;
 	Calendar registeredDate;
 	User writer;
+	String pinTitle;
 	
-	public Pin(int id, User writer, float xLocation, float yLocation){
-		this.id = id;
+	public Pin(int pinId, User writer, float xLocation, float yLocation){
+		this.pinId = pinId;
 		this.xLocation = xLocation;
 		this.yLocation = yLocation;
 		registeredDate = Calendar.getInstance();
 		this.writer = writer;
 	}
-	public int getId() {
-		return id;
+	public int getPinId() {
+		return pinId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setPinId(int pinId) {
+		this.pinId = pinId;
+	}
+	public int getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 	public Calendar getDate() {
 		return registeredDate;
@@ -48,5 +56,11 @@ public class Pin {
 	}
 	public void setWriter(User writer) {
 		this.writer = writer;
+	}
+	public String getPinTitle() {
+		return pinTitle;
+	}
+	public void setPinTitle(String pinTitle) {
+		this.pinTitle = pinTitle;
 	}
 }

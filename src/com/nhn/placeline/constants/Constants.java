@@ -31,4 +31,22 @@ public class Constants {
 	public static final int GROUPMAP_IMAGE_ID = 100;
 
 	public static boolean USE_XML_LAYOUT = false;
+	
+	
+	
+	/* Menus */
+	public static final int MENU_ITEM_CLEAR_MAP = 10;
+	public static final int MENU_ITEM_MAP_MODE = 20;
+	public static final int MENU_ITEM_MAP_MODE_SUB_VECTOR = MENU_ITEM_MAP_MODE + 1;
+	public static final int MENU_ITEM_MAP_MODE_SUB_SATELLITE = MENU_ITEM_MAP_MODE + 2;
+	public static final int MENU_ITEM_MAP_MODE_SUB_TRAFFIC = MENU_ITEM_MAP_MODE + 3;
+	public static final int MENU_ITEM_MAP_MODE_SUB_BICYCLE = MENU_ITEM_MAP_MODE + 4;
+	public static final int MENU_ITEM_ZOOM_CONTROLS = 30;
+	public static final int MENU_ITEM_MY_LOCATION = 40;
+
+	public static final int MENU_ITEM_TEST_MODE = 50;
+	public static final int MENU_ITEM_TEST_POI_DATA = MENU_ITEM_TEST_MODE + 1;
+	public static final int MENU_ITEM_TEST_PATH_DATA = MENU_ITEM_TEST_MODE + 2;
+	public static final int MENU_ITEM_TEST_FLOATING_DATA = MENU_ITEM_TEST_MODE + 3;
+	public static final int MENU_ITEM_TEST_AUTO_ROTATE = MENU_ITEM_TEST_MODE + 4;
 }
