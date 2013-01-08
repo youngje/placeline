@@ -7,10 +7,14 @@
 
 package com.nhn.android.mapviewer;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -27,6 +31,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
+import com.nhn.placeline.vo.Pin;
+import com.nhn.placeline.vo.User;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
@@ -68,29 +74,23 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonFriendsList;
 	
 	private boolean flagMyLocationOnOff;
-	
-
 	private SharedPreferences mPreferences;
- 
 	private NMapOverlayManager mOverlayManager;
-
 	private NMapMyLocationOverlay mMyLocationOverlay;
 	private NMapLocationManager mMapLocationManager;
 	private NMapCompassManager mMapCompassManager;
-
 	private NMapViewerResourceProvider mMapViewerResourceProvider;
-
 	private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 	private NMapPOIitem mFloatingPOIitem;
 
-	private static boolean USE_XML_LAYOUT = false;
-	        
+	private ArrayList<Pin> pinList;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (USE_XML_LAYOUT) {
+		if (Constants.USE_XML_LAYOUT) {
 			setContentView(R.layout.map_main);
 			mMapView = (NMapView)findViewById(R.id.mapView);
 		} else {
@@ -107,6 +107,33 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		initMap();
 		initButtons();
+		initInstance();
+	}
+	
+	
+	private void initInstance(){
+	
+		pinList = new ArrayList<Pin>();
+		User user = new User("Junsun", "백준선", "010-6848-3855");
+		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
+		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
+		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);
+		Pin newPin4 = new Pin(3, user, 126.4090f, 33.2484f);
+		
+		pinList.add(newPin1);
+		pinList.add(newPin2);
+		pinList.add(newPin3);
+		pinList.add(newPin4);
+		
+		for(int i=0; i<pinList.size(); i++){
+			putPOIdataOverlay(pinList.get(i));
+		}
+	}
+	
+	
+	private void printCurrentLocation(){
+		NGeoPoint center = mMapController.getMapCenter();
+		Log.d("########## [DEBUG] ##########"," GPS Location : " + center.getLongitude() + " / " + center.getLatitude());
 	}
 
 	
@@ -190,6 +217,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		// create my location overlay
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
 		
+		
 		flagMyLocationOnOff = false;
 	}
 	
@@ -213,6 +241,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}	
 	 	else if (button.getId() == Constants.BUTTON_ID_ADD_PIN){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
+	 		printCurrentLocation();
 		}
 	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_FriendsList button is clicked");
@@ -276,6 +305,24 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 	}
 
+	
+	// 마커 
+	private void putPOIdataOverlay(Pin pin) {
+
+		NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+		poiData.beginPOIdata(1);
+		
+//		Log.d("############", "X: "+pin.getxLocation()+" / Y: "+pin.getyLocation());
+		NMapPOIitem item = poiData.addPOIitem(pin.getxLocation(), pin.getyLocation(), "NEW", NMapPOIflagType.PIN, 0);
+		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		
+		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+		poiDataOverlay.selectPOIitem(0, true);
+		poiDataOverlay.showAllPOIdata(0);
+	}
+	
+	
 	// 경로선
 	private void testPathDataOverlay() {
 
