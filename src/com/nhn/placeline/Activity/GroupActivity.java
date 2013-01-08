@@ -30,6 +30,7 @@ public class GroupActivity extends Activity {
 		GridView groupGridView = (GridView) findViewById(R.id.group_gridview);
 		
 		groupGridView.setAdapter(new GroupAdapter(GroupActivity.this, groups));
+		groupGridView.setSelected(false);
 		
 		groupGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

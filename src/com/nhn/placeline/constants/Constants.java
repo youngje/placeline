@@ -25,5 +25,7 @@ public class Constants {
 	public static final String KEY_VIEW_MODE = "NMapViewer.viewMode";
 	public static final String KEY_TRAFFIC_MODE = "NMapViewer.trafficMode";
 	public static final String KEY_BICYCLE_MODE = "NMapViewer.bicycleMode";
+	
+	public static final int GROUPMAP_IMAGE_ID = 100;
 
 }
