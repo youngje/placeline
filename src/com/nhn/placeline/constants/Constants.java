@@ -13,7 +13,9 @@ public class Constants {
 	public static final int BUTTON_ID_ADD_PIN = 2;
 	public static final int BUTTON_ID_FRIENDS_LIST = 3;
 
-	public static final NGeoPoint NMAP_LOCATION_DEFAULT = new NGeoPoint(126.978371, 37.5666091);
+	//GPS Location (신라호텔) :  126.4085 / 33.2480 
+
+	public static final NGeoPoint NMAP_LOCATION_DEFAULT = new NGeoPoint(126.4085, 33.2480);
 	public static final int NMAP_ZOOMLEVEL_DEFAULT = 11;
 	public static final int NMAP_VIEW_MODE_DEFAULT = NMapView.VIEW_MODE_VECTOR;
 	public static final boolean NMAP_TRAFFIC_MODE_DEFAULT = false;
@@ -28,4 +30,5 @@ public class Constants {
 	
 	public static final int GROUPMAP_IMAGE_ID = 100;
 
+	public static boolean USE_XML_LAYOUT = false;
 }
