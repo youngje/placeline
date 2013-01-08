@@ -84,6 +84,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private NMapPOIitem mFloatingPOIitem;
 
 	private ArrayList<Pin> pinList;
+	private String userId;
+	private String groupId;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -109,10 +111,14 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		initButtons();
 		initInstance();
 	}
-	
+	   
 	
 	private void initInstance(){
-	
+		Intent intent = getIntent();
+		userId = intent.getStringExtra("userId");
+		groupId = intent.getStringExtra("groupId");
+		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
+		
 		pinList = new ArrayList<Pin>();
 		User user = new User("Junsun", "백준선", "010-6848-3855");
 		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
