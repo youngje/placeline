@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupActivity" 
+    android:background="@drawable/group_map_bg"
+    android:orientation="vertical">
+	
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_title_bar"
+        android:background="@drawable/groupmap_title_bar"
+         >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/setting"
+            android:layout_alignParentRight="true"
+            tools:ignore="ContentDescription"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+    <GridView 
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/group_gridview"
+        android:numColumns="3"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="30dp"
+        android:scrollbars="vertical"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        android:layout_marginTop="30dp" >
+        
+    </GridView> 
+     
+
+</LinearLayout>
