@@ -36,7 +36,8 @@ public class GroupActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
 				Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
-				intent.putExtra("groupId", position);
+				intent.putExtra("groupId", groups.get(position).getId());
+				intent.putExtra("userId", userid);
 				startActivity(intent);
 			}
 			
