@@ -32,6 +32,7 @@ public class Constants {
 
 	public static boolean USE_XML_LAYOUT = false;
 	
+	public static final String ADD_GROUP = "AddGroup";
 	
 	
 	/* Menus */

@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,12 +38,119 @@
     <HorizontalScrollView 
         xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/horizontalScrollView1"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" >
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	     >
           
-    
-
+        <LinearLayout
+	        android:id="@+id/horizontalScrollLayout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="320dp"
+	        android:orientation="horizontal" 
+	        android:background="@drawable/detailed_pin_photo_section"
+	        >
+        
+            
+	        <RelativeLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/detailed_pin_photo_frame"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        >
+		        <ImageView 
+		            android:src="@drawable/photo_1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginLeft="10dp"
+		            />
+	        </RelativeLayout>
+	        
+   	        <RelativeLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/detailed_pin_photo_frame"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        >
+		        <ImageView 
+		            android:src="@drawable/photo_2"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginLeft="10dp"
+		            />
+	        </RelativeLayout>
+	        
+   	        <RelativeLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/detailed_pin_photo_frame"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        >
+		        <ImageView 
+		            android:src="@drawable/photo_3"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginLeft="10dp"
+		            />
+	        </RelativeLayout>
+	        
+   	        <RelativeLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/detailed_pin_photo_frame"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        >
+		        <ImageView 
+		            android:src="@drawable/photo_4"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginLeft="10dp"
+		            />
+	        </RelativeLayout>
+	        
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="20dp"
+				>
+		        <ImageView 
+		            android:src="@drawable/detailed_pin_add_photo"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="270dp"
+		            android:layout_marginLeft="10dp"
+		            />
+	        </RelativeLayout>
+		</LinearLayout>
     </HorizontalScrollView>
-     
-
-</RelativeLayout>
+    
+     <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="110dp"
+	        android:background="#FFFFFF"
+	        >
+	        <TextView 
+	            android:layout_width="330dp"
+	            android:layout_height="wrap_content"
+	            android:text="신입사원 입문교육 중, 처음보는 멤버들, 안녕? 반갑반갑ㅋㅋㅋ 아 지금이 세신데...... 족금만 더하면 다할거같은데..."
+                android:textSize="15sp"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginTop="10dp"
+	            />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="백준선"
+	            android:textSize="10sp"
+	            android:layout_marginLeft="320dp"
+	            android:layout_marginTop="80dp"
+	            />
+        </RelativeLayout>
+</LinearLayout>

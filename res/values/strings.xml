@@ -9,8 +9,8 @@
     <string name="title_activity_detailed_pin">DetailedPinActivity</string>
 
     <string name="group_title">지도 그룹 리스트</string>
-    
     <string name="str_done">완료</string>
-    
-    
-   </resources>
+    <string name="title_activity_add_group">AddGroupActivity</string>
+    <string name="group_name_hint">그룹 이름을 입력해 주세요</string>
+
+</resources>
