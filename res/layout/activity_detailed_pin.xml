@@ -1,196 +1,221 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".DetailedPinActivity" 
-    android:orientation="vertical">
-	
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/detailed_pin_title_bar"
-        android:background="@drawable/detailed_pin_title_bar"
-         >
-        <TextView 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text = "와웅 첫제목"
-			android:textColor = "#FF0000FF"
-			android:textSize = "15sp"
-			android:textStyle = "italic"
-			android:singleLine = "true"   
-			android:layout_marginLeft="30dp"
-			android:layout_marginTop="8dp"
-			/>
-          <TextView 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text = "2013.01.07 15:30"
-			android:textColor = "#FF0000FF"
-			android:textSize = "10sp"
-			android:textStyle = "italic"
-			android:singleLine = "true"   
-			android:layout_marginLeft="270dp"
-			android:layout_marginTop="10dp"
-			/>
-    </RelativeLayout>
-    
-    <HorizontalScrollView 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/horizontalScrollView1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	     >
-          
-        <LinearLayout
-	        android:id="@+id/horizontalScrollLayout"
-	        android:layout_width="wrap_content"
-	        android:layout_height="320dp"
-	        android:orientation="horizontal" 
-	        android:background="#e4e7e4"
-	        >
-	        <RelativeLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/detailed_pin_photo_frame"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        >
-		        <ImageView 
-		            android:src="@drawable/photo_1"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginTop="10dp"
-		            android:layout_marginLeft="10dp"
-		            />
-	        </RelativeLayout>
-	        
-   	        <RelativeLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/detailed_pin_photo_frame"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        >
-		        <ImageView 
-		            android:src="@drawable/photo_2"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginTop="10dp"
-		            android:layout_marginLeft="10dp"
-		            />
-	        </RelativeLayout>
-	        
-   	        <RelativeLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/detailed_pin_photo_frame"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        >
-		        <ImageView 
-		            android:src="@drawable/photo_3"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginTop="10dp"
-		            android:layout_marginLeft="10dp"
-		            />
-	        </RelativeLayout>
-	        
-   	        <RelativeLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/detailed_pin_photo_frame"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        >
-		        <ImageView 
-		            android:src="@drawable/photo_4"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginTop="10dp"
-		            android:layout_marginLeft="10dp"
-		            />
-	        </RelativeLayout>
-	        
-			<RelativeLayout
-				android:layout_width="fill_parent"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent" >
+
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+		
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/detailed_pin_title_bar"
+	        android:background="@drawable/detailed_pin_title_bar"
+	         >
+	        <TextView 
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginRight="20dp"
-				>
-		        <ImageView 
-		            android:src="@drawable/detailed_pin_add_photo"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginTop="270dp"
-		            android:layout_marginLeft="10dp"
-		            />
-	        </RelativeLayout>
-		</LinearLayout>
-    </HorizontalScrollView>
-    
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/detailed_pin_photoalbum_underline"
-        />
-    
-	<RelativeLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="110dp"
-	    android:background="#FFFFFF"
-	    >
-	    <TextView 
-	        android:layout_width="330dp"
-	        android:layout_height="wrap_content"
-	        android:text="신입사원 입문교육 중, 처음보는 멤버들, 안녕? 반갑반갑ㅋㅋㅋ 아 지금이 세신데...... 족금만 더하면 다할거같은데..."
-	           android:textSize="15sp"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginTop="10dp"
-	        />
-	    <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="백준선"
-	        android:textSize="10sp"
-	        android:layout_marginLeft="320dp"
-	        android:layout_marginTop="80dp"
-	        />
-	</RelativeLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="@drawable/detailed_pin_reply_bar"
-		>
-		<ImageView 
-		    android:src="@drawable/detailed_pin_reply_bar_emoticon"
+				android:text = "와웅 첫제목"
+				android:textColor = "#FF0000FF"
+				android:textSize = "15sp"
+				android:textStyle = "italic"
+				android:singleLine = "true"   
+				android:layout_marginLeft="30dp"
+				android:layout_marginTop="8dp"
+				/>
+	          <TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text = "2013.01.07 15:30"
+				android:textColor = "#FF0000FF"
+				android:textSize = "10sp"
+				android:textStyle = "italic"
+				android:singleLine = "true"   
+				android:layout_marginLeft="270dp"
+				android:layout_marginTop="10dp"
+				/>
+	    </RelativeLayout>
+	    
+	    <HorizontalScrollView 
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/horizontalScrollView1"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_marginTop="5dp"
-		    android:layout_marginLeft="10dp"
-		    />
-		<EditText
-	        android:layout_width="250dp"
-	        android:layout_height="30dp"
-	        android:hint="@string/reply_hint"
-	        android:textSize="17sp"
-	        android:width="250dp"
-	        android:layout_centerHorizontal="true"
-	        android:background="#ffffff"
-	        android:layout_marginTop="6dp"
-	        />
-		 <TextView 
-	        android:layout_width="wrap_content"
+		     >
+	          
+	        <LinearLayout
+		        android:id="@+id/horizontalScrollLayout"
+		        android:layout_width="wrap_content"
+		        android:layout_height="320dp"
+		        android:orientation="horizontal" 
+		        android:background="#e4e7e4"
+		        >
+		        <RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/detailed_pin_photo_frame"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginLeft="10dp"
+			        >
+			        <ImageView 
+			            android:src="@drawable/photo_1"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="10dp"
+			            android:layout_marginLeft="10dp"
+			            />
+		        </RelativeLayout>
+		        
+	   	        <RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/detailed_pin_photo_frame"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginLeft="10dp"
+			        >
+			        <ImageView 
+			            android:src="@drawable/photo_2"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="10dp"
+			            android:layout_marginLeft="10dp"
+			            />
+		        </RelativeLayout>
+		        
+	   	        <RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/detailed_pin_photo_frame"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginLeft="10dp"
+			        >
+			        <ImageView 
+			            android:src="@drawable/photo_3"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="10dp"
+			            android:layout_marginLeft="10dp"
+			            />
+		        </RelativeLayout>
+		        
+	   	        <RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/detailed_pin_photo_frame"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginLeft="10dp"
+			        >
+			        <ImageView 
+			            android:src="@drawable/photo_4"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="10dp"
+			            android:layout_marginLeft="10dp"
+			            />
+		        </RelativeLayout>
+		        
+				<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="20dp"
+					>
+			        <ImageView 
+			            android:src="@drawable/detailed_pin_add_photo"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginTop="270dp"
+			            android:layout_marginLeft="10dp"
+			            />
+		        </RelativeLayout>
+			</LinearLayout>
+	    </HorizontalScrollView>
+	    
+	    <ImageView
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="전송"
-	        android:textSize="20sp"
-	        android:layout_marginLeft="310dp"
-	        android:layout_marginTop="5dp"
+	        android:src="@drawable/detailed_pin_photoalbum_underline"
 	        />
-	</RelativeLayout>
-	
-	
-	
-	
-</LinearLayout>
+	    
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="10dp"
+		    android:background="#FFFFFF"
+		    android:orientation="vertical" 
+		    >
+		    <TextView 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="신입사원 입문교육 중, 처음보는 멤버들, 안녕? 반갑반갑ㅋㅋㅋ 아 지금이 세신데...... 족금만 더하면 다할거같은데..."
+		           android:textSize="15sp"
+		        />
+		    <TextView 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="300dp"
+		        android:text="백준선"
+		        android:textSize="10sp"
+		        />
+		</LinearLayout>
+		
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/detailed_pin_content_underline"
+			>
+	        <TextView 
+	  	        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="댓글"
+		        android:textSize="15sp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_marginTop="2dp"
+	            />
+		</RelativeLayout>
+		
+		<LinearLayout
+		    android:id="@+id/itemReplyList"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/detailed_pin_reply_bar"
+			android:visibility="gone"
+			android:orientation="vertical"
+			>
+		</LinearLayout>
+			
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/detailed_pin_reply_bar"
+			>
+			<ImageView 
+			    android:src="@drawable/detailed_pin_reply_bar_emoticon"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="5dp"
+			    android:layout_marginLeft="10dp"
+			    />
+			<EditText
+		        android:layout_width="250dp"
+		        android:layout_height="30dp"
+		        android:hint="@string/reply_hint"
+		        android:textSize="17sp"
+		        android:width="250dp"
+		        android:layout_centerHorizontal="true"
+		        android:background="#ffffff"
+		        android:layout_marginTop="6dp"
+		        />
+			 <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="전송"
+		        android:textSize="20sp"
+		        android:layout_marginLeft="310dp"
+		        android:layout_marginTop="5dp"
+		        />
+		</RelativeLayout>
+	</LinearLayout>
+</ScrollView>
