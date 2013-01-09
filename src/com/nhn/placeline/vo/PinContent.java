@@ -7,12 +7,12 @@ public class PinContent {
 	int pinId;
 	String title;
 	String content;
-	String writer;
+	User writer;
 	ArrayList<PinReply> replyList;
 	ArrayList<Integer> pictures;
 	Calendar registeredDate;
 	
-	public PinContent(int pinId, String title, String content, String writer){
+	public PinContent(int pinId, String title, String content, User writer){
 		this.pinId = pinId;
 		this.title = title;
 		this.content = content;
@@ -57,10 +57,10 @@ public class PinContent {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriter() {
+	public User getWriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
+	public void setWriter(User writer) {
 		this.writer = writer;
 	}
 	public PinReply getReply(int index) {

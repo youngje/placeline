@@ -10,6 +10,7 @@ import com.nhn.placeline.util.GroupAdapter;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.PinContent;
 import com.nhn.placeline.vo.PinReply;
+import com.nhn.placeline.vo.User;
 import com.nhn.android.mapviewer.NMapViewer;
 
 import android.os.Bundle;
@@ -42,7 +43,10 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 
 	private ArrayList<PinReply> replyList;
 	private PinContent pinContent;
-	private String userid = "oskar";
+	private User user1;
+	private User user2;
+	private User user3;
+	private User user4;
 	
 	private LinearLayout replyItem;
 	private LinearLayout photoAlbum;
@@ -82,15 +86,20 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	}
 	
 	private void initInstance(){
+		user1 = new User("hongkyoungYun", "윤홍경", "010-6848-3855", R.drawable.user_1);
+		user2 = new User("sunghoKim", "김성호", "010-6848-3855", R.drawable.user_2);
+		user3 = new User("joonsunBaek", "백준선", "010-6848-3855", R.drawable.user_3);
+		user4 = new User("youngjaeYoon", "윤영제", "010-6848-3855", R.drawable.user_4);
+		
 		replyList = new ArrayList<PinReply>();
-		replyList.add(new PinReply(0, "윤홍경", "살아있네살아있네살아있네살아있네살아있네살아있네살아있네" +
+		replyList.add(new PinReply(0, user1, "살아있네살아있네살아있네살아있네살아있네살아있네살아있네" +
 				"살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네" +
 				"살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네살아있네"));
-		replyList.add(new PinReply(1, "윤홍경", "그치?ㅋㅋㅋㅋㅋㅋㅋㅋ 나 지금 울상이야ㅜㅜ"));
-		replyList.add(new PinReply(2, "윤홍경", "누나바보"));
-		replyList.add(new PinReply(3, "윤홍경", "집에가고싶으무ㅜ ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ"));
+		replyList.add(new PinReply(1, user2, "그치?ㅋㅋㅋㅋㅋㅋㅋㅋ 나 지금 울상이야ㅜㅜ"));
+		replyList.add(new PinReply(2, user3, "누나바보"));
+		replyList.add(new PinReply(3, user4, "집에가고싶으무ㅜ ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ"));
 		
-		pinContent = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", "백준선");
+		pinContent = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", user1);
 		pinContent.addPictures(R.drawable.photo_1);
 		pinContent.addPictures(R.drawable.photo_2);
 		pinContent.addPictures(R.drawable.photo_3);
@@ -115,7 +124,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		TextView contentContent = (TextView) findViewById(id.content_content);
 		TextView contentDate = (TextView) findViewById(id.content_date);
 		
-		contentWriter.setText(pinContent.getWriter());
+		contentWriter.setText(pinContent.getWriter().getName());
 		contentDate.setText(pinContent.getDateToString());
 		contentContent.setText(pinContent.getContent());
 		pinTitle.setText(pinContent.getTitle());
@@ -146,6 +155,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 			TextView replyWriter;
 			TextView replyComment;
 			TextView replyDate;
+			ImageView replyPhoto;
 			
 			for(int i=0; i<replyList.size(); i++){
 				mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -153,10 +163,12 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 				replyWriter = (TextView) view.findViewById(id.reply_writer);
 				replyComment = (TextView) view.findViewById(id.reply_comment);
 				replyDate = (TextView) view.findViewById(id.reply_date);
-				replyWriter.setText(replyList.get(i).getWriter());
+				replyPhoto = (ImageView) view.findViewById(id.reply_photo);
+				replyWriter.setText(replyList.get(i).getWriter().getName());
 				replyComment.setText(replyList.get(i).getComments());
 				replyDate.setText(replyList.get(i).getDateToString());
-
+				replyPhoto.setBackgroundResource(replyList.get(i).getWriter().getThumnail());
+				
 				replyItem.addView(view);
 			}
 			commentReply.setText("댓글 (" + replyList.size() + ")");
