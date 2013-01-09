@@ -58,8 +58,8 @@ public class DatabaseConnector{
 	public PinContent getPinContent(String pinId) {
 		dbHelper = new DatabaseHelper(null);
 		db = dbHelper.getWritableDatabase();
-		
-		PinContent content = new PinContent();		
+
+		PinContent content = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", "백준선");
 		return content;
 	}
 	

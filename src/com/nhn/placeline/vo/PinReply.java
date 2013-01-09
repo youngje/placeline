@@ -8,6 +8,12 @@ public class PinReply {
 	String comments;
 	Calendar registeredDate;
 	
+	public PinReply(int pinId, String writer, String comments){
+		this.pinId = pinId;
+		this.writer = writer;
+		this.comments = comments;
+		this.registeredDate = Calendar.getInstance();
+	}
 	public int getPinId() {
 		return pinId;
 	}
@@ -26,10 +32,22 @@ public class PinReply {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Calendar getRegisteredDate() {
+	public Calendar getDate() {
 		return registeredDate;
+//		registeredDate.get(Calendar.YEAR);
+//		registeredDate.get(Calendar.MONTH)+1);
+//		registeredDate.get(Calendar.DAY_OF_MONTH);
 	}
-	public void setRegisteredDate(Calendar registeredDate) {
-		this.registeredDate = registeredDate;
+	public void setDate() {
+		this.registeredDate = Calendar.getInstance();
+	}
+	public String getDateToString(){
+		String year = Integer.toString(registeredDate.get(Calendar.YEAR));
+		String month = Integer.toString(registeredDate.get(Calendar.MONTH)+1);
+		String date = Integer.toString(registeredDate.get(Calendar.DAY_OF_MONTH));
+		String hour = Integer.toString(registeredDate.get(Calendar.HOUR_OF_DAY));
+		String minute = Integer.toString(registeredDate.get(Calendar.MINUTE));
+		
+		return  year + "." + month + "." + date + " " + hour + ":" + minute;
 	}
 }

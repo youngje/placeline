@@ -16,26 +16,15 @@
 	        android:background="@drawable/detailed_pin_title_bar"
 	         >
 	        <TextView 
+	            android:id="@+id/detailed_pin_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text = "와웅 첫제목"
 				android:textColor = "#FF0000FF"
 				android:textSize = "15sp"
 				android:textStyle = "italic"
 				android:singleLine = "true"   
 				android:layout_marginLeft="30dp"
 				android:layout_marginTop="8dp"
-				/>
-	          <TextView 
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text = "2013.01.07 15:30"
-				android:textColor = "#FF0000FF"
-				android:textSize = "10sp"
-				android:textStyle = "italic"
-				android:singleLine = "true"   
-				android:layout_marginLeft="270dp"
-				android:layout_marginTop="10dp"
 				/>
 	    </RelativeLayout>
 	    
@@ -145,20 +134,37 @@
 		    android:padding="10dp"
 		    android:background="#FFFFFF"
 		    android:orientation="vertical" 
+		    android:minHeight="90dp"
 		    >
 		    <TextView 
+		        android:id="@+id/content_content"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:text="신입사원 입문교육 중, 처음보는 멤버들, 안녕? 반갑반갑ㅋㅋㅋ 아 지금이 세신데...... 족금만 더하면 다할거같은데..."
-		           android:textSize="15sp"
+	           	android:textSize="15sp"
 		        />
-		    <TextView 
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="300dp"
-		        android:text="백준선"
-		        android:textSize="10sp"
-		        />
+		    
+		    <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" 
+			    android:layout_marginTop="30dp"
+			    android:layout_marginLeft="230dp"
+			    >
+	   		    <TextView 
+	   		        android:id="@+id/content_date"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize = "10sp"
+					/>
+			    <TextView 
+			        android:id="@+id/content_writer"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:textSize="10sp"
+			        android:layout_marginLeft="10dp"
+			        />
+		    </LinearLayout>
+
 		</LinearLayout>
 		
 		<RelativeLayout
@@ -167,9 +173,9 @@
 			android:background="@drawable/detailed_pin_content_underline"
 			>
 	        <TextView 
+	            android:id="@+id/comment_reply"
 	  	        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="댓글"
 		        android:textSize="15sp"
 		        android:layout_marginLeft="5dp"
 		        android:layout_marginTop="2dp"
@@ -180,10 +186,20 @@
 		    android:id="@+id/itemReplyList"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/detailed_pin_reply_bar"
-			android:visibility="gone"
+			android:background="#FFFFFF"
 			android:orientation="vertical"
 			>
+	        <TextView 
+	            android:id="@+id/msgNoReply"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="댓글이 없습니다."
+		        android:textSize="15sp"
+		        android:layout_marginTop="18dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginBottom="18dp"
+		        android:visibility="gone"
+		        />
 		</LinearLayout>
 			
 		<RelativeLayout
