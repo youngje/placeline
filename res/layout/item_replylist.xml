@@ -30,7 +30,7 @@
 	        android:layout_height="wrap_content"
 	        android:textSize="10sp"
 	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="280dp"
+	        android:layout_marginLeft="250dp"
 	        />
 		<TextView 
 	     	android:id="@+id/reply_comment"

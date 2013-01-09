@@ -1,4 +1,4 @@
-package com.nhn.placeline.db;
+package com.nhn.placeline.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

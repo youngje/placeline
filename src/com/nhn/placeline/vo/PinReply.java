@@ -48,6 +48,6 @@ public class PinReply {
 		String hour = Integer.toString(registeredDate.get(Calendar.HOUR_OF_DAY));
 		String minute = Integer.toString(registeredDate.get(Calendar.MINUTE));
 		
-		return  year + "." + month + "." + date + " " + hour + ":" + minute;
+		return  year + "년" + month + "월" + date + "일 " + hour + ":" + minute;
 	}
 }
