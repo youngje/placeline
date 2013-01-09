@@ -16,21 +16,28 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
-public class DetailedPinActivity extends Activity {
+public class DetailedPinActivity extends Activity implements OnClickListener, OnEditorActionListener{
 
 	private ArrayList<PinReply> replyList;
 	private PinContent pinContent;
@@ -39,6 +46,8 @@ public class DetailedPinActivity extends Activity {
 	private LinearLayout replyItem;
 	private TextView commentNoReply;
 	private TextView commentReply;
+	private TextView buttonSendReply;
+	private EditText editTextReply;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,24 @@ public class DetailedPinActivity extends Activity {
 		initViews();
 		displayPinInfo();
 		displayReplies();
+	}
+	
+	
+	// 버튼 리스너 
+	@Override
+	public void onClick(View button) {
+		if (button.getId() == R.id.button_send_reply){
+			sendReply();
+		}
+	}
+
+	
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		 if(actionId == EditorInfo.IME_ACTION_DONE){ // IME_ACTION_SEARCH , IME_ACTION_GO
+			 sendReply();
+          }
+		return false;
 	}
 	
 	private void initInstance(){
@@ -67,6 +94,10 @@ public class DetailedPinActivity extends Activity {
 		replyItem = (LinearLayout) findViewById(R.id.itemReplyList);
 		commentNoReply = (TextView) findViewById(R.id.msgNoReply);
 		commentReply = (TextView) findViewById(R.id.comment_reply);
+		buttonSendReply = (TextView) findViewById(R.id.button_send_reply);
+		editTextReply = (EditText) findViewById(R.id.edittext_reply);
+		buttonSendReply.setOnClickListener(this);
+		editTextReply.setOnEditorActionListener(this);
 	}
 	
 	private void displayPinInfo(){
@@ -100,5 +131,10 @@ public class DetailedPinActivity extends Activity {
 		else{
 			commentNoReply.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	private void sendReply(){
+		 Log.d("########## [DEBUG] ##########","onClick() - Button_SendReply button is clicked / Reply : " + editTextReply.getText());
+		 editTextReply.setText("");
 	}
 }

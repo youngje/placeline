@@ -1,4 +1,4 @@
-package com.nhn.placeline.db;
+package com.nhn.placeline.dao;
 
 import java.util.ArrayList;
 
