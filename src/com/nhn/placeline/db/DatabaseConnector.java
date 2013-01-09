@@ -2,6 +2,7 @@ package com.nhn.placeline.db;
 
 import java.util.ArrayList;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.nhn.placeline.vo.Group;
@@ -15,35 +16,60 @@ public class DatabaseConnector{
 	DatabaseHelper dbHelper;
 
 	//userId를 주면 그 사용자가 이용중인 Group List를 주마.
+	
 	public ArrayList<Group> getGroupList(String userId) {
 		dbHelper = new DatabaseHelper(null);
 		db = dbHelper.getWritableDatabase();
 		
-		//쿼리문으로 결과 완성
-		ArrayList<Group> result = null; //미완
+		//userId가 참여하고 있는 groupId 목록을 불러옴
+		Cursor result = db.rawQuery("SELECT * " +
+				                    "FROM member, userIdToGroupId " +
+				                    "WHERE member.groupId = userIdToGroupId.groupId , userId = '"+userId+"'", null);
 		
-		return result;
+		//쿼리문으로 결과 완성
+		ArrayList<Group> groupList = null;
+
+		result.moveToFirst();
+		while (!result.isAfterLast()){
+			   groupList.add(new Group(result.getString(1), result.getString(2), result.getString(3) , result.getInt(4)));
+			   result.moveToNext();
+		}
+		
+		return groupList;
 	}
+	
+	
+//	SELECT A1.region_name REGION, SUM(A2.Sales) SALES
+//	FROM Geography A1, Store_Information A2
+//	WHERE A1.store_name = A2.store_name
+//	GROUP BY A1.region_name
 	
 	//groupId를 주면 해당 그룹의 각 Pin List를 주마.
 	public ArrayList<Pin> getPinList(String groupId) {
+		dbHelper = new DatabaseHelper(null);
+		db = dbHelper.getWritableDatabase();
 		
-		ArrayList<Pin> result = null;
-		return result;
+		ArrayList<Pin> pinList = null;
+
+		return pinList;
 	}
 	
 	//pinId를 주면 해당 핀의 PinContent를 주마.
 	public PinContent getPinContent(String pinId) {
+		dbHelper = new DatabaseHelper(null);
+		db = dbHelper.getWritableDatabase();
 		
-		PinContent result = new PinContent();		
-		return result;
+		PinContent content = new PinContent();		
+		return content;
 	}
 	
 	//pinId를 주면 해당 핀의 Reply List를 주마.
 	public ArrayList<PinReply> getPinReplyList(String pinId) {
+		dbHelper = new DatabaseHelper(null);
+		db = dbHelper.getWritableDatabase();
 		
-		ArrayList<PinReply> result = null;		
-		return result;
+		ArrayList<PinReply> replyList = null;		
+		return replyList;
 	}
 	
 	
