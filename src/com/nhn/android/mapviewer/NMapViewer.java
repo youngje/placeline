@@ -252,6 +252,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		printCurrentLocation();
 		}
 	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
+	 		// 영제 형 요기
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_FriendsList button is clicked");
 		}
 	}
