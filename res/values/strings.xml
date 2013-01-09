@@ -12,5 +12,7 @@
     <string name="str_done">완료</string>
     <string name="title_activity_add_group">AddGroupActivity</string>
     <string name="group_name_hint">그룹 이름을 입력해 주세요</string>
+    <string name="addgroup_text_hint">그룹 이름 입력칸</string>
 
 </resources>
+

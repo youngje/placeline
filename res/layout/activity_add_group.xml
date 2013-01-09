@@ -20,19 +20,38 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/button_vin"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:id="@+id/addgroup_confirm" />
     </RelativeLayout>
     
-    <ImageView
-        android:layout_width="wrap_content"
+    <RelativeLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:src="@drawable/group_2"
-        tools:ignore="ContentDescription"
-		android:layout_centerHorizontal="true"
-        android:id="@+id/addgroup_image_preview"
         android:layout_below="@id/addgroup_status_bar"
+        android:id="@+id/addgroup_preview"
+        >
+        <ImageView
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_margin="20dp"
+        	android:src="@drawable/group_2"
+        	tools:ignore="ContentDescription"
+			android:layout_centerHorizontal="true"
+        	android:id="@+id/addgroup_image_preview"
         />
+        <TextView 
+            android:layout_width="90dp"
+            android:layout_height="50dp"
+            android:text="@string/addgroup_text_hint"
+            android:layout_centerHorizontal="true"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="#d1d1e2"
+            android:layout_marginBottom="5dp"
+            android:layout_alignBottom="@id/addgroup_image_preview"
+            android:id="@+id/addgroup_group_title"/>
+    </RelativeLayout>
+    
     
     <EditText
         android:layout_width="250dp"
@@ -43,9 +62,11 @@
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:padding="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"
         android:id="@+id/addgroup_edittext"
-        android:layout_below="@id/addgroup_image_preview"
+        android:layout_below="@id/addgroup_preview"
+        android:singleLine="true"
+        android:maxLength="10"
         />
     <RelativeLayout 
         android:layout_width="fill_parent"
@@ -73,7 +94,9 @@
                 android:src="@drawable/group_color_1"
                 tools:ignore="ContentDescription" 
                 android:padding="5dp"
-                android:id="@+id/addgroup_color_1"/>
+                android:id="@+id/addgroup_color_1"
+                android:layout_marginLeft="5dp"
+                android:onClick="changeColor"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -82,7 +105,8 @@
                 android:src="@drawable/group_color_2"
                 tools:ignore="ContentDescription"
                 android:padding="5dp"
-                android:id="@+id/addgroup_color_2" />
+                android:id="@+id/addgroup_color_2"
+                android:onClick="changeColor" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -91,7 +115,8 @@
                 android:src="@drawable/group_color_3"
                 tools:ignore="ContentDescription" 
                 android:padding="5dp"
-                android:id="@+id/addgroup_color_3"/>
+                android:id="@+id/addgroup_color_3"
+                android:onClick="changeColor"/>
             
         </LinearLayout>
         
