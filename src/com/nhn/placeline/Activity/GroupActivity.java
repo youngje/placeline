@@ -38,7 +38,7 @@ public class GroupActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
-				groupId = groups.get(position).getId();
+				groupId = groups.get(position).getId();	
 				if(groupId.equals(Constants.ADD_GROUP)){
 					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
 					startActivity(intent);
