@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -44,6 +45,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	private String userid = "oskar";
 	
 	private LinearLayout replyItem;
+	private LinearLayout photoAlbum;
 	private TextView commentNoReply;
 	private TextView commentReply;
 	private TextView buttonSendReply;
@@ -57,6 +59,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		initInstance();
 		initViews();
 		displayPinInfo();
+		displayPhotos();
 		displayReplies();
 	}
 	
@@ -88,10 +91,16 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		replyList.add(new PinReply(3, "윤홍경", "집에가고싶으무ㅜ ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ"));
 		
 		pinContent = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", "백준선");
+		pinContent.addPictures(R.drawable.photo_1);
+		pinContent.addPictures(R.drawable.photo_2);
+		pinContent.addPictures(R.drawable.photo_3);
+		pinContent.addPictures(R.drawable.photo_4);
 	}
 	
 	private void initViews(){
 		replyItem = (LinearLayout) findViewById(R.id.itemReplyList);
+		photoAlbum = (LinearLayout) findViewById(R.id.horizontalScrollLayout);
+		
 		commentNoReply = (TextView) findViewById(R.id.msgNoReply);
 		commentReply = (TextView) findViewById(R.id.comment_reply);
 		buttonSendReply = (TextView) findViewById(R.id.button_send_reply);
@@ -111,15 +120,39 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		contentContent.setText(pinContent.getContent());
 		pinTitle.setText(pinContent.getTitle());
 	}
+	
+	private void displayPhotos(){
+		LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view;
+		ImageView photo;
+		
+		for(int i=0; i<pinContent.countPictures(); i++){
+			view = mInflater.inflate(R.layout.item_photo, null);
+			photo = (ImageView) view.findViewById(R.id.item_photo);
+			photo.setBackgroundResource(pinContent.getPictures(i));
+			photoAlbum.addView(view);
+		}
+		
+		view = mInflater.inflate(R.layout.item_add_photo, null);
+		photo = (ImageView) view.findViewById(R.id.item_add_photo);
+		photo.setBackgroundResource(R.drawable.detailed_pin_add_photo);
+		photoAlbum.addView(view);
+	}
 	 
 	private void displayReplies(){
 		if(replyList.size() > 0){
+			LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view;
+			TextView replyWriter;
+			TextView replyComment;
+			TextView replyDate;
+			
 			for(int i=0; i<replyList.size(); i++){
-				LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				View view = mInflater.inflate(R.layout.item_replylist, null);
-				TextView replyWriter = (TextView) view.findViewById(id.reply_writer);
-				TextView replyComment = (TextView) view.findViewById(id.reply_comment);
-				TextView replyDate = (TextView) view.findViewById(id.reply_date);
+				mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				view = mInflater.inflate(R.layout.item_replylist, null);
+				replyWriter = (TextView) view.findViewById(id.reply_writer);
+				replyComment = (TextView) view.findViewById(id.reply_comment);
+				replyDate = (TextView) view.findViewById(id.reply_date);
 				replyWriter.setText(replyList.get(i).getWriter());
 				replyComment.setText(replyList.get(i).getComments());
 				replyDate.setText(replyList.get(i).getDateToString());

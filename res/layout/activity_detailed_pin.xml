@@ -41,84 +41,8 @@
 		        android:layout_height="320dp"
 		        android:orientation="horizontal" 
 		        android:background="#e4e7e4"
+		        android:padding="10dp"
 		        >
-		        <RelativeLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:background="@drawable/detailed_pin_photo_frame"
-			        android:layout_marginTop="10dp"
-			        android:layout_marginLeft="10dp"
-			        >
-			        <ImageView 
-			            android:src="@drawable/photo_1"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_marginTop="10dp"
-			            android:layout_marginLeft="10dp"
-			            />
-		        </RelativeLayout>
-		        
-	   	        <RelativeLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:background="@drawable/detailed_pin_photo_frame"
-			        android:layout_marginTop="10dp"
-			        android:layout_marginLeft="10dp"
-			        >
-			        <ImageView 
-			            android:src="@drawable/photo_2"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_marginTop="10dp"
-			            android:layout_marginLeft="10dp"
-			            />
-		        </RelativeLayout>
-		        
-	   	        <RelativeLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:background="@drawable/detailed_pin_photo_frame"
-			        android:layout_marginTop="10dp"
-			        android:layout_marginLeft="10dp"
-			        >
-			        <ImageView 
-			            android:src="@drawable/photo_3"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_marginTop="10dp"
-			            android:layout_marginLeft="10dp"
-			            />
-		        </RelativeLayout>
-		        
-	   	        <RelativeLayout
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:background="@drawable/detailed_pin_photo_frame"
-			        android:layout_marginTop="10dp"
-			        android:layout_marginLeft="10dp"
-			        >
-			        <ImageView 
-			            android:src="@drawable/photo_4"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_marginTop="10dp"
-			            android:layout_marginLeft="10dp"
-			            />
-		        </RelativeLayout>
-		        
-				<RelativeLayout
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginRight="20dp"
-					>
-			        <ImageView 
-			            android:src="@drawable/detailed_pin_add_photo"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_marginTop="270dp"
-			            android:layout_marginLeft="10dp"
-			            />
-		        </RelativeLayout>
 			</LinearLayout>
 	    </HorizontalScrollView>
 	    

@@ -9,7 +9,7 @@ public class PinContent {
 	String content;
 	String writer;
 	ArrayList<PinReply> replyList;
-	ArrayList<String> pictures;
+	ArrayList<Integer> pictures;
 	Calendar registeredDate;
 	
 	public PinContent(int pinId, String title, String content, String writer){
@@ -18,6 +18,7 @@ public class PinContent {
 		this.content = content;
 		this.writer = writer;
 		replyList = new ArrayList<PinReply>();
+		this.pictures = new ArrayList<Integer>();
 		this.registeredDate = Calendar.getInstance();
 	}
 	public int getPinId() {
@@ -68,12 +69,14 @@ public class PinContent {
 	public void addReplyList(PinReply pinReply) {
 		replyList.add(pinReply);
 	}
-	public ArrayList<String> getPictures() {
-		return pictures;
+	public int getPictures(int index) {
+		return pictures.get(index);
 	}
-	public void setPictures(ArrayList<String> pictures) {
-		this.pictures = pictures;
+	public void addPictures(int pictureIndex) {
+		pictures.add(pictureIndex);
 	}
-	
+	public int countPictures(){
+		return pictures.size();
+	}
 	
 }
