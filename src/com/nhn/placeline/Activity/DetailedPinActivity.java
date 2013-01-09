@@ -28,5 +28,6 @@ public class DetailedPinActivity extends Activity {
 		
 		
 		
+		
 	}
 }
