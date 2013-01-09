@@ -92,6 +92,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ListView friendsListView;
 	
 	private boolean flagMyLocationOnOff;
+	private boolean addPinOnOff;
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
 	private NMapMyLocationOverlay mMyLocationOverlay;
@@ -100,6 +101,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private NMapViewerResourceProvider mMapViewerResourceProvider;
 	private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 	private NMapPOIitem mFloatingPOIitem;
+	private NMapPathDataOverlay pathDataOverlay;
 
 	private ArrayList<Pin> pinList;
 	private String userId;
@@ -127,7 +129,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		initMap();
 		initButtons();
-		initInstance();
+		initInstance(); 
 		slideFriendList();
 		
 		mapViewLayout = (LinearLayout)findViewById(R.id.mapview_layout);
@@ -183,47 +185,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 	
 	private void initButtons(){
-
-		RelativeLayout mainLayout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams buttonCurrentLocationLayout = new RelativeLayout.LayoutParams(100, 100);
-		buttonCurrentLocationLayout.leftMargin = 590;
-		buttonCurrentLocationLayout.topMargin = 1020; 
-		buttonCurrentLocation = new ImageView(this);
-		buttonCurrentLocation.setImageResource(R.drawable.ic_my_location_default);
+		buttonCurrentLocation = (ImageView) findViewById(R.id.imageview_currentlocation);
 		buttonCurrentLocation.setOnClickListener(this);
-		buttonCurrentLocation.setId(Constants.BUTTON_ID_CURRENT_LOCATION);
-		buttonCurrentLocation.setAdjustViewBounds(true);
+		buttonCurrentLocation.setBackgroundResource(R.drawable.ic_my_location_default);
 		
-		RelativeLayout.LayoutParams buttonAddPinLayout = new RelativeLayout.LayoutParams(100, 100);
-		buttonAddPinLayout.leftMargin = 590;
-		buttonAddPinLayout.topMargin = 10; 
-		buttonAddPin = new ImageView(this);
-		buttonAddPin.setImageResource(R.layout.image_addpin);
+		buttonAddPin = (ImageView) findViewById(R.id.imageview_addpin);
 		buttonAddPin.setOnClickListener(this);
-		buttonAddPin.setId(Constants.BUTTON_ID_ADD_PIN);
-		buttonAddPin.setAdjustViewBounds(true);
 		
-		RelativeLayout.LayoutParams buttonFriendListLayout = new RelativeLayout.LayoutParams(100, 100);
-		buttonFriendListLayout.leftMargin = 0;
-		buttonFriendListLayout.topMargin = 10; 
-		buttonFriendsList = new ImageView(this);
-		buttonFriendsList.setImageResource(R.layout.image_friend);
+		buttonFriendsList = (ImageView) findViewById(R.id.imageview_friend);
 		buttonFriendsList.setOnClickListener(this);
-		buttonFriendsList.setId(Constants.BUTTON_ID_FRIENDS_LIST);
-		buttonFriendsList.setAdjustViewBounds(true);
-		
-		/*LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = mInflater.inflate(R.layout.friendslist, null);
-		friendslistLayout = (LinearLayout)view;
-		
-		RelativeLayout.LayoutParams friendListLayoutParam = new RelativeLayout.LayoutParams(230, LayoutParams.MATCH_PARENT);
-		friendListLayoutParam.leftMargin = -180;
-		*/
-		mainLayout.addView(buttonCurrentLocation, buttonCurrentLocationLayout);
-		mainLayout.addView(buttonAddPin, buttonAddPinLayout);
-		mainLayout.addView(buttonFriendsList, buttonFriendListLayout);
-		//mainLayout.addView(friendslistLayout, friendListLayoutParam);
-		mMapView.addView(mainLayout);
 	} 
 	
 	private void initMap(){
@@ -272,6 +242,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		
 		flagMyLocationOnOff = false;
+		addPinOnOff = false;
 	}
 	
 	public void slideFriendList() {
@@ -309,25 +280,35 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	// 버튼 리스너 
 	@Override
 	public void onClick(View button) {
-	 	if (button.getId() == Constants.BUTTON_ID_CURRENT_LOCATION){
+	 	if (button.getId() == R.id.imageview_currentlocation){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_GoToCurrentLocation button is clicked");
 	 		if(!flagMyLocationOnOff){
 	 			startMyLocation();	
-	 			buttonCurrentLocation.setImageResource(R.drawable.ic_my_location_clicked);
 	 			flagMyLocationOnOff = true;
+	 			button.setBackgroundResource(R.drawable.ic_my_location_clicked);
 	 		}
 	 		else{
 	 			stopMyLocation();
-	 			buttonCurrentLocation.setImageResource(R.drawable.ic_my_location_default);
 	 			flagMyLocationOnOff = false;
+	 			button.setBackgroundResource(R.drawable.ic_my_location_default);
 	 		}
 	 		
 		}	
-	 	else if (button.getId() == Constants.BUTTON_ID_ADD_PIN){
+	 	else if (button.getId() == R.id.imageview_addpin){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
 	 		printCurrentLocation();
+	 		
+	 		if(!addPinOnOff){
+	 			drawLineWithDataOverlay();
+	 			addPinOnOff = true;
+	 		}
+	 		else{
+	 			addPinOnOff = false;
+//	 			pathDataOverlay.setHidden(true); 
+	 			//////////////////////////////////////////////////////// 작업중
+	 		}
 		}
-	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
+	 	else if (button.getId() == R.id.imageview_friend){
 	 		// 영제 형 요기
 	 		if(isFriendsListOpen) {
 	 			mapViewLayout.bringToFront();
@@ -413,6 +394,30 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
 		poiDataOverlay.selectPOIitem(0, true);
 		poiDataOverlay.showAllPOIdata(0);
+	}
+	
+	// 경로선 그리기
+	private void drawLineWithDataOverlay() {
+		// set path data points
+		NMapPathData pathData = new NMapPathData(pinList.size());
+		pathData.initPathData();
+		pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+		
+		for(int i=0; i<pinList.size(); i++){
+			if(i == 0){
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), NMapPathLineStyle.TYPE_SOLID);
+			}
+			else{
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), 0);
+			}
+		}
+		pathData.endPathData();
+		pathDataOverlay.addPathData(pathData);
+		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
+		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
+		pathLineStyle.setLineColor(0xA04DD2, 0xff);
+		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
+		pathData.setPathLineStyle(pathLineStyle);
 	}
 	
 	
