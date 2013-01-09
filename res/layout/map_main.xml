@@ -66,7 +66,6 @@
 				android:layout_centerVertical="true"
 				android:layout_margin="3dp"
 		        />
-			 
 		</RelativeLayout>
 	
 	   <ImageView
@@ -76,7 +75,6 @@
 		    android:src="@drawable/detailed_pin_photoalbum_underline"
 		    tools:ignore="ContentDescription" 
 		    android:padding="3dp"/>
-
 	</LinearLayout>
     <LinearLayout 
     	android:orientation="vertical"
@@ -84,12 +82,37 @@
     	android:layout_height="fill_parent"
     	android:id="@+id/mapview_layout"
     	>
-    
-		<com.nhn.android.maps.NMapView 
-	    	android:layout_width="fill_parent" 
-	    	android:layout_height="fill_parent" 
-	    	android:id="@+id/mapView"
-    		/>
+	    <RelativeLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    >
+			<com.nhn.android.maps.NMapView 
+		    	android:layout_width="fill_parent" 
+		    	android:layout_height="fill_parent" 
+		    	android:id="@+id/mapView"
+	    		/>
+			<ImageView 
+			    android:id="@+id/imageview_friend"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:src="@layout/image_friend"
+			    android:layout_marginTop="5dp"
+			    android:layout_marginLeft="5dp"/>
+			<ImageView 
+			    android:id="@+id/imageview_addpin"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:src="@layout/image_addpin"
+			    android:layout_marginLeft="295dp"
+			    android:layout_marginTop="5dp"/>
+			<ImageView 
+			    android:id="@+id/imageview_currentlocation"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="295dp"
+			    android:layout_marginTop="502dp"
+			    />
+		</RelativeLayout>
 	</LinearLayout>
 
 </FrameLayout>
