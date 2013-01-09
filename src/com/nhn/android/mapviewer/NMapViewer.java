@@ -92,6 +92,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ListView friendsListView;
 	
 	private boolean flagMyLocationOnOff;
+	private boolean addPinOnOff;
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
 	private NMapMyLocationOverlay mMyLocationOverlay;
@@ -100,6 +101,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private NMapViewerResourceProvider mMapViewerResourceProvider;
 	private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 	private NMapPOIitem mFloatingPOIitem;
+	private NMapPathDataOverlay pathDataOverlay;
 
 	private ArrayList<Pin> pinList;
 	private String userId;
@@ -240,6 +242,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		
 		flagMyLocationOnOff = false;
+		addPinOnOff = false;
 	}
 	
 	public void slideFriendList() {
@@ -294,6 +297,16 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 	else if (button.getId() == R.id.imageview_addpin){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
 	 		printCurrentLocation();
+	 		
+	 		if(!addPinOnOff){
+	 			drawLineWithDataOverlay();
+	 			addPinOnOff = true;
+	 		}
+	 		else{
+	 			addPinOnOff = false;
+//	 			pathDataOverlay.setHidden(true); 
+	 			//////////////////////////////////////////////////////// 작업중
+	 		}
 		}
 	 	else if (button.getId() == R.id.imageview_friend){
 	 		// 영제 형 요기
@@ -381,6 +394,30 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
 		poiDataOverlay.selectPOIitem(0, true);
 		poiDataOverlay.showAllPOIdata(0);
+	}
+	
+	// 경로선 그리기
+	private void drawLineWithDataOverlay() {
+		// set path data points
+		NMapPathData pathData = new NMapPathData(pinList.size());
+		pathData.initPathData();
+		pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+		
+		for(int i=0; i<pinList.size(); i++){
+			if(i == 0){
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), NMapPathLineStyle.TYPE_SOLID);
+			}
+			else{
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), 0);
+			}
+		}
+		pathData.endPathData();
+		pathDataOverlay.addPathData(pathData);
+		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
+		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
+		pathLineStyle.setLineColor(0xA04DD2, 0xff);
+		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
+		pathData.setPathLineStyle(pathLineStyle);
 	}
 	
 	
