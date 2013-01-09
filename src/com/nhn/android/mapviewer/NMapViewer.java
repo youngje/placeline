@@ -145,10 +145,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	
 	private void getFriendsList(String userId) {
 		//DB 작업 해야할 부분
-		friends.add(new User("0", "윤영제", "016-9611-7061", R.drawable.user_4));
-		friends.add(new User("1", "김성호", "016-9611-7061", R.drawable.user_2));
-		friends.add(new User("2", "백준선", "016-9611-7061", R.drawable.user_3));
-		friends.add(new User("3", "윤홍경", "016-9611-7061", R.drawable.user_1));
+		friends.add(new User("윤영제", "016-9611-7061", R.drawable.user_4));
+		friends.add(new User("김성호", "016-9611-7061", R.drawable.user_2));
+		friends.add(new User("백준선", "016-9611-7061", R.drawable.user_3));
+		friends.add(new User("윤홍경", "016-9611-7061", R.drawable.user_1));
 	}
 
 
@@ -159,7 +159,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
 		
 		pinList = new ArrayList<Pin>();
-		User user = new User("Junsun", "백준선", "010-6848-3855", R.drawable.photo_3);
+		User user = new User("백준선", "010-6848-3855", R.drawable.photo_3);
 		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
 		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
 		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);

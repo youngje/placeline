@@ -1,6 +1,7 @@
 package com.nhn.placeline.Activity;
 
 import com.nhn.placeline.vo.Group;
+import com.nhn.placeline.vo.User;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,8 @@ import android.widget.TextView;
 
 public class AddGroupActivity extends Activity {
 	
-	String userId;
+	private String userId;
+	private User user;
 	Handler mHandler;
 	private ImageView confirm;
 	private ImageView imagePrev;
@@ -51,7 +53,7 @@ public class AddGroupActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//디비에 업로드 작업 추가
-				newGroup = new Group("0", groupTitle.getText().toString(), userId, Integer.parseInt(imagePrev.getTag().toString()));
+				newGroup = new Group(groupTitle.getText().toString(), user, Integer.parseInt(imagePrev.getTag().toString()));
 				Intent intent = new Intent(AddGroupActivity.this, GroupActivity.class);
 				startActivity(intent);
 				finish();

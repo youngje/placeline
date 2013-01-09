@@ -86,10 +86,10 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	}
 	
 	private void initInstance(){
-		user1 = new User("hongkyoungYun", "윤홍경", "010-6848-3855", R.drawable.user_1);
-		user2 = new User("sunghoKim", "김성호", "010-6848-3855", R.drawable.user_2);
-		user3 = new User("joonsunBaek", "백준선", "010-6848-3855", R.drawable.user_3);
-		user4 = new User("youngjaeYoon", "윤영제", "010-6848-3855", R.drawable.user_4);
+		user1 = new User("윤홍경", "010-6848-3855", R.drawable.user_1);
+		user2 = new User("김성호", "010-6848-3855", R.drawable.user_2);
+		user3 = new User("백준선", "010-6848-3855", R.drawable.user_3);
+		user4 = new User("윤영제", "010-6848-3855", R.drawable.user_4);
 		
 		replyList = new ArrayList<PinReply>();
 		replyList.add(new PinReply(0, user1, "살아있네살아있네살아있네살아있네살아있네살아있네살아있네" +
