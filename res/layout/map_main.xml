@@ -20,7 +20,7 @@
 	       android:id="@+id/friendlist_upbar"
 	       android:layout_width="fill_parent"
 	       android:layout_height="wrap_content"
-	       android:background="@drawable/add_group_upbar" >
+	       android:background="@drawable/status_bar_nothing" >
 	
 	       <TextView
 	           android:layout_width="fill_parent"
@@ -28,7 +28,9 @@
 	           android:layout_alignParentLeft="true"
 	           android:layout_margin="10dp"
 	           android:text="@string/friendlist_upbar"
-	           android:textSize="15sp" />
+	           android:textColor="#424251"
+	           android:textSize="17sp" 
+	           android:gravity="center_vertical"/>
 	   </RelativeLayout>
 	
 	   <ListView
@@ -36,14 +38,44 @@
 	       android:layout_width="fill_parent"
 	       android:layout_height="wrap_content"
 	       android:background="#ffffff"
-	       android:scrollbarStyle="insideOverlay" >
+	       android:scrollbarStyle="insideOverlay" 
+	       android:layout_margin="5dp">
 	   </ListView>
+
+	   <RelativeLayout 
+	    	android:layout_width="wrap_content"
+   			android:layout_height="wrap_content"
+   			android:padding="5dp"
+	    	>
+		   	<ImageView
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content"
+		       android:src="@drawable/add_friend_button"
+		       tools:ignore="ContentDescription"
+		       android:layout_marginLeft="5dp"
+		       android:id="@+id/friend_add_button" />
+			 <TextView 
+			    android:id="@+id/friend_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/friend_add"
+		        android:textSize="20sp"
+				android:textStyle="bold"
+		        android:textColor="#00aea2"
+				android:layout_toRightOf="@id/friend_add_button"
+				android:layout_centerVertical="true"
+				android:layout_margin="3dp"
+		        />
+			 
+		</RelativeLayout>
 	
 	   <ImageView
-	       android:layout_width="250dp"
-	       android:layout_height="40dp"
-	       android:src="@drawable/ic_friend_default"
-	       tools:ignore="ContentDescription" />
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="5dp"
+		    android:src="@drawable/detailed_pin_photoalbum_underline"
+		    tools:ignore="ContentDescription" 
+		    android:padding="3dp"/>
 
 	</LinearLayout>
     <LinearLayout 

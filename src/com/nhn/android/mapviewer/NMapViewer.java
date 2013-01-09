@@ -32,11 +32,13 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
+import com.nhn.placeline.util.FriendsListAdapter;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.User;
 import com.nhn.android.maps.NMapActivity;
@@ -80,11 +82,14 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private boolean isFriendsListOpen = false;
 	private View mapViewLayout;
 	
+	private ArrayList<User> friends;
+	
 	private NMapView mMapView;
 	private NMapController mMapController;
 	private ImageView buttonCurrentLocation;
 	private ImageView buttonAddPin;
 	private ImageView buttonFriendsList;
+	private ListView friendsListView;
 	
 	private boolean flagMyLocationOnOff;
 	private SharedPreferences mPreferences;
@@ -124,12 +129,29 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		initButtons();
 		initInstance();
 		slideFriendList();
+		
 		mapViewLayout = (LinearLayout)findViewById(R.id.mapview_layout);
 		friendslistLayout =(LinearLayout)findViewById(R.id.friendslist);
 		
+		friends = new ArrayList<User>();
+		Intent intent = getIntent();
+		
+		getFriendsList(userId);
+		FriendsListAdapter friendAdapter = new FriendsListAdapter(this, R.layout.friend_list_partition, friends);
+		ListView listView = (ListView)findViewById(R.id.friendlist_view);
+		listView.setAdapter(friendAdapter);
 	}
 	   
 	
+	private void getFriendsList(String userId) {
+		//DB 작업 해야할 부분
+		friends.add(new User("0", "윤영제", "016-9611-7061", R.drawable.user_4));
+		friends.add(new User("1", "김성호", "016-9611-7061", R.drawable.user_2));
+		friends.add(new User("2", "백준선", "016-9611-7061", R.drawable.user_3));
+		friends.add(new User("3", "윤홍경", "016-9611-7061", R.drawable.user_1));
+	}
+
+
 	private void initInstance(){
 		Intent intent = getIntent();
 		userId = intent.getStringExtra("userId");
@@ -137,7 +159,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
 		
 		pinList = new ArrayList<Pin>();
-		User user = new User("Junsun", "백준선", "010-6848-3855");
+		User user = new User("Junsun", "백준선", "010-6848-3855", R.drawable.photo_3);
 		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
 		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
 		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);

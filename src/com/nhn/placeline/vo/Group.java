@@ -2,6 +2,8 @@ package com.nhn.placeline.vo;
 
 import java.util.ArrayList;
 
+import com.nhn.placeline.Activity.R;
+
 public class Group {
 	private String id;
 	private String name;
@@ -19,8 +21,8 @@ public class Group {
 		this.groupMapId = groupMapId;
 		
 		//나중에 지워야 하는 부분
-		members.add(new User("oskar", "윤영제", "016-9611-7061"));
-		members.add(new User("sdf", "백준선", "016-9611-7061"));
+		members.add(new User("oskar", "윤영제", "016-9611-7061", R.drawable.user_4));
+		members.add(new User("sdf", "백준선", "016-9611-7061", R.drawable.user_3));
 		
 	}
 	
