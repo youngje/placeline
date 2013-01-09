@@ -179,7 +179,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		mainLayout.addView(buttonAddPin, buttonAddPinLayout);
 		mainLayout.addView(buttonFriendsList, buttonFriendListLayout);
 		mMapView.addView(mainLayout);
-	}
+	} 
 	
 	private void initMap(){
 		// set a registered API key for Open MapViewer Library

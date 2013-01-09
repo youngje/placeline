@@ -12,9 +12,13 @@ public class PinContent {
 	ArrayList<String> pictures;
 	Calendar registeredDate;
 	
-	public PinContent(){
-		this.registeredDate = Calendar.getInstance();
+	public PinContent(int pinId, String title, String content, String writer){
+		this.pinId = pinId;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
 		replyList = new ArrayList<PinReply>();
+		this.registeredDate = Calendar.getInstance();
 	}
 	public int getPinId() {
 		return pinId;
@@ -30,6 +34,15 @@ public class PinContent {
 	}
 	public void setDate() {
 		this.registeredDate = Calendar.getInstance();
+	}
+	public String getDateToString(){
+		String year = Integer.toString(registeredDate.get(Calendar.YEAR));
+		String month = Integer.toString(registeredDate.get(Calendar.MONTH)+1);
+		String date = Integer.toString(registeredDate.get(Calendar.DAY_OF_MONTH));
+		String hour = Integer.toString(registeredDate.get(Calendar.HOUR_OF_DAY));
+		String minute = Integer.toString(registeredDate.get(Calendar.MINUTE));
+		
+		return  year + "." + month + "." + date + " " + hour + ":" + minute;
 	}
 	public String getTitle() {
 		return title;
