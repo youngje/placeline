@@ -78,6 +78,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private Animation slideLeftAnim;
 	private Animation slideRightAnim;
 	private boolean isFriendsListOpen = false;
+	private View mapViewLayout;
 	
 	private NMapView mMapView;
 	private NMapController mMapController;
@@ -122,6 +123,9 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		initMap();
 		initButtons();
 		initInstance();
+		slideFriendList();
+		mapViewLayout = (LinearLayout)findViewById(R.id.mapview_layout);
+		friendslistLayout =(LinearLayout)findViewById(R.id.friendslist);
 		
 	}
 	   
@@ -161,7 +165,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		RelativeLayout mainLayout = new RelativeLayout(this);
 		RelativeLayout.LayoutParams buttonCurrentLocationLayout = new RelativeLayout.LayoutParams(100, 100);
 		buttonCurrentLocationLayout.leftMargin = 590;
-		buttonCurrentLocationLayout.topMargin = 1000; 
+		buttonCurrentLocationLayout.topMargin = 1020; 
 		buttonCurrentLocation = new ImageView(this);
 		buttonCurrentLocation.setImageResource(R.drawable.ic_my_location_default);
 		buttonCurrentLocation.setOnClickListener(this);
@@ -170,7 +174,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		RelativeLayout.LayoutParams buttonAddPinLayout = new RelativeLayout.LayoutParams(100, 100);
 		buttonAddPinLayout.leftMargin = 590;
-		buttonAddPinLayout.topMargin = 30; 
+		buttonAddPinLayout.topMargin = 10; 
 		buttonAddPin = new ImageView(this);
 		buttonAddPin.setImageResource(R.layout.image_addpin);
 		buttonAddPin.setOnClickListener(this);
@@ -179,30 +183,24 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		RelativeLayout.LayoutParams buttonFriendListLayout = new RelativeLayout.LayoutParams(100, 100);
 		buttonFriendListLayout.leftMargin = 0;
-		buttonFriendListLayout.topMargin = 30; 
+		buttonFriendListLayout.topMargin = 10; 
 		buttonFriendsList = new ImageView(this);
 		buttonFriendsList.setImageResource(R.layout.image_friend);
 		buttonFriendsList.setOnClickListener(this);
 		buttonFriendsList.setId(Constants.BUTTON_ID_FRIENDS_LIST);
 		buttonFriendsList.setAdjustViewBounds(true);
 		
-		LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		/*LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = mInflater.inflate(R.layout.friendslist, null);
 		friendslistLayout = (LinearLayout)view;
 		
 		RelativeLayout.LayoutParams friendListLayoutParam = new RelativeLayout.LayoutParams(230, LayoutParams.MATCH_PARENT);
 		friendListLayoutParam.leftMargin = -180;
-		slideLeftAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_left);
-		slideRightAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_right);
-		
-		ShowFriendsListener animListener = new ShowFriendsListener();
-		slideLeftAnim.setAnimationListener(animListener);
-		slideRightAnim.setAnimationListener(animListener);
-		
+		*/
 		mainLayout.addView(buttonCurrentLocation, buttonCurrentLocationLayout);
 		mainLayout.addView(buttonAddPin, buttonAddPinLayout);
 		mainLayout.addView(buttonFriendsList, buttonFriendListLayout);
-		mainLayout.addView(friendslistLayout, friendListLayoutParam);
+		//mainLayout.addView(friendslistLayout, friendListLayoutParam);
 		mMapView.addView(mainLayout);
 	} 
 	
@@ -254,7 +252,38 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		flagMyLocationOnOff = false;
 	}
 	
+	public void slideFriendList() {
+		slideLeftAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_left);
+		slideRightAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_right);
+		
+		ShowFriendsListener animListener = new ShowFriendsListener();
+		slideLeftAnim.setAnimationListener(animListener);
+		slideRightAnim.setAnimationListener(animListener);
+		
+	}
 	
+	private class ShowFriendsListener implements AnimationListener {
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			if(isFriendsListOpen){
+				isFriendsListOpen = false;
+			} else {
+				isFriendsListOpen = true;
+				friendslistLayout.bringToFront();
+				mapViewLayout.setTranslationX(390);
+			}
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			
+		}
+		
+	}
 	// 버튼 리스너 
 	@Override
 	public void onClick(View button) {
@@ -278,13 +307,14 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
 	 		// 영제 형 요기
-	 		Log.d("########## [DEBUG] ##########","onClick() - Button_FriendsList button is clicked");
 	 		if(isFriendsListOpen) {
-				friendslistLayout.startAnimation(slideLeftAnim);
-				
+	 			mapViewLayout.bringToFront();
+	 			mapViewLayout.setTranslationX(0);
+	 			mapViewLayout.startAnimation(slideLeftAnim);
 				
 			} else {
-				friendslistLayout.startAnimation(slideRightAnim);
+				mapViewLayout.startAnimation(slideRightAnim);
+				friendslistLayout.setVisibility(View.VISIBLE);
 			}
 		}
 	}
@@ -1075,25 +1105,5 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 	}
 	
-	private class ShowFriendsListener implements AnimationListener {
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			if(isFriendsListOpen){
-				isFriendsListOpen = false;
-			} else {
-				isFriendsListOpen = true;
-			}
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-			
-		}
-
-		@Override
-		public void onAnimationStart(Animation animation) {
-			
-		}
-		
-	}
+	
 }

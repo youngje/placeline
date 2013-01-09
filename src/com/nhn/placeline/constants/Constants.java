@@ -30,7 +30,7 @@ public class Constants {
 	
 	public static final int GROUPMAP_IMAGE_ID = 100;
 
-	public static boolean USE_XML_LAYOUT = false;
+	public static boolean USE_XML_LAYOUT = true;
 	
 	public static final String ADD_GROUP = "AddGroup";
 	
