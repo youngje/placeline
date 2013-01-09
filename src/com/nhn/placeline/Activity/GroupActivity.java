@@ -3,6 +3,7 @@ package com.nhn.placeline.Activity;
 import java.util.ArrayList;
 
 import com.nhn.placeline.Activity.R;
+import com.nhn.placeline.constants.Constants;
 import com.nhn.placeline.util.GroupAdapter;
 import com.nhn.placeline.vo.Group;
 import com.nhn.android.mapviewer.NMapViewer;
@@ -20,6 +21,7 @@ public class GroupActivity extends Activity {
 
 	private ArrayList<Group> groups;
 	private String userid = "oskar";
+	private String groupId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,19 @@ public class GroupActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
-				Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
-				intent.putExtra("groupId", groups.get(position).getId());
-				intent.putExtra("userId", userid);
-				startActivity(intent);
+				groupId = groups.get(position).getId();
+				if(groupId.equals(Constants.ADD_GROUP)){
+					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
+					startActivity(intent);
+				}
+				else {
+					Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
+					intent.putExtra("groupId", groupId);
+					intent.putExtra("userId", userid);
+					startActivity(intent);
+				}
+				
+				
 			}
 			
 		});
