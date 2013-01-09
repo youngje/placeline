@@ -14,5 +14,7 @@
     <string name="group_name_hint">그룹 이름을 입력해 주세요</string>
     <string name="addgroup_text_hint">그룹 이름 입력칸</string>
 	<string name="reply_hint">댓글을 입력하세요</string>
+	<string name="friendlist_upbar">친구 목록</string>
+	<string name="friend_name">친구 이름</string>
 </resources>
 

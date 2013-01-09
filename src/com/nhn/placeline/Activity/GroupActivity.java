@@ -41,6 +41,7 @@ public class GroupActivity extends Activity {
 				groupId = groups.get(position).getId();	
 				if(groupId.equals(Constants.ADD_GROUP)){
 					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
+					intent.putExtra("userId", userid);
 					startActivity(intent);
 				}
 				else {
@@ -49,7 +50,6 @@ public class GroupActivity extends Activity {
 					intent.putExtra("userId", userid);
 					startActivity(intent);
 				}
-				
 				
 			}
 			

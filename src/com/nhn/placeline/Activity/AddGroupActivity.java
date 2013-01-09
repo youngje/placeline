@@ -1,5 +1,7 @@
 package com.nhn.placeline.Activity;
 
+import com.nhn.placeline.vo.Group;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 
 public class AddGroupActivity extends Activity {
 	
+	String userId;
 	Handler mHandler;
 	private ImageView confirm;
 	private ImageView imagePrev;
@@ -26,12 +29,15 @@ public class AddGroupActivity extends Activity {
 	private ImageView colorImage3;
 	private EditText groupTitleEdit;
 	private TextView groupTitle;
+	private Group newGroup;
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_group);
+		
+		Intent intent = this.getIntent();
+		userId = intent.getCharSequenceExtra("userId").toString();
 		
 		confirm = (ImageView)findViewById(R.id.addgroup_confirm);
 		imagePrev = (ImageView)findViewById(R.id.addgroup_image_preview);
@@ -45,8 +51,10 @@ public class AddGroupActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//디비에 업로드 작업 추가
+				newGroup = new Group("0", groupTitle.getText().toString(), userId, Integer.parseInt(imagePrev.getTag().toString()));
 				Intent intent = new Intent(AddGroupActivity.this, GroupActivity.class);
 				startActivity(intent);
+				finish();
 			}
 		});
 		colorImage1.setOnClickListener(new OnClickListener() {
@@ -104,12 +112,15 @@ public class AddGroupActivity extends Activity {
 				switch(msg.what) {
 				case 1:
 					imagePrev.setImageResource(R.drawable.group_1);
+					imagePrev.setTag(R.drawable.group_map_image_1);
 					break;
 				case 2:
 					imagePrev.setImageResource(R.drawable.group_2);
+					imagePrev.setTag(R.drawable.group_map_image_2);
 					break;
 				case 3:
 					imagePrev.setImageResource(R.drawable.group_3);
+					imagePrev.setTag(R.drawable.group_map_image_3);
 					break;
 				case 10:
 					Log.d("test", msg.obj.toString());

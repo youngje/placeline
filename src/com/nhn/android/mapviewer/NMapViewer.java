@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,8 +27,13 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
@@ -58,7 +64,6 @@ import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
-
  
 /** 
  * Sample class for map viewer library.
@@ -68,6 +73,11 @@ import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 public class NMapViewer extends NMapActivity implements OnClickListener {
 
 	private MapContainerView mMapContainerView;
+	
+	private LinearLayout friendslistLayout;
+	private Animation slideLeftAnim;
+	private Animation slideRightAnim;
+	private boolean isFriendsListOpen = false;
 	
 	private NMapView mMapView;
 	private NMapController mMapController;
@@ -112,6 +122,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		initMap();
 		initButtons();
 		initInstance();
+		
 	}
 	   
 	
@@ -175,9 +186,23 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		buttonFriendsList.setId(Constants.BUTTON_ID_FRIENDS_LIST);
 		buttonFriendsList.setAdjustViewBounds(true);
 		
+		LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = mInflater.inflate(R.layout.friendslist, null);
+		friendslistLayout = (LinearLayout)view;
+		
+		RelativeLayout.LayoutParams friendListLayoutParam = new RelativeLayout.LayoutParams(230, LayoutParams.MATCH_PARENT);
+		friendListLayoutParam.leftMargin = -180;
+		slideLeftAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_left);
+		slideRightAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_right);
+		
+		ShowFriendsListener animListener = new ShowFriendsListener();
+		slideLeftAnim.setAnimationListener(animListener);
+		slideRightAnim.setAnimationListener(animListener);
+		
 		mainLayout.addView(buttonCurrentLocation, buttonCurrentLocationLayout);
 		mainLayout.addView(buttonAddPin, buttonAddPinLayout);
 		mainLayout.addView(buttonFriendsList, buttonFriendListLayout);
+		mainLayout.addView(friendslistLayout, friendListLayoutParam);
 		mMapView.addView(mainLayout);
 	}
 	
@@ -254,6 +279,13 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 	else if (button.getId() == Constants.BUTTON_ID_FRIENDS_LIST){
 	 		// 영제 형 요기
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_FriendsList button is clicked");
+	 		if(isFriendsListOpen) {
+				friendslistLayout.startAnimation(slideLeftAnim);
+				
+				
+			} else {
+				friendslistLayout.startAnimation(slideRightAnim);
+			}
 		}
 	}
 	
@@ -1041,5 +1073,27 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		}
+	}
+	
+	private class ShowFriendsListener implements AnimationListener {
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			if(isFriendsListOpen){
+				isFriendsListOpen = false;
+			} else {
+				isFriendsListOpen = true;
+			}
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			
+		}
+		
 	}
 }

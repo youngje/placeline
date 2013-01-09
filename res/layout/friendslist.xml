@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/friendslist" >
+
+    <RelativeLayout
+        android:id="@+id/friendlist_upbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_group_upbar" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:text="@string/friendlist_upbar"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/friendlist_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:scrollbarStyle="insideOverlay" >
+    </ListView>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_friend_default"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>
+
