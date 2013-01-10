@@ -78,7 +78,7 @@ public class DatabaseService {
 	public PinReply getReplyById(int replyId){
 		Cursor result = db.rawQuery("SELECT * FROM reply WHERE replyId='"+replyId+"'", null);
 		result.moveToFirst();
-		PinReply reply = new PinReply(result.getInt(0), resulte.get);
+		PinReply reply = new PinReply(result.getInt(0), result.get);
 	}
 	
 	public ArrayList<User> getMembersByGroupId(int groupId){
