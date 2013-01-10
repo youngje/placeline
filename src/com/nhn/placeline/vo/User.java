@@ -1,16 +1,16 @@
 package com.nhn.placeline.vo;
 
 public class User {
-	private String id;
+	private int id;
 	private String name;
 	private String phoneNumber;
 	private int thumnail;
 	
-	public int getThumnail() {
-		return thumnail;
-	}
-
-	public void setThumnail(int thumnail) {
+	public User(int id, String name, String phoneNumber, int thumnail) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
 		this.thumnail = thumnail;
 	}
 
@@ -24,11 +24,11 @@ public class User {
 		super();
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -47,6 +47,16 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public int getThumnail() {
+		return thumnail;
+	}
+
+	public void setThumnail(int thumnail) {
+		this.thumnail = thumnail;
+	}
+
+
 
 	@Override
 	public String toString() {

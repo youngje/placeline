@@ -10,6 +10,17 @@ public class Group {
 	private ArrayList<User>	members;
 	private int groupMapId;
 	private User creator;
+	
+	public Group(int id, String name, ArrayList<User> members, int groupMapId,
+			User creator) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.members = new ArrayList<User>();
+		//this.members = members;
+		this.groupMapId = groupMapId;
+		this.creator = creator;
+	}
 
 	public Group(String name, int groupMapId) {
 		super();

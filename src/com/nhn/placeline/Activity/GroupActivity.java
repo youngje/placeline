@@ -3,8 +3,6 @@ package com.nhn.placeline.Activity;
 import java.util.ArrayList;
 
 import com.nhn.placeline.Activity.R;
-import com.nhn.placeline.constants.Constants;
-import com.nhn.placeline.dao.DatabaseHelper;
 import com.nhn.placeline.dao.DatabaseService;
 import com.nhn.placeline.util.GroupAdapter;
 import com.nhn.placeline.vo.Group;
@@ -14,7 +12,6 @@ import com.nhn.android.mapviewer.NMapViewer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,7 +47,7 @@ public class GroupActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
 				groupId = groups.get(position).getId();	
-				if(groupId==Constants.ADD_GROUP) {
+				if(groups.get(position).getGroupMapId()==R.drawable.groupmapadd) {
 					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
 					intent.putExtra("userId", userid);
 					startActivity(intent);
