@@ -3,6 +3,7 @@ package com.nhn.android.mapviewer;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
@@ -72,7 +73,7 @@ public abstract class NMapCalloutOverlayView extends FrameLayout implements
 	 */
 	@Override
 	public boolean isCalloutViewInVisibleBounds(NMapView mapView) {
-
+		Log.d("########## [DEBUG] ##########", "isCalloutViewInVisibleBounds");
 		if (this.getVisibility() == View.VISIBLE) {
 			Rect boundsVisible = mapView.getMapController().getBoundsVisible();
 			Rect bounds = getBounds(mapView);
@@ -150,7 +151,7 @@ public abstract class NMapCalloutOverlayView extends FrameLayout implements
 			ScaleAnimation.RELATIVE_TO_SELF, 1.0f);
 
 		animation.setDuration(SCALE_DURATION_MILLS);
-
+		Log.d("########## [DEBUG] ##########", "animateCallout");
 		this.startAnimation(animation);
 	}
 
