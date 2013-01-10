@@ -11,9 +11,11 @@ public class Pin {
 	private User writer;
 	private String pinTitle;
 	private int pinThumnail;
+	private String pinContent;
 	
 	public Pin(int pinId, int groupId, float xLocation, float yLocation,
-			String registeredDate, User writer, String pinTitle, int pinThumnail) {
+			String registeredDate, User writer, String pinTitle,
+			int pinThumnail, String pinContent) {
 		super();
 		this.pinId = pinId;
 		this.groupId = groupId;
@@ -23,6 +25,7 @@ public class Pin {
 		this.writer = writer;
 		this.pinTitle = pinTitle;
 		this.pinThumnail = pinThumnail;
+		this.pinContent = pinContent;
 	}
 
 	public Pin(String pinTitle, int groupId, User writer, float xLocation, float yLocation, int pinThumnail){
@@ -111,6 +114,14 @@ public class Pin {
 		String minute = Integer.toString(calendar.get(Calendar.MINUTE));
 		
 		return  year + "년" + month + "월" + date + "일 " + hour + ":" + minute;
+	}
+	
+	public String getPinContent() {
+		return pinContent;
+	}
+
+	public void setPinContent(String pinContent) {
+		this.pinContent = pinContent;
 	}
 
 }

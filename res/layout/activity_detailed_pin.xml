@@ -20,7 +20,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textColor = "#424261"
-				android:textSize = "15sp"
+				android:textSize = "17sp"
 				android:textStyle="bold"
 				android:singleLine = "true"   
 				android:layout_marginLeft="30dp"
@@ -65,7 +65,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:textColor = "#333333"
-	           	android:textSize="15sp"
+	           	android:textSize="17sp"
 		        />
 		    
 		    <LinearLayout
@@ -79,13 +79,13 @@
 	   		        android:id="@+id/content_date"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:textSize = "10sp"
+					android:textSize = "12sp"
 					/>
 			    <TextView 
 			        android:id="@+id/content_writer"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:textSize="10sp"
+			        android:textSize="12sp"
 			        android:layout_marginLeft="10dp"
 			        />
 		    </LinearLayout>
@@ -120,7 +120,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="댓글이 없습니다."
-		        android:textSize="15sp"
+		        android:textSize="17sp"
 		        android:textColor = "#333333"
 		        android:layout_marginTop="18dp"
 		        android:layout_marginLeft="10dp"
@@ -161,8 +161,8 @@
 		        android:text="전송"
 		        android:textSize="20sp"
 		        android:textColor = "#333333"
-		        android:layout_marginLeft="310dp"
-		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="315dp"
+		        android:layout_marginTop="6dp"
 		        />
 		</RelativeLayout>
 	</LinearLayout>

@@ -35,6 +35,7 @@ public class NMapCalloutCustomOverlayView extends NMapCalloutOverlayView {
 		mAddPin = findViewById(R.id.icon_add_pin);
 		mAddPin.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View v) { 
+				mAddPin.setVisibility(View.GONE);
 				mHandler.sendEmptyMessage(0);
 	       	} 
 		}); 
