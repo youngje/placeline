@@ -2,6 +2,7 @@ package com.nhn.android.mapviewer;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class NMapCalloutCustomOverlayView extends NMapCalloutOverlayView {
 
 		@Override
 		public void onClick(View view) {
+			Log.d("########## [DEBUG] ##########", "callOutClickListener");
 			if (mOnClickListener != null) {
 				mOnClickListener.onClick(null, mItemOverlay, mOverlayItem);
 			}

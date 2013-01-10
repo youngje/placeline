@@ -91,6 +91,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private boolean isFlagMyLocationOn;
 	private boolean ifConnectionPinsOn;
 	private boolean isFriendsListOpen;
+	private boolean isPinBoxOpen;
 	
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
@@ -246,6 +247,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		isFlagMyLocationOn = false;
 		ifConnectionPinsOn = false;
 		isFriendsListOpen = false;
+		isPinBoxOpen = false;
+//		Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
 	}
 	
 	public void slideFriendList() {
@@ -642,7 +645,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		@Override
 		public void onMapInitHandler(NMapView mapView, NMapError errorInfo) {
-
+			Log.d("########## [DEBUG] ##########", "onMapInitHandler");
 			if (errorInfo == null) { // success
 				// restore map view state such as map center position and zoom level.
 				restoreInstanceState();
@@ -698,12 +701,14 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		@Override
 		public void onSingleTapUp(NMapView mapView, MotionEvent ev) {
 			// TODO Auto-generated method stub
-
+			Log.d("########## [DEBUG] ##########", "map is singleTapUped");
+			isPinBoxOpen = false;
+			Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
 		}
 
 		@Override
 		public void onTouchDown(NMapView mapView, MotionEvent ev) {
-			
+//			Log.d("########## [DEBUG] ##########", "map is clicked");
 		}
 
 		@Override
@@ -843,8 +848,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				// [TEST] 말풍선 오버레이를 뷰로 설정함
 				String title = overlayItem.getTitle();
 				int pinId = findPinByLocation(overlayItem.getPoint());
-				Log.d("########## [DEBUG] ##########", "clicked location : " + overlayItem.getPoint().getLatitude() + " / " + overlayItem.getPoint().getLongitude());
-				Log.d("########## [DEBUG] ##########", "findPinByLocation(overlayItem.getPoint()): " + pinList.get(pinId).getyLocation() + " / " + pinList.get(pinId).getxLocation());
+//				Log.d("########## [DEBUG] ##########", "clicked location : " + overlayItem.getPoint().getLatitude() + " / " + overlayItem.getPoint().getLongitude());
+//				Log.d("########## [DEBUG] ##########", "findPinByLocation(overlayItem.getPoint()): " + pinList.get(pinId).getyLocation() + " / " + pinList.get(pinId).getxLocation());
+//				Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
+				isPinBoxOpen = true;
 				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, pinList.get(pinId).getPinThumnail());
 			}
 
@@ -1184,6 +1191,18 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 			mapViewLayout.setTranslationX(0);
 	 			mapViewLayout.startAnimation(slideLeftAnim);
 	 			return false;
+			}
+			else if(isPinBoxOpen){
+				mOverlayManager.clearOverlays();
+				drawPins();
+				
+				isPinBoxOpen = false;
+				ifConnectionPinsOn = false;
+				isFlagMyLocationOn = false;
+	 			buttonConnectPins.setBackgroundResource(R.drawable.ic_connect_pins_default);
+	 			buttonCurrentLocation.setBackgroundResource(R.drawable.ic_my_location_default);
+	 			stopMyLocation();
+				return false;
 			}
 			else{
 				finish();
