@@ -37,9 +37,10 @@ public class GroupActivity extends Activity {
 		setContentView(R.layout.activity_group);
 
 		dbService = new DatabaseService(this);
-
+		
+		Log.d("### onCreate", "before showGroup");
 		showGroup();
-
+		Log.d("### onCreate", "after showGroup");
 	}
 
 	public void showGroup() {
@@ -68,7 +69,6 @@ public class GroupActivity extends Activity {
 					intent.putExtra("userId", user.getId());
 					startActivity(intent);
 				}
-
 			}
 
 		});
@@ -77,13 +77,17 @@ public class GroupActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("### onResume", "before showGroup");
 		showGroup();
+		Log.d("### onResume", "after showGroup");
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		Log.d("### onDestroy", "before showGroup");
 		dbService.closeDb();
+		Log.d("### onDestroy", "after showGroup");
 	}
 
 	@Override
