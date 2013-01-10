@@ -87,7 +87,7 @@ public class DatabaseService {
 	public Pin getPinById(int pinId){
 		Cursor result = db.rawQuery("SELECT * FROM pin WHERE pinId='"+pinId+"'", null);
 		result.moveToFirst();
-		Pin pin = new Pin(result.getInt(0), result.getInt(5), Float.parseFloat(result.getString(3)), Float.parseFloat(result.getString(4)), result.getString(2), getUserById(result.getInt(6)), result.getString(1), result.getInt(7));
+		Pin pin = new Pin(result.getInt(0), result.getInt(5), Float.parseFloat(result.getString(3)), Float.parseFloat(result.getString(4)), result.getString(2), getUserById(result.getInt(6)), result.getString(1), result.getInt(8), result.getString(7));
 		result.close();
 		return pin;
 	}
@@ -148,4 +148,5 @@ public class DatabaseService {
 	public void closeDb(){
 		db.close();
 	}
+
 }
