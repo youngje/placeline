@@ -9,7 +9,9 @@ package com.nhn.android.mapviewer;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -738,7 +741,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 
 			// [[TEMP]] handle a click event of the callout
-			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getId(), Toast.LENGTH_LONG).show();
+//			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getId(), Toast.LENGTH_LONG).show();
 			Intent intent = new Intent(NMapViewer.this, DetailedPinActivity.class);
 			intent.putExtra("pinId", item.getId());
 			startActivity(intent);
@@ -1172,5 +1175,20 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 	}
 	
+	public boolean onKeyDown(int KeyCode, KeyEvent event) {
+		if (KeyCode == KeyEvent.KEYCODE_BACK) {
+			if(isFriendsListOpen) {
+				buttonFriendsList.setBackgroundResource(R.drawable.ic_friend_default);
+	 			mapViewLayout.bringToFront();
+	 			mapViewLayout.setTranslationX(0);
+	 			mapViewLayout.startAnimation(slideLeftAnim);
+	 			return false;
+			}
+			else{
+				finish();
+			}
+		}
+		return super.onKeyDown(KeyCode, event);
+	}	
 	
 }
