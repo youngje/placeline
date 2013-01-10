@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.constants.Constants;
 import com.nhn.placeline.vo.Group;
+import com.nhn.placeline.vo.User;
 
 import android.content.Context;
 import android.view.View;
@@ -23,7 +24,7 @@ public class GroupAdapter extends BaseAdapter {
 	public GroupAdapter(Context c, ArrayList<Group> groups) {
 		mContext = c;
 		this.groups = groups;
-		groups.add(new Group("AddGroup", " ", R.drawable.groupmapadd));
+		groups.add(new Group(" ", new User("그룹추가", " ", 0), R.drawable.groupmapadd));
 	}
 	
 	@Override

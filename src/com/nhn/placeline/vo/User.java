@@ -14,8 +14,7 @@ public class User {
 		this.thumnail = thumnail;
 	}
 
-	public User(String id, String name, String phoneNumber, int thumnail) {
-		this.id = id;
+	public User(String name, String phoneNumber, int thumnail) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.thumnail = thumnail;

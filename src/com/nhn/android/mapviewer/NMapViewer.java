@@ -147,10 +147,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	
 	private void getFriendsList(String userId) {
 		//DB 작업 해야할 부분
-		friends.add(new User("0", "윤영제", "016-9611-7061", R.drawable.user_4));
-		friends.add(new User("1", "김성호", "016-9611-7061", R.drawable.user_2));
-		friends.add(new User("2", "백준선", "016-9611-7061", R.drawable.user_3));
-		friends.add(new User("3", "윤홍경", "016-9611-7061", R.drawable.user_1));
+		friends.add(new User("윤영제", "016-9611-7061", R.drawable.user_4));
+		friends.add(new User("김성호", "016-9611-7061", R.drawable.user_2));
+		friends.add(new User("백준선", "016-9611-7061", R.drawable.user_3));
+		friends.add(new User("윤홍경", "016-9611-7061", R.drawable.user_1));
 	}
 
 
@@ -161,7 +161,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
 		
 		pinList = new ArrayList<Pin>();
-		User user = new User("Junsun", "백준선", "010-6848-3855", R.drawable.photo_3);
+		User user = new User("백준선", "010-6848-3855", R.drawable.photo_3);
 		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
 		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
 		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);
@@ -304,7 +304,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		}
 	 		else{
 	 			addPinOnOff = false;
-//	 			pathDataOverlay.setHidden(true); 
+//	 			pathDataOverlay.setHidden(true); ()
+	 			undrawLineWithDataOverlay();
 	 			//////////////////////////////////////////////////////// 작업중
 	 		}
 		}
@@ -418,6 +419,32 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		pathLineStyle.setLineColor(0xA04DD2, 0xff);
 		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
 		pathData.setPathLineStyle(pathLineStyle);
+	}
+	
+	
+	// 경로선 그리기
+	private void undrawLineWithDataOverlay() {
+		// set path data points
+		NMapPathData pathData = new NMapPathData(pinList.size());
+		pathData.initPathData();
+		pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+		
+		for(int i=0; i<pinList.size(); i++){
+			if(i == 0){
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), NMapPathLineStyle.TYPE_SOLID);
+			}
+			else{
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), 0);
+			}
+		}
+		pathData.endPathData();
+		pathDataOverlay.addPathData(pathData);
+		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
+		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
+		pathLineStyle.setLineColor(0xA04DD2, 0xff);
+		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
+		pathData.setPathLineStyle(pathLineStyle);
+		pathDataOverlay.setHidden(true); 
 	}
 	
 	
