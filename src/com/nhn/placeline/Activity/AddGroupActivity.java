@@ -1,5 +1,6 @@
 package com.nhn.placeline.Activity;
 
+import com.nhn.placeline.dao.DatabaseService;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.User;
 
@@ -21,7 +22,8 @@ import android.widget.TextView;
 
 public class AddGroupActivity extends Activity {
 	
-	private String userId;
+	private DatabaseService dbService;
+	private int userId;
 	private User user;
 	Handler mHandler;
 	private ImageView confirm;
@@ -39,7 +41,10 @@ public class AddGroupActivity extends Activity {
 		setContentView(R.layout.activity_add_group);
 		
 		Intent intent = this.getIntent();
-		userId = intent.getCharSequenceExtra("userId").toString();
+		userId = intent.getIntExtra("userId", -1);
+		
+		dbService = new DatabaseService(this);
+		user = dbService.getUserById(userId);
 		
 		confirm = (ImageView)findViewById(R.id.addgroup_confirm);
 		imagePrev = (ImageView)findViewById(R.id.addgroup_image_preview);
@@ -54,6 +59,7 @@ public class AddGroupActivity extends Activity {
 			public void onClick(View v) {
 				//디비에 업로드 작업 추가
 				newGroup = new Group(groupTitle.getText().toString(), user, Integer.parseInt(imagePrev.getTag().toString()));
+				dbService.addGroupToDB(newGroup);
 				Intent intent = new Intent(AddGroupActivity.this, GroupActivity.class);
 				startActivity(intent);
 				finish();
@@ -140,6 +146,12 @@ public class AddGroupActivity extends Activity {
 			}
 		};
 		
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		dbService.closeDb();
 	}
 
 	@Override

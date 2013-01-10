@@ -24,7 +24,7 @@ public class GroupActivity extends Activity {
 	
 	private ArrayList<Group> groups;
 	private User user;
-	private String userid = "oskar";
+	private int userId = 1;
 	private int groupId;
 	
 	@Override
@@ -34,9 +34,14 @@ public class GroupActivity extends Activity {
 		
 		dbService = new DatabaseService(this);
 		
-		initDataBase();
+		showGroup();
 		
-		getGroupList(userid);
+	}
+
+	public void showGroup(){
+		user = dbService.getUserById(userId);
+		groups = dbService.getGroupListByUser(user);
+		
 		GridView groupGridView = (GridView) findViewById(R.id.group_gridview);
 		
 		groupGridView.setAdapter(new GroupAdapter(GroupActivity.this, groups));
@@ -49,13 +54,13 @@ public class GroupActivity extends Activity {
 				groupId = groups.get(position).getId();	
 				if(groups.get(position).getGroupMapId()==R.drawable.groupmapadd) {
 					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
-					intent.putExtra("userId", userid);
+					intent.putExtra("userId", user.getId());
 					startActivity(intent);
 				}
 				else {
 					Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
 					intent.putExtra("groupId", groupId);
-					intent.putExtra("userId", userid);
+					intent.putExtra("userId", user.getId());
 					startActivity(intent);
 				}
 				
@@ -63,18 +68,17 @@ public class GroupActivity extends Activity {
 			
 		});
 	}
-
-	private void initDataBase() {
-		user = new User("윤영제", "016-9611-7061", R.drawable.user_4);
-		
-		dbService.addUserToDB(new User("윤영제", "016-9611-7061", R.drawable.user_4));
-		dbService.addUserToDB(new User("김성호", "010-8824-2666", R.drawable.user_2));
-		dbService.addUserToDB(new User("백준선", "010-6848-3855", R.drawable.user_3));
-		dbService.addUserToDB(new User("윤홍경", "010-9788-0411", R.drawable.user_1));
-		
-		Group group = new Group("우리가족", user, R.drawable.group_map_image_1);
-		
-		dbService.addGroupToDB(group);
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		showGroup();
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		dbService.closeDb();
 	}
 	
 	@Override
@@ -84,12 +88,5 @@ public class GroupActivity extends Activity {
 		return true;
 	}
 	
-	public void getGroupList(String userid) {
-		// 추후 DB연동으로 변경 예정
-		groups = new ArrayList<Group>();
-		groups.add(new Group("test", user, R.drawable.group_map_image_1));
-		groups.add(new Group("한글", user, R.drawable.group_map_image_2));
-		groups.add(new Group("C조   6-2조", user, R.drawable.group_map_image_3));
-	}
 	
 }
