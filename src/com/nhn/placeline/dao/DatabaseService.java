@@ -40,7 +40,7 @@ public class DatabaseService {
 	}
 	
 	public void addPinToDB(Pin pin) {
-		db.execSQL("insert into pin(pinId, pinName,pinDate,pinX,pinY, groupId, pinThumnail) values(?,'"+pin.getPinTitle()+"', '"+pin.getRegisteredDate()+"','"+pin.getxLocation()+"','"+pin.getyLocation()+"',"+pin.getGroupId()+","+pin.getPinThumnail()+")");
+		db.execSQL("insert into pin(pinId, pinName,pinDate,pinX,pinY, groupId, writerId,pinThumnail) values(?,'"+pin.getPinTitle()+"', '"+pin.getRegisteredDate()+"','"+pin.getxLocation()+"','"+pin.getyLocation()+"',"+pin.getGroupId()+","+pin.getPinThumnail()+")");
 	}
 	
 	public void addReplyToDB(PinReply reply){
@@ -75,11 +75,19 @@ public class DatabaseService {
 		return group;
 	}
 	
-	public PinReply getReplyById(int replyId){
+	public Pin getPinById(int pinId){
+		Cursor result = db.rawQuery("SELECT * FROM pin WHERE pinId='"+pinId+"'", null);
+		result.moveToFirst();
+		Pin pin = new Pin(result.getInt(0), result.getInt(5), Float.parseFloat(result.getString(3)), Float.parseFloat(result.getString(4)), result.getString(2), getUserById(result.getInt(6)), result.getString(1), result.getInt(7));
+		result.close();
+		return pin;
+	}
+	
+	/*public PinReply getReplyById(int replyId){
 		Cursor result = db.rawQuery("SELECT * FROM reply WHERE replyId='"+replyId+"'", null);
 		result.moveToFirst();
-		PinReply reply = new PinReply(result.getInt(0), result.get);
-	}
+		PinReply reply = new PinReply();
+	}*/
 	
 	public ArrayList<User> getMembersByGroupId(int groupId){
 		ArrayList<User> members = new ArrayList<User>();
@@ -112,7 +120,7 @@ public class DatabaseService {
 		return groupList;
 	}
 
-	public ArrayList<PinReply> replies getReplyListBy(Pin pin){
+	/*public ArrayList<PinReply> replies getReplyListBy(Pin pin){
 		Cursor result = db.rawQuery("SELECT * FROM reply WHERE pinId='"+pin.getPinId()+"'", null);
 		
 		ArrayList<PinReply> replies = new ArrayList<PinReply>();
@@ -121,19 +129,7 @@ public class DatabaseService {
 		while(!result.isAfterLast()){
 			replies.add()
 		}
-	}
-	//member table set
-	/*
-		sample query for pinToPicture table (미완성)
-
-		insert into pinIdToPicture(pinId,picture) values ('1',null)
-
-		sample query for pinToReply table (미완성)
-
-		insert into pinIdToPicture(pinId,replyDate,replyCreator,replyContent) values ('1','CURRENT_TIMESTAMP,'abc123','첫번째 댓글은 내가 담!')
-
-
-		*/
+	}*/
 	
 	public void closeDb(){
 		db.close();

@@ -34,9 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                    "pinDate TIMESTAMP, " +
 				                    "pinX TEXT, " +
 				                    "pinY TEXT, " +
-				                    "pinContent TEXT, " +
-				                    "pinThumnail INTEGER"+
-				                    "groupId INTEGER);");
+				                    "groupId INTEGER, "+
+				                    "writerId TEXT, " +
+				                    "pinThumnail INTEGER);");
 
 		db.execSQL("CREATE TABLE reply(replyId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				                    "pinId INTEGER, " +
