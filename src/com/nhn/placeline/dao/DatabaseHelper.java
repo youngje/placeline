@@ -22,7 +22,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                       "userPhone TEXT," +
 				                       "thumnail INTEGER);");
 		
-		db.execSQL("CREATE TABLE placegroup(groupId INTEGER PRIMARY KEY AUTOINCREMENT, groupName TEXT, groupCreator INTEGER, groupMapId INTEGER);");
+		db.execSQL("CREATE TABLE placegroup(groupId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				                           "groupName TEXT, " +
+				                           "groupCreator INTEGER, " +
+				                           "groupMapId INTEGER);");
 		
 		db.execSQL("CREATE TABLE pin(pinId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				                    "pinName TEXT, " +
@@ -32,13 +35,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                    "pinContent TEXT, " +
 				                    "pinThumnail INTEGER"+
 				                    "groupId INTEGER);");
+
 		db.execSQL("CREATE TABLE reply(replyId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				                    "pinId INTEGER, " +
 					                "replyDate TIMESTAMP, " +
 					                "replyCreator INTEGER, " +
 					                "replyContent TEXT);");
 
-		
 		//참조용 테이블
 		db.execSQL("CREATE TABLE userIdToGroupId(userId INTEGER, " +
 				                                "groupId INTEGER);");
@@ -46,27 +49,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE pinIdToPicture(pinId INTEGER, " +
 				                               "picture INTEGER);");
 		
-		
-		//샘플 데이터 삽입
-		
-		/*//member
-		
-		//group
-		db.execSQL("insert into group(groupId,groupName,groupCreator,groupCustom)" +
-	                         "values ('1','NHN신입사원교육','abc123','1')");
-		//pin
-		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId)" +
-	                       "values ('1','올레길탐방',CURRENT_TIMESTAMP,'100','100','올레길 시작지점','1')");
-		//userId > groupId
-		db.execSQL("insert into userIdToGroupId(userId,groupId)" +
-	                                   "values ('abc123','1')");
-		//pinId > picture
-		db.execSQL("insert into pinIdToPicture(pinId,picture)" +
-                                      "values ('1',null)");
-		//pinId > reply
-		db.execSQL("insert into pinIdToPicture(pinId,replyDate,replyCreator,replyContent)" +
-                                      "values ('1','CURRENT_TIMESTAMP,'abc123','첫번째 댓글은 내가 담!')");
-		*/
 	}
 	
 	@Override

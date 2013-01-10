@@ -15,7 +15,7 @@ insert into group(groupId,groupName,groupCreator,groupCustom) values ('1','네�
 insert into group(groupId,groupName,groupCreator,groupCustom) values ('2','NHN신입사원교육','abc345','1')
 insert into group(groupId,groupName,groupCreator,groupCustom) values ('3','라인동호회','abc678','3')
 
-sample query for pin table (좌표값 및 컨텐트만 빼고 완성)
+sample query for pin table (시간, 좌표값 및 컨텐트만 빼고 완성)
 
 insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values ('1','서울근처',CURRENT_TIMESTAMP,'100','100','임시본문','1')
 insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values ('2','서울근처',CURRENT_TIMESTAMP,'100','100','임시본문','2')
