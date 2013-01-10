@@ -15,28 +15,36 @@
 		android:background="@drawable/pin_ballon_bg"
 		android:clickable="true">
 		
-	    <LinearLayout
+	    <RelativeLayout
 	        android:id="@+id/callout_upper"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-	        android:orientation="horizontal"
-			android:gravity="center"
-			android:duplicateParentState="true">
+	        android:layout_height="wrap_content">
 	        
+         	<RelativeLayout
+		        android:id="@+id/callout_upper"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/pin_ballon_thumbnail"
+		        android:layout_marginTop="20dp"
+		        android:padding="1dp">
+	         	<ImageView
+			        android:id="@+id/callout_leftThumbnail"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					/>
+         	</RelativeLayout>
+	         
 			<TextView 
 			    android:id="@+id/callout_text"
-				android:layout_width="wrap_content"
+				android:layout_width="55dp"
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:includeFontPadding="false"
-				android:text="..."
-				android:textSize="14dp"
-				android:textColor="@color/callout_textcolor"
-				android:shadowRadius="1"
-				android:shadowDy="1"
-				android:shadowColor="#000"
+				android:textSize="12dp"
+				android:textColor="#333333"
 				android:duplicateParentState="true"
+				android:layout_marginTop="2dp"
+				android:singleLine="true"
 				/>
 		    
 			<!-- 화살표 아이콘 -->
@@ -44,11 +52,11 @@
 		        android:id="@+id/callout_rightArrow"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="3.33dp"
+				android:layout_marginLeft="57dp"
+				android:layout_marginTop="2dp"
 				android:background="@drawable/pin_ballon_arrow"
 				/>
-		    
-		</LinearLayout>
+		</RelativeLayout>
 	</RelativeLayout>
 </merge>
  
