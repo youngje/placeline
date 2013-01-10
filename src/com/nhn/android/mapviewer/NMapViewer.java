@@ -304,7 +304,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		}
 	 		else{
 	 			addPinOnOff = false;
-//	 			pathDataOverlay.setHidden(true); 
+//	 			pathDataOverlay.setHidden(true); ()
+	 			undrawLineWithDataOverlay();
 	 			//////////////////////////////////////////////////////// 작업중
 	 		}
 		}
@@ -418,6 +419,32 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		pathLineStyle.setLineColor(0xA04DD2, 0xff);
 		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
 		pathData.setPathLineStyle(pathLineStyle);
+	}
+	
+	
+	// 경로선 그리기
+	private void undrawLineWithDataOverlay() {
+		// set path data points
+		NMapPathData pathData = new NMapPathData(pinList.size());
+		pathData.initPathData();
+		pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+		
+		for(int i=0; i<pinList.size(); i++){
+			if(i == 0){
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), NMapPathLineStyle.TYPE_SOLID);
+			}
+			else{
+				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), 0);
+			}
+		}
+		pathData.endPathData();
+		pathDataOverlay.addPathData(pathData);
+		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
+		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
+		pathLineStyle.setLineColor(0xA04DD2, 0xff);
+		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
+		pathData.setPathLineStyle(pathLineStyle);
+		pathDataOverlay.setHidden(true); 
 	}
 	
 	
