@@ -1,5 +1,6 @@
 package com.nhn.placeline.dao;
 
+import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.PinReply;
@@ -46,7 +47,35 @@ public class DatabaseService {
 		db.execSQL("insert into pinIdToPicture(pinId, picture) values ('"+pin.getPinId()+"', '"+picture+"')");
 	}
 	
-	
+
+	//member table set
+	/*
+
+		sample query for userIdToGroupId table (완성)
+
+		insert into userIdToGroupId(userId,groupId) values ('abc123','1')
+		insert into userIdToGroupId(userId,groupId) values ('abc345','1')
+		insert into userIdToGroupId(userId,groupId) values ('abc456','1')
+		insert into userIdToGroupId(userId,groupId) values ('abc123','2')
+		insert into userIdToGroupId(userId,groupId) values ('abc234','2')
+		insert into userIdToGroupId(userId,groupId) values ('abc567','2')
+		insert into userIdToGroupId(userId,groupId) values ('abc678','2')
+		insert into userIdToGroupId(userId,groupId) values ('abc123','3')
+		insert into userIdToGroupId(userId,groupId) values ('abc456','3')
+		insert into userIdToGroupId(userId,groupId) values ('abc678','3')
+		insert into userIdToGroupId(userId,groupId) values ('abc789','3')
+
+		sample query for pinToPicture table (미완성)
+
+		insert into pinIdToPicture(pinId,picture) values ('1',null)
+
+		sample query for pinToReply table (미완성)
+
+		insert into pinIdToPicture(pinId,replyDate,replyCreator,replyContent) values ('1','CURRENT_TIMESTAMP,'abc123','첫번째 댓글은 내가 담!')
+
+
+		*/
+	}
 	
 	
 	
