@@ -19,16 +19,20 @@ import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 @SuppressLint("HandlerLeak")
 public class AddGroupActivity extends Activity {
 	
 	private DatabaseService dbService;
 	private int userId;
+	private int groupId;
 	private User user;
 	Handler mHandler;
+	private boolean isSetting;
 	private ImageView confirm;
 	private ImageView imagePrev;
 	private ImageView colorImage1;
@@ -45,10 +49,12 @@ public class AddGroupActivity extends Activity {
 		setContentView(R.layout.activity_add_group);
 		
 		Intent intent = this.getIntent();
+		isSetting = intent.getBooleanExtra("isSetting", false);
+		
 		userId = intent.getIntExtra("userId", -1);
+		groupId = intent.getIntExtra("groupId", -1);
 		
 		dbService = new DatabaseService(this);
-		user = dbService.getUserById(userId);
 		
 		confirm = (ImageView)findViewById(R.id.addgroup_confirm);
 		imagePrev = (ImageView)findViewById(R.id.addgroup_image_preview);
@@ -58,24 +64,52 @@ public class AddGroupActivity extends Activity {
 		groupTitleEdit = (EditText)findViewById(R.id.addgroup_edittext);
 		groupTitle = (TextView)findViewById(R.id.addgroup_group_title);
 		
-		confirm.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		if(isSetting) {
+			newGroup = dbService.getGroupById(groupId);
+			
+			imagePrev.setImageResource(newGroup.getGroupMapId());
+			groupTitleEdit.setText(newGroup.getName());
+			groupTitle.setText(newGroup.getName());
+			((RelativeLayout)findViewById(R.id.addgroup_status_bar)).setBackgroundResource(R.drawable.group_setting_upbar);
+			
+			
+			confirm.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(groupTitle.getText().toString().isEmpty()) {
+						Toast.makeText(AddGroupActivity.this, "그룹 이름을 입력해 주세요", Toast.LENGTH_SHORT).show();
+						return;
+					}
 					
-				newGroup = new Group(groupTitle.getText().toString(), user, groupImageColor);
-				Log.d("#######db", newGroup.toString());
-				if(newGroup.getName().isEmpty()) {
-					Toast.makeText(AddGroupActivity.this, "그룹 이름을 입력해 주세요", Toast.LENGTH_SHORT).show();
-					return;
+					dbService.updateGroup(new Group(newGroup.getId(), groupTitle.getText().toString(), newGroup.getMembers(), groupImageColor, newGroup.getCreator()));
+					AddGroupActivity.this.finish();
 				}
-				dbService.addGroupToDB(newGroup);
-				newGroup.setId(dbService.getGroupId());
-				dbService.addUserToGroup(user, newGroup);
-				
-				AddGroupActivity.this.setResult(RESULT_OK);
-				AddGroupActivity.this.finish();
-			}
-		});
+			});
+		} else {
+			user = dbService.getUserById(userId);
+			
+			confirm.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+						
+					newGroup = new Group(groupTitle.getText().toString(), user, groupImageColor);
+					
+					if(newGroup.getName().isEmpty()) {
+						Toast.makeText(AddGroupActivity.this, "그룹 이름을 입력해 주세요", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					
+					dbService.addGroupToDB(newGroup);
+					newGroup.setId(dbService.getGroupId());
+					dbService.addUserToGroup(user, newGroup);
+					
+					AddGroupActivity.this.setResult(RESULT_OK);
+					AddGroupActivity.this.finish();
+				}
+			});
+		}
+		
+		
 		colorImage1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
