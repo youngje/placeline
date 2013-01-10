@@ -50,21 +50,6 @@ public class DatabaseService {
 
 	//member table set
 	/*
-
-		sample query for userIdToGroupId table (완성)
-
-		insert into userIdToGroupId(userId,groupId) values ('abc123','1')
-		insert into userIdToGroupId(userId,groupId) values ('abc345','1')
-		insert into userIdToGroupId(userId,groupId) values ('abc456','1')
-		insert into userIdToGroupId(userId,groupId) values ('abc123','2')
-		insert into userIdToGroupId(userId,groupId) values ('abc234','2')
-		insert into userIdToGroupId(userId,groupId) values ('abc567','2')
-		insert into userIdToGroupId(userId,groupId) values ('abc678','2')
-		insert into userIdToGroupId(userId,groupId) values ('abc123','3')
-		insert into userIdToGroupId(userId,groupId) values ('abc456','3')
-		insert into userIdToGroupId(userId,groupId) values ('abc678','3')
-		insert into userIdToGroupId(userId,groupId) values ('abc789','3')
-
 		sample query for pinToPicture table (미완성)
 
 		insert into pinIdToPicture(pinId,picture) values ('1',null)
@@ -75,7 +60,7 @@ public class DatabaseService {
 
 
 		*/
-	}
+	
 	
 	
 	
