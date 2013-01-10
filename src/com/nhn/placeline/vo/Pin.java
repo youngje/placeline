@@ -28,8 +28,9 @@ public class Pin {
 		this.pinContent = pinContent;
 	}
 
-	public Pin(String pinTitle, int groupId, User writer, float xLocation, float yLocation, int pinThumnail){
+	public Pin(String pinTitle, String pinContent, int groupId, User writer, float xLocation, float yLocation, int pinThumnail){
 		this.pinTitle = pinTitle;
+		this.pinContent = pinContent;
 		this.xLocation = xLocation;
 		this.yLocation = yLocation;
 		this.registeredDate = calendarToString(Calendar.getInstance());

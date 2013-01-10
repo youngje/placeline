@@ -182,9 +182,9 @@
 				            android:background="@drawable/writeboard_photo_frame"
 				            android:padding="5dp">
 				            <ImageView 
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:background="@drawable/photo_1"/>
+				                android:layout_width="fill_parent"
+				                android:layout_height="fill_parent"
+				                android:background="@drawable/photo_small_1"/>
 				        </LinearLayout>
 			         	<LinearLayout 
 				            android:layout_width="90dp"
@@ -193,9 +193,9 @@
 				            android:background="@drawable/writeboard_photo_frame"
 				            android:padding="5dp">
 				            <ImageView 
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:background="@drawable/photo_2"/>
+				                android:layout_width="fill_parent"
+				                android:layout_height="fill_parent"
+				                android:background="@drawable/photo_small_2"/>
 				        </LinearLayout>
 			        	<LinearLayout 
 				            android:layout_width="90dp"
@@ -204,9 +204,9 @@
 				            android:background="@drawable/writeboard_photo_frame"
 				            android:padding="5dp">
 				            <ImageView 
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:background="@drawable/photo_3"/>
+				                android:layout_width="fill_parent"
+				                android:layout_height="fill_parent"
+				                android:background="@drawable/photo_small_3"/>
 				        </LinearLayout>
 				        <ImageView 
 				            android:layout_width="80dp"
