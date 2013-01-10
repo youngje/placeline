@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 public class DetailedPinActivity extends Activity implements OnClickListener, OnEditorActionListener{
@@ -36,6 +37,8 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 //	private User user3;
 //	private User user4;
 	private int pinId;
+	private int userId;
+	private User user;
 	private Pin pin;
 	
 	DatabaseService dbService;
@@ -55,6 +58,8 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		dbService = new DatabaseService(this);
 		Intent intent = getIntent();
 		pinId = intent.getIntExtra("pinId", -1);
+		userId = intent.getIntExtra("userId", -1);
+		user = dbService.getUserById(userId);
 		initInstance();
 		initViews();
 		displayPinInfo();
@@ -148,6 +153,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	}
 	 
 	private void displayReplies(){
+		replyItem.removeAllViews();
 		if(replyList.size() > 0){
 			LayoutInflater mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View view;
@@ -178,8 +184,21 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	}
 	
 	private void sendReply(){
-		 Log.d("########## [DEBUG] ##########","onClick() - Button_SendReply button is clicked / Reply : " + editTextReply.getText());
-		 editTextReply.setText("");
+		 Log.d("########## [DEBUG] ##########","onClick() - Button_SendReply button is clicked / Reply : " + editTextReply.getText() + " / user : " + user + " / pinId : "+ pinId);
+		 String reply = editTextReply.getText().toString();
+		 if(reply.length() > 0){
+			 PinReply newReply = new PinReply(pinId, user, reply);
+			 dbService.addReplyToDB(newReply);
+			 editTextReply.setText("");
+			 
+			 replyList = dbService.getReplyListByPinId(pin);
+			 replyItem.removeAllViews();
+			 displayReplies();
+			 replyItem.invalidate();
+		 }
+		 else{
+			 Toast.makeText(DetailedPinActivity.this, "댓글을 입력해주세요", Toast.LENGTH_SHORT).show();
+		 }
 	}
 	
 	@Override 

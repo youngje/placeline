@@ -471,8 +471,9 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		// save map view state such as map center position and zoom level.
 		saveInstanceState();
-
+		
 		super.onDestroy();
+		dbService.closeDb();
 	}
 
 	/* Test Functions */
@@ -867,6 +868,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 //			Toast.makeText(NMapViewer.this, "onCalloutClick: " + item.getId(), Toast.LENGTH_LONG).show();
 			Intent intent = new Intent(NMapViewer.this, DetailedPinActivity.class);
 			intent.putExtra("pinId", item.getId());
+			intent.putExtra("userId", userId);
 			startActivity(intent);
 		}
 
