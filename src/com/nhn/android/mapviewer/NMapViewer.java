@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,6 +30,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -89,13 +93,20 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonConnectPins;
 	private ImageView buttonWritePinSend;
 	private ImageView buttonWritePinCancel;
+	private ImageView iconAddPin;
 	private ImageView fullScreen;
+	private EditText editTextTitle;
+	private EditText editTextContent;
+	
+	private InputMethodManager imm;
 	
 	private boolean isFlagMyLocationOn;
 	private boolean ifConnectionPinsOn;
 	private boolean isFriendsListOpen;
+	private boolean isAddingPinExsist;
 	private boolean isPinBoxOpen;
 	private boolean isWritingBoardOpen;
+	private boolean isWriting;
 	
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
@@ -112,7 +123,9 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private int groupId;
 	private User user;
 	
-	DatabaseService dbService;
+	private DatabaseService dbService;
+	private Handler mHandler;
+	private NGeoPoint addingPoint;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -184,12 +197,20 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 	
 	private void initButtons(){
+		
+		editTextTitle = (EditText) findViewById(R.id.add_pin_title);
+		editTextTitle.setOnClickListener(this);
+		
+		editTextContent = (EditText) findViewById(R.id.add_pin_content);
+		editTextContent.setOnClickListener(this);
+		
 		buttonCurrentLocation = (ImageView) findViewById(R.id.imageview_currentlocation);
 		buttonCurrentLocation.setOnClickListener(this);
 		buttonCurrentLocation.setBackgroundResource(R.drawable.ic_my_location_default);
 		
 		buttonAddPin = (ImageView) findViewById(R.id.imageview_addpin);
 		buttonAddPin.setOnClickListener(this);
+		buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 		
 		buttonFriendsList = (ImageView) findViewById(R.id.imageview_friend);
 		buttonFriendsList.setOnClickListener(this);
@@ -205,10 +226,24 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		buttonWritePinCancel = (ImageView) findViewById(R.id.button_writing_pin_cancel);
 		buttonWritePinCancel.setOnClickListener(this);
 		
+		iconAddPin = (ImageView) findViewById(R.id.icon_add_pin);
+		
 		fullScreen = (ImageView) findViewById(R.id.fullscreen);
 		fullScreen.setOnClickListener(this);
+		
+		mHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0) {
+					showWritingPin();
+					mFloatingPOIdataOverlay.selectPOIitem(0, true);
+					mFloatingPOIdataOverlay.showAllPOIdata(0);
+					
+				}
+			}
+		};
 	} 
-	
+	 
 	private void initMap(){
 		// set a registered API key for Open MapViewer Library
 		mMapView.setApiKey(Constants.API_KEY);
@@ -253,11 +288,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		// create my location overlay
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
 
+		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		
 		isFlagMyLocationOn = false;
 		ifConnectionPinsOn = false;
 		isFriendsListOpen = false;
 		isPinBoxOpen = false;
 		isWritingBoardOpen = false;
+		isWriting = false;
+		isAddingPinExsist = false;
 //		Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
 	}
 	
@@ -297,6 +336,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 		
 	}
+	
+	private void showWritingPin(){
+		fullScreen.setVisibility(View.VISIBLE);
+		writingBoard.setVisibility(View.VISIBLE);
+		isWritingBoardOpen = true;
+	}
 	// 버튼 리스너 
 	@Override
 	public void onClick(View button) {
@@ -317,26 +362,36 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 	else if (button.getId() == R.id.imageview_connectpins){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_Connect_Pins button is clicked");
 	 		if(!ifConnectionPinsOn){
-	 			drawLineWithDataOverlay();
+	 			mOverlayManager.clearOverlays();
+	 			drawPins();
 	 			ifConnectionPinsOn = true;
+	 			isAddingPinExsist = false;
+	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 	 			button.setBackgroundResource(R.drawable.ic_connect_pins_clicked);
 	 		}
 	 		else{
-	 			ifConnectionPinsOn = false;
 	 			mOverlayManager.clearOverlays();
 	 			drawPins();
+	 			ifConnectionPinsOn = false;
 	 			button.setBackgroundResource(R.drawable.ic_connect_pins_default);
 	 		}
 		}
 	 	else if (button.getId() == R.id.imageview_addpin){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
-	 		if(!isWritingBoardOpen){
+	 		if(!isAddingPinExsist){
+	 			mOverlayManager.clearOverlays();
+	 			drawPins();
 	 			testFloatingPOIdataOverlay();
-//	 			fullScreen.setVisibility(View.VISIBLE);
-//	 			writingBoard.setVisibility(View.VISIBLE);
-//	 			isWritingBoardOpen = true;
+	 			isAddingPinExsist = true;
+	 			ifConnectionPinsOn = false;
+	 			buttonConnectPins.setBackgroundResource(R.drawable.ic_connect_pins_default);
+	 			button.setBackgroundResource(R.drawable.ic_add_pin_clicked);
 	 		}
 	 		else{
+	 			mOverlayManager.clearOverlays();
+				drawPins();
+	 			isAddingPinExsist = false;
+	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 	 		}
 	 		
 		}
@@ -355,14 +410,39 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 		}
 		else if (button.getId() == R.id.button_writing_pin_send){
+ 			if(editTextTitle.isFocused()){
+ 				imm.hideSoftInputFromWindow(editTextTitle.getWindowToken(), 0);
+ 			}
+ 			else if(editTextContent.isFocused()){
+ 				imm.hideSoftInputFromWindow(editTextContent.getWindowToken(), 0);
+ 			}
+			Log.d("########## [DEBUG] ###########","button_writing_pin_send is clicked - title: " + editTextTitle.getText() + " / content: " + editTextContent.getText());
+			editTextTitle.setText("");
+			editTextContent.setText("");
 			writingBoard.setVisibility(View.GONE);
 			fullScreen.setVisibility(View.GONE);
+			mOverlayManager.clearOverlays();
+			drawPins();
  			isWritingBoardOpen = false;
+ 			isAddingPinExsist = false;
+ 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 		}
 		else if (button.getId() == R.id.button_writing_pin_cancel){
+ 			if(editTextTitle.isFocused()){
+ 				imm.hideSoftInputFromWindow(editTextTitle.getWindowToken(), 0);
+ 			}
+ 			else if(editTextContent.isFocused()){
+ 				imm.hideSoftInputFromWindow(editTextContent.getWindowToken(), 0);
+ 			}
+ 			editTextTitle.setText("");
+			editTextContent.setText("");
 			writingBoard.setVisibility(View.GONE);
 			fullScreen.setVisibility(View.GONE);
+			mOverlayManager.clearOverlays();
+			drawPins();
  			isWritingBoardOpen = false;
+ 			isAddingPinExsist = false;
+ 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 		}
 	}
 	
@@ -575,6 +655,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private void testFloatingPOIdataOverlay() {
 		// Markers for POI item
 		int marker1 = NMapPOIflagType.PIN;
+		isWriting = true;
 
 		// set POI data
 		NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
@@ -802,13 +883,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		@Override
 		public void onPointChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
-			NGeoPoint point = item.getPoint();
-
+			addingPoint = item.getPoint();
+			
+			Log.d("########## [DEBUG] ##########", "onPOIdataFloatingItemChangeListener is called - addingLat : " + addingPoint.getLatitude() + " / addingLon : " + addingPoint.getLongitude());
+			
 			if (Constants.DEBUG) {
-				Log.i(Constants.LOG_TAG, "onPointChanged: point=" + point.toString());
+				Log.i(Constants.LOG_TAG, "onPointChanged: point=" + addingPoint.toString());
 			}
 
-			findPlacemarkAtLocation(point.longitude, point.latitude);
+			findPlacemarkAtLocation(addingPoint.longitude, addingPoint.latitude);
 
 			item.setTitle(null);
 
@@ -885,7 +968,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 //				Log.d("########## [DEBUG] ##########", "findPinByLocation(overlayItem.getPoint()): " + pinList.get(pinId).getyLocation() + " / " + pinList.get(pinId).getxLocation());
 //				Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
 				isPinBoxOpen = true;
-				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, pinList.get(pinId).getPinThumnail());
+				
+				if((pinId == -1) || (isWriting)){
+					isWriting = false;
+					return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, R.drawable.detailed_pin_add_photo, mHandler);
+				}
+				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, pinList.get(pinId).getPinThumnail(), mHandler);
 			}
 
 			// null을 반환하면 말풍선 오버레이를 표시하지 않음
@@ -1225,10 +1313,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 			mapViewLayout.startAnimation(slideLeftAnim);
 	 			return false;
 			}
-			else if(isWritingBoardOpen){
+			else if(isWritingBoardOpen || isAddingPinExsist){
+				mOverlayManager.clearOverlays();
+				drawPins();
 				writingBoard.setVisibility(View.GONE);
 				fullScreen.setVisibility(View.GONE);
 	 			isWritingBoardOpen = false;
+	 			isAddingPinExsist = false;
+	 			isPinBoxOpen = false;
+	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 	 			return false;
 			}
 			else if(isPinBoxOpen){

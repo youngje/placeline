@@ -58,6 +58,12 @@
 				/>
 		</RelativeLayout>
 	</RelativeLayout>
+	<ImageView
+	    android:id="@+id/icon_add_pin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/detailed_pin_add_photo"
+		/>
 </merge>
  
 
