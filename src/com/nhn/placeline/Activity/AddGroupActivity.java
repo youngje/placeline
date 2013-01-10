@@ -7,6 +7,7 @@ import com.nhn.placeline.vo.User;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+@SuppressLint("HandlerLeak")
 public class AddGroupActivity extends Activity {
 	
 	private DatabaseService dbService;
@@ -34,6 +36,7 @@ public class AddGroupActivity extends Activity {
 	private EditText groupTitleEdit;
 	private TextView groupTitle;
 	private Group newGroup;
+	private int groupImageColor = R.drawable.group_map_image_2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +60,15 @@ public class AddGroupActivity extends Activity {
 		confirm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//디비에 업로드 작업 추가
-				Object temp = imagePrev.getTag();
-				Log.d("sdfsdf", temp+"");
-				newGroup = new Group(groupTitle.getText().toString(), user, 100);
+				
+				newGroup = new Group(groupTitle.getText().toString(), user, groupImageColor);
 				Log.d("#######db", newGroup.toString());
 				dbService.addGroupToDB(newGroup);
-				Intent intent = new Intent(AddGroupActivity.this, GroupActivity.class);
-				startActivity(intent);
-				finish();
+				newGroup.setId(dbService.getGroupId());
+				dbService.addUserToGroup(user, newGroup);
+				
+				AddGroupActivity.this.setResult(RESULT_OK);
+				AddGroupActivity.this.finish();
 			}
 		});
 		colorImage1.setOnClickListener(new OnClickListener() {
@@ -123,15 +126,15 @@ public class AddGroupActivity extends Activity {
 				switch(msg.what) {
 				case 1:
 					imagePrev.setImageResource(R.drawable.group_1);
-					imagePrev.setTag(R.drawable.group_map_image_1);
+					groupImageColor = R.drawable.group_map_image_1;
 					break;
 				case 2:
 					imagePrev.setImageResource(R.drawable.group_2);
-					imagePrev.setTag(R.drawable.group_map_image_2);
+					groupImageColor = R.drawable.group_map_image_2;
 					break;
 				case 3:
 					imagePrev.setImageResource(R.drawable.group_3);
-					imagePrev.setTag(R.drawable.group_map_image_3);
+					groupImageColor = R.drawable.group_map_image_3;
 					break;
 				case 10:
 					Log.d("test", msg.obj.toString());

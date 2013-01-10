@@ -80,7 +80,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private View mapViewLayout;
 	
 	private ArrayList<User> friends;
-	
+	 
 	private NMapView mMapView;
 	private NMapController mMapController;
 	private ImageView buttonCurrentLocation;

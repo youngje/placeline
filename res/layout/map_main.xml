@@ -119,6 +119,113 @@
 			    android:layout_marginLeft="295dp"
 			    android:layout_marginTop="502dp"
 			    />
+			<LinearLayout 
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical"
+		    	>
+	    	  	<RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/detailed_pin_title_bar"
+			         >
+			        <EditText
+				        android:layout_width="320dp"
+				        android:layout_height="30dp"
+	   			        android:gravity="top"
+				        android:textSize="14sp"
+				        android:textColor = "#333333"
+				        android:padding="3dp"
+				        android:layout_marginLeft="30dp"
+				        android:layout_marginTop="3dp"
+				        android:hint="제목을 입력하세요."
+				        />
+		    	</RelativeLayout>
+	    		<EditText
+			        android:layout_width="fill_parent"
+			        android:layout_height="100dp"
+   			        android:gravity="top"
+			        android:textSize="17sp"
+			        android:textColor = "#333333"
+			        android:background="#FFFFFF"
+			        android:padding="5dp"
+			        android:hint="내용을 입력하세요."
+			        />
+	    		<HorizontalScrollView 
+			        xmlns:android="http://schemas.android.com/apk/res/android"
+				   	android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/writeboard_photoalbum_background"
+			     	>
+			        <LinearLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="fill_parent"
+				        android:orientation="horizontal" 
+				        android:padding="20dp"
+				        >
+				        <LinearLayout 
+				            android:layout_width="100dp"
+				            android:layout_height="100dp"
+				            android:layout_marginRight="20dp"
+				            android:background="@drawable/writeboard_photo_frame">
+				            <ImageView 
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content"
+				                android:background="@drawable/photo_1"/>
+				        </LinearLayout>
+			         	<LinearLayout 
+				            android:layout_width="100dp"
+				            android:layout_height="100dp"
+				            android:layout_marginRight="20dp"
+				            android:background="@drawable/writeboard_photo_frame">
+				            <ImageView 
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content"
+				                android:background="@drawable/photo_2"/>
+				        </LinearLayout>
+			        	<LinearLayout 
+				            android:layout_width="100dp"
+				            android:layout_height="100dp"
+				            android:layout_marginRight="20dp"
+				            android:background="@drawable/writeboard_photo_frame">
+				            <ImageView 
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content"
+				                android:background="@drawable/photo_3"/>
+				        </LinearLayout>
+				        <ImageView 
+				            android:layout_width="100dp"
+				            android:layout_height="100dp"
+				            android:background="@drawable/writeboard_photo_add"/>
+					</LinearLayout>
+			    </HorizontalScrollView>
+			    <RelativeLayout 
+   		         	android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="#F3F4F3"
+			        android:paddingLeft="50dp"
+			        android:paddingRight="50dp"
+			        android:paddingTop="15dp"
+			        android:paddingBottom="15dp"
+	    		    >
+			        <TextView 
+	   		         	android:layout_width="fill_parent"
+				        android:layout_height="50dp"
+				        android:background="@drawable/writeboard_upload_button"
+				        android:text="올리기"
+				        android:textSize="27dp"
+				        android:textColor="#01a59f"
+				        android:textStyle="bold"
+				        android:gravity="center_horizontal"
+				        android:paddingTop="5dp"
+		    		    />
+			    </RelativeLayout>
+			    <ImageView 
+		        	android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:background="@drawable/writeboard_balloon"
+			        />
+			</LinearLayout>
 		</RelativeLayout>
 	</LinearLayout>
 

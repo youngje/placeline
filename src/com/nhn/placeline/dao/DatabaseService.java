@@ -56,6 +56,15 @@ public class DatabaseService {
 		db.execSQL("insert into pinIdToPicture(pinId, picture) values ("+pin.getPinId()+",'"+picture+")");
 	}
 	
+	public int getGroupId() {
+		Cursor result = db.rawQuery("SELECT MAX(groupId) FROM placegroup", null);
+		result.moveToFirst();
+		int groupId = result.getInt(0);
+		result.close();
+		return groupId;
+		
+	}
+	
 	//select 
 	public User getUserById(int userId) {
 		Cursor result = db.rawQuery("SELECT * FROM member WHERE userId='"+userId+"'", null);
@@ -139,6 +148,5 @@ public class DatabaseService {
 	public void closeDb(){
 		db.close();
 	}
-	
-	
+
 }
