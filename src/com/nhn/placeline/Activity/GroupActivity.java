@@ -10,18 +10,21 @@ import com.nhn.placeline.vo.User;
 import com.nhn.android.mapviewer.NMapViewer;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+@SuppressLint("HandlerLeak")
 public class GroupActivity extends Activity {
 
 	private DatabaseService dbService;
@@ -30,6 +33,9 @@ public class GroupActivity extends Activity {
 	private User user;
 	private int userId = 1;
 	private int groupId;
+	private static final int ADD_GROUP_ACTIVITY = 1;
+	Handler mHandler;
+	private boolean isToastUp=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +47,22 @@ public class GroupActivity extends Activity {
 		Log.d("### onCreate", "before showGroup");
 		showGroup();
 		Log.d("### onCreate", "after showGroup");
+		
+		mHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0) {
+					isToastUp = false;
+				}
+			}
+		};
 	}
 
 	public void showGroup() {
 		user = dbService.getUserById(userId);
+		Log.d("####", user.toString());
 		groups = dbService.getGroupListByUser(user);
+		Log.d("####", groups.toString());
 
 		GridView groupGridView = (GridView) findViewById(R.id.group_gridview);
 
@@ -57,14 +74,13 @@ public class GroupActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				groupId = groups.get(position).getId();
+				
 				if (groups.get(position).getGroupMapId() == R.drawable.groupmapadd) {
-					Intent intent = new Intent(GroupActivity.this,
-							AddGroupActivity.class);
+					Intent intent = new Intent(GroupActivity.this, AddGroupActivity.class);
 					intent.putExtra("userId", user.getId());
-					startActivityForResult(intent, 1);
+					startActivityForResult(intent, ADD_GROUP_ACTIVITY);
 				} else {
-					Intent intent = new Intent(GroupActivity.this,
-							NMapViewer.class);
+					Intent intent = new Intent(GroupActivity.this, NMapViewer.class);
 					intent.putExtra("groupId", groupId);
 					intent.putExtra("userId", user.getId());
 					startActivity(intent);
@@ -96,31 +112,20 @@ public class GroupActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_group, menu);
 		return true;
 	}
-
+	
 	public boolean onKeyDown(int KeyCode, KeyEvent event) {
 		if (KeyCode == KeyEvent.KEYCODE_BACK) {
-			displayDialog();
+			if(isToastUp){
+				finish();
+				
+			} else {
+				Toast.makeText(GroupActivity.this, "한 번 더 누르면 종료 됩니다.", Toast.LENGTH_LONG).show();
+				mHandler.sendEmptyMessageDelayed(0, 2000);
+				isToastUp = true;
+			}
 			return false;
 		}
 		return super.onKeyDown(KeyCode, event);
 	}
 	
-	public void displayDialog(){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-		alertDialog.setTitle("프로그램을 종료 하시겠습니까?");
-		alertDialog.setPositiveButton("종료",
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-				}
-			});
-		alertDialog.setNegativeButton("취소",
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Log.d("########## [DEBUG] ##########", "Canceled");
-				}
-		});
-		AlertDialog newDialog = alertDialog.create();
-		newDialog.show();
-	}
 }

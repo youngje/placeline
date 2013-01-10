@@ -137,6 +137,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		friends = new ArrayList<User>();
 		Intent intent = getIntent();
+		//groupId = intent.getIntExtra("groupId", -1);
 		
 		getFriendsList(userId);
 		FriendsListAdapter friendAdapter = new FriendsListAdapter(this, R.layout.friend_list_partition, friends);
