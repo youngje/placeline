@@ -145,6 +145,33 @@ public class DatabaseService {
 		return replies;
 	}
 	
+	public ArrayList<Integer> getPicturesIdByPin(Pin pin){
+		Cursor result = db.rawQuery("SELECT picture FROM pinIdToPicture WHERE pinId='"+pin.getPinId()+"'", null);
+		
+		ArrayList<Integer> pictures = new ArrayList<Integer>();
+		result.moveToFirst();
+		while(!result.isAfterLast()){
+			pictures.add(result.getInt(0));
+			result.moveToNext();
+		}
+		result.close();
+		return pictures;
+	}
+	
+	 public ArrayList<Pin> getPinListByGroupId(int groupId) {
+			Cursor result = db.rawQuery("SELECT * FROM pin WHERE groupId='"+groupId+"'", null);
+			
+			ArrayList<Pin> pinList = new ArrayList<Pin>();
+			result.moveToFirst();
+			while(!result.isAfterLast()){
+				Pin pin = new Pin(result.getInt(0), result.getInt(5), Float.parseFloat(result.getString(3)), Float.parseFloat(result.getString(4)),result.getString(2), getUserById(result.getInt(6)), result.getString(1), result.getInt(8), result.getString(7));
+				pinList.add(pin);
+				result.moveToNext();
+			}
+			result.close();
+			return pinList;
+		}
+	
 	public void closeDb(){
 		db.close();
 	}
