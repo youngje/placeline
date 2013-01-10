@@ -16,8 +16,7 @@ public class Group {
 		super();
 		this.id = id;
 		this.name = name;
-		this.members = new ArrayList<User>();
-		//this.members = members;
+		this.members = members;
 		this.groupMapId = groupMapId;
 		this.creator = creator;
 	}
@@ -26,20 +25,21 @@ public class Group {
 		super();
 		this.name = name;
 		this.members = new ArrayList<User>();
+		members.add(creator);
 		this.groupMapId = groupMapId;
 		
 		//나중에 지워야 하는 부분
-		members.add(new User("윤영제", "016-9611-7061", R.drawable.user_4));
-		members.add(new User("백준선", "016-9611-7061", R.drawable.user_3));
+		//members.add(new User("윤영제", "016-9611-7061", R.drawable.user_4));
+		//members.add(new User("백준선", "016-9611-7061", R.drawable.user_3));
 	}
 	
 	public Group(String name, User creator, int groupMapId ) {
 		super();
 		this.name = name;
 		this.members = new ArrayList<User>();
+		members.add(creator);
 		this.creator = creator;
 		this.groupMapId = groupMapId;
-		
 	}
 
 	public Group() {

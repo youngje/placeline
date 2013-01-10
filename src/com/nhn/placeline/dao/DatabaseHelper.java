@@ -65,6 +65,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
+	@Override
+	public void onOpen(SQLiteDatabase db){
+		super.onOpen(db);
+		/*db.execSQL("DROP TABLE IF EXISTS pinIdToPicture");
+		db.execSQL("DROP TABLE IF EXISTS userIdToGroupId");
+		db.execSQL("DROP TABLE IF EXISTS reply");
+		db.execSQL("DROP TABLE IF EXISTS pin");
+		db.execSQL("DROP TABLE IF EXISTS placegroup");
+		db.execSQL("DROP TABLE IF EXISTS member");
+		onCreate(db);*/
+		
+		
+	}
+	
 	public void initDB(SQLiteDatabase db) {
 		//member
 		db.execSQL("insert into member(userId,userName,userPhone, thumnail) values(?,'김에이','010-1111-2666', "+R.drawable.user_1+")");

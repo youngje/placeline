@@ -55,15 +55,14 @@ public class GroupAdapter extends BaseAdapter {
 		imageView.setId(Constants.GROUPMAP_IMAGE_ID);
 		imageView.setAdjustViewBounds(true);
 		
-		RelativeLayout.LayoutParams textViewParam = new RelativeLayout.LayoutParams(165, 150);
-		textViewParam.leftMargin = 50;
+		RelativeLayout.LayoutParams textViewParam = new RelativeLayout.LayoutParams(153, 142);
+		textViewParam.leftMargin = 42;
 		textViewParam.topMargin = 270;
 		
 		TextView textView = new TextView(mContext);
 		textView.setText(groups.get(position).getName());
 		textView.setTextSize(23);
 		textView.setTextColor(0xff424251);
-		
 
 		relativeLayout.addView(imageView, imageViewParam);
 		relativeLayout.addView(textView, textViewParam);
