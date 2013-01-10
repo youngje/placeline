@@ -34,6 +34,7 @@ public class Constants {
 	
 	public static final int ADD_GROUP = -100;
 	
+	public static final int ADD_GROUP_ACTIVITY = 1;
 	
 	/* Menus */
 	public static final int MENU_ITEM_CLEAR_MAP = 10;
@@ -50,4 +51,6 @@ public class Constants {
 	public static final int MENU_ITEM_TEST_PATH_DATA = MENU_ITEM_TEST_MODE + 2;
 	public static final int MENU_ITEM_TEST_FLOATING_DATA = MENU_ITEM_TEST_MODE + 3;
 	public static final int MENU_ITEM_TEST_AUTO_ROTATE = MENU_ITEM_TEST_MODE + 4;
+	
+	public static final int SETTING_BUTTON = 99;
 }

@@ -180,4 +180,8 @@ public class DatabaseService {
 		return pictures;
 	}
 
+	public void updateGroup(Group newGroup) {
+		db.execSQL("UPDATE placegroup SET groupName='"+newGroup.getName()+"', groupMapId='"+newGroup.getGroupMapId()+"' WHERE groupId='"+newGroup.getId()+"'");
+	}
+
 }
