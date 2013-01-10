@@ -13,13 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -33,8 +30,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
@@ -58,7 +53,6 @@ import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.maps.overlay.NMapPathData;
 import com.nhn.android.maps.overlay.NMapPathLineStyle;
 import com.nhn.placeline.Activity.DetailedPinActivity;
-import com.nhn.placeline.Activity.GroupActivity;
 import com.nhn.placeline.Activity.R;
 import com.nhn.android.mapviewer.overlay.NMapCalloutCustomOverlay;
 import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
@@ -89,7 +83,6 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonCurrentLocation;
 	private ImageView buttonAddPin;
 	private ImageView buttonFriendsList;
-	private ListView friendsListView;
 	
 	private boolean flagMyLocationOnOff;
 	private boolean addPinOnOff;

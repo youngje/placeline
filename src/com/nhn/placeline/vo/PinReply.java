@@ -3,6 +3,7 @@ package com.nhn.placeline.vo;
 import java.util.Calendar;
 
 public class PinReply {
+	int replyId;
 	int pinId;
 	User writer;
 	String comments;
@@ -40,6 +41,18 @@ public class PinReply {
 	}
 	public void setDate() {
 		this.registeredDate = Calendar.getInstance();
+	}
+	public int getReplyId() {
+		return replyId;
+	}
+	public void setReplyId(int replyId) {
+		this.replyId = replyId;
+	}
+	public Calendar getRegisteredDate() {
+		return registeredDate;
+	}
+	public void setRegisteredDate(Calendar registeredDate) {
+		this.registeredDate = registeredDate;
 	}
 	public String getDateToString(){
 		String year = Integer.toString(registeredDate.get(Calendar.YEAR));

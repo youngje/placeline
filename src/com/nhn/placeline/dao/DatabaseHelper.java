@@ -32,17 +32,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                    "pinContent TEXT, " +
 				                    "pinThumnail INTEGER"+
 				                    "groupId INTEGER);");
+		db.execSQL("CREATE TABLE reply(replyId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				                    "pinId INTEGER, " +
+					                "replyDate TIMESTAMP, " +
+					                "replyCreator INTEGER, " +
+					                "replyContent TEXT);");
+
+		
 		//참조용 테이블
 		db.execSQL("CREATE TABLE userIdToGroupId(userId INTEGER, " +
 				                                "groupId INTEGER);");
 		
 		db.execSQL("CREATE TABLE pinIdToPicture(pinId INTEGER, " +
-				                               "picture TEXT);");
+				                               "picture INTEGER);");
 		
-		db.execSQL("CREATE TABLE pinIdToReply(pinId INTEGER, " +
-				                             "replyDate TIMESTAMP, " +
-				                             "replyCreator INTEGER, " +
-				                             "replyContent TEXT);");
 		
 		//샘플 데이터 삽입
 		
@@ -68,9 +71,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS userIdToReply");
 		db.execSQL("DROP TABLE IF EXISTS pinIdToPicture");
-		db.execSQL("DROP TABLE IF EXISTS pinIdToReply");
+		db.execSQL("DROP TABLE IF EXISTS userIdToGroupId");
+		db.execSQL("DROP TABLE IF EXISTS reply");
 		db.execSQL("DROP TABLE IF EXISTS pin");
 		db.execSQL("DROP TABLE IF EXISTS placegroup");
 		db.execSQL("DROP TABLE IF EXISTS member");
