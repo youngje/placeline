@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                    "pinX TEXT, " +
 				                    "pinY TEXT, " +
 				                    "pinContent TEXT, " +
+				                    "pinThumnail INTEGER"+
 				                    "groupId INTEGER);");
 		//참조용 테이블
 		db.execSQL("CREATE TABLE userIdToGroupId(userId INTEGER, " +

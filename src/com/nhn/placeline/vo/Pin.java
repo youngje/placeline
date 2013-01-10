@@ -10,14 +10,17 @@ public class Pin {
 	Calendar registeredDate;
 	User writer;
 	String pinTitle;
+	int pinThumnail;
 	
-	public Pin(int pinId, User writer, float xLocation, float yLocation){
-		this.pinId = pinId;
+	public Pin(String pinTitle, int groupId, User writer, float xLocation, float yLocation, int pinThumnail){
+		this.pinTitle = pinTitle;
 		this.xLocation = xLocation;
 		this.yLocation = yLocation;
 		registeredDate = Calendar.getInstance();
 		this.writer = writer;
+		this.pinThumnail = pinThumnail;
 	}
+	
 	public int getPinId() {
 		return pinId;
 	}
@@ -39,28 +42,45 @@ public class Pin {
 	public void setDate() {
 		this.registeredDate = Calendar.getInstance();
 	}
+	
 	public float getxLocation() {
 		return xLocation;
 	}
+	
 	public void setxLocation(int xLocation) {
 		this.xLocation = xLocation;
 	}
+	
 	public float getyLocation() {
 		return yLocation;
 	}
+	
 	public void setyLocation(int yLocation) {
 		this.yLocation = yLocation;
 	}
+	
 	public User getWriter() {
 		return writer;
 	}
+	
 	public void setWriter(User writer) {
 		this.writer = writer;
 	}
+	
 	public String getPinTitle() {
 		return pinTitle;
 	}
+	
 	public void setPinTitle(String pinTitle) {
 		this.pinTitle = pinTitle;
 	}
+	
+	public int getPinThumnail() {
+		return pinThumnail;
+	}
+
+	public void setPinThumnail(int pinThumnail) {
+		this.pinThumnail = pinThumnail;
+	}
+
 }

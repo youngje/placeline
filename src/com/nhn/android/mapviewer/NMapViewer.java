@@ -162,10 +162,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		pinList = new ArrayList<Pin>();
 		User user = new User("백준선", "010-6848-3855", R.drawable.photo_3);
-		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
-		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
-		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);
-		Pin newPin4 = new Pin(3, user, 126.4090f, 33.2484f);
+		Pin newPin1 = new Pin("한라산", 1, user, 126.4085f, 33.2480f, R.drawable.ic_launcher);
+		Pin newPin2 = new Pin("그린팩토리", 1, user, 126.4092f, 33.2480f, R.drawable.ic_launcher);
+		Pin newPin3 = new Pin("신라호텔", 1, user, 126.4087f, 33.2491f, R.drawable.ic_launcher);
+		Pin newPin4 = new Pin("성산일출봉", 1, user, 126.4090f, 33.2484f, R.drawable.ic_launcher);
 		
 		pinList.add(newPin1);
 		pinList.add(newPin2);
