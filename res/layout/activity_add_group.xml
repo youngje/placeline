@@ -38,6 +38,7 @@
         	tools:ignore="ContentDescription"
 			android:layout_centerHorizontal="true"
         	android:id="@+id/addgroup_image_preview"
+        	android:tag="@drawable/group_map_image_2"
         />
         <TextView 
             android:layout_width="90dp"

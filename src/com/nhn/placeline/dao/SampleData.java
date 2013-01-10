@@ -1,6 +1,6 @@
 package com.nhn.placeline.dao;
 
-import com.nhn.placeline.Activity.R;
+//import com.nhn.placeline.Activity.R;
 
 public class SampleData {
 

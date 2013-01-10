@@ -12,6 +12,7 @@ import com.nhn.android.mapviewer.NMapViewer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,8 +35,9 @@ public class GroupActivity extends Activity {
 		
 		dbService = new DatabaseService(this);
 		
+		Log.d("### onCreate", "before showGroup");
 		showGroup();
-		
+		Log.d("### onCreate", "after showGroup");
 	}
 
 	public void showGroup(){
@@ -63,7 +65,6 @@ public class GroupActivity extends Activity {
 					intent.putExtra("userId", user.getId());
 					startActivity(intent);
 				}
-				
 			}
 			
 		});
@@ -72,13 +73,17 @@ public class GroupActivity extends Activity {
 	@Override
 	public void onResume(){
 		super.onResume();
+		Log.d("### onResume", "before showGroup");
 		showGroup();
+		Log.d("### onResume", "after showGroup");
 	}
 	
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+		Log.d("### onDestroy", "before showGroup");
 		dbService.closeDb();
+		Log.d("### onDestroy", "after showGroup");
 	}
 	
 	@Override

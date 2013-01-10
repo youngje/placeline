@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
-	
-	<RelativeLayout 
-	    android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:padding="5dp"
-	    >
-	   	<ImageView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/user_1"
-	        android:id="@+id/friend_thumb"
-	        />
-		 <TextView 
-		    android:id="@+id/friend_name"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/friend_name"
-	        android:textSize="20sp"
-			android:textStyle="bold"
-	        android:textColor="#00aea2"
-			android:layout_toRightOf="@id/friend_thumb"
-			android:layout_alignParentTop="true"
-			android:layout_margin="3dp"
-	        />
-		 <TextView 
-		     android:id="@+id/friend_phone"
-		     android:text="@string/friend_phonenumber"
-		     android:layout_width="wrap_content"
-		     android:layout_height="wrap_content"
-		     android:layout_below="@id/friend_name"
-		     android:layout_toRightOf="@id/friend_thumb"
-		     android:textColor="#424251"
-		     android:textSize="15sp"
-		     android:textStyle="bold"
-		     android:layout_centerVertical="true"
-		     android:layout_marginLeft="6dp"
-		     />"
-	</RelativeLayout>
-	
-	<ImageView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:src="@drawable/detailed_pin_photoalbum_underline"
-		android:layout_marginTop="5dp"
-		/>
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/friend_thumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_1"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
+            android:layout_toRightOf="@id/friend_thumb"
+            android:text="@string/friend_name"
+            android:textColor="#00aea2"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/friend_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friend_name"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/friend_thumb"
+            android:text="@string/friend_phonenumber"
+            android:textColor="#424251"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/detailed_pin_photoalbum_underline"
+        tools:ignore="ContentDescription" />
+
 </LinearLayout>
