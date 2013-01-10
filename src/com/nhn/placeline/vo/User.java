@@ -4,11 +4,20 @@ public class User {
 	private String id;
 	private String name;
 	private String phoneNumber;
+	private int thumnail;
 	
-	public User(String id, String name, String phoneNumber) {
-		this.id = id;
+	public int getThumnail() {
+		return thumnail;
+	}
+
+	public void setThumnail(int thumnail) {
+		this.thumnail = thumnail;
+	}
+
+	public User(String name, String phoneNumber, int thumnail) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
+		this.thumnail = thumnail;
 	}
 	
 	public User(){

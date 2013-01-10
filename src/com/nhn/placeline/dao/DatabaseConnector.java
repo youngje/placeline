@@ -1,14 +1,16 @@
-package com.nhn.placeline.db;
+package com.nhn.placeline.dao;
 
 import java.util.ArrayList;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.PinContent;
 import com.nhn.placeline.vo.PinReply;
+import com.nhn.placeline.vo.User;
 
 public class DatabaseConnector{
 	
@@ -30,10 +32,10 @@ public class DatabaseConnector{
 		ArrayList<Group> groupList = null;
 
 		result.moveToFirst();
-		while (!result.isAfterLast()){
-			   groupList.add(new Group(result.getString(1), result.getString(2), result.getString(3) , result.getInt(4)));
+		/*while (!result.isAfterLast()){
+			   groupList.add(new Group(result.getString(2), result.getString(3) , result.getInt(4)));
 			   result.moveToNext();
-		}
+		}*/
 		
 		return groupList;
 	}
@@ -58,8 +60,8 @@ public class DatabaseConnector{
 	public PinContent getPinContent(String pinId) {
 		dbHelper = new DatabaseHelper(null);
 		db = dbHelper.getWritableDatabase();
-
-		PinContent content = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", "백준선");
+		User user = new User("백준선", "010-6848-3855", R.drawable.user_3);
+		PinContent content = new PinContent(0, "생애 첫교육", "살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 살아있소 흐하", user);
 		return content;
 	}
 	

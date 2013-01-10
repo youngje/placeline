@@ -4,11 +4,11 @@ import java.util.Calendar;
 
 public class PinReply {
 	int pinId;
-	String writer;
+	User writer;
 	String comments;
 	Calendar registeredDate;
 	
-	public PinReply(int pinId, String writer, String comments){
+	public PinReply(int pinId, User writer, String comments){
 		this.pinId = pinId;
 		this.writer = writer;
 		this.comments = comments;
@@ -20,10 +20,10 @@ public class PinReply {
 	public void setPinId(int pinId) {
 		this.pinId = pinId;
 	}
-	public String getWriter() {
+	public User getWriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
+	public void setWriter(User writer) {
 		this.writer = writer;
 	}
 	public String getComments() {
@@ -48,6 +48,6 @@ public class PinReply {
 		String hour = Integer.toString(registeredDate.get(Calendar.HOUR_OF_DAY));
 		String minute = Integer.toString(registeredDate.get(Calendar.MINUTE));
 		
-		return  year + "." + month + "." + date + " " + hour + ":" + minute;
+		return  year + "년" + month + "월" + date + "일 " + hour + ":" + minute;
 	}
 }

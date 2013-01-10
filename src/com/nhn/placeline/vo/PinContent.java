@@ -7,17 +7,18 @@ public class PinContent {
 	int pinId;
 	String title;
 	String content;
-	String writer;
+	User writer;
 	ArrayList<PinReply> replyList;
-	ArrayList<String> pictures;
+	ArrayList<Integer> pictures;
 	Calendar registeredDate;
 	
-	public PinContent(int pinId, String title, String content, String writer){
+	public PinContent(int pinId, String title, String content, User writer){
 		this.pinId = pinId;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		replyList = new ArrayList<PinReply>();
+		this.pictures = new ArrayList<Integer>();
 		this.registeredDate = Calendar.getInstance();
 	}
 	public int getPinId() {
@@ -42,7 +43,7 @@ public class PinContent {
 		String hour = Integer.toString(registeredDate.get(Calendar.HOUR_OF_DAY));
 		String minute = Integer.toString(registeredDate.get(Calendar.MINUTE));
 		
-		return  year + "." + month + "." + date + " " + hour + ":" + minute;
+		return  year + "년" + month + "월" + date + "일 " + hour + ":" + minute;
 	}
 	public String getTitle() {
 		return title;
@@ -56,10 +57,10 @@ public class PinContent {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriter() {
+	public User getWriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
+	public void setWriter(User writer) {
 		this.writer = writer;
 	}
 	public PinReply getReply(int index) {
@@ -68,12 +69,14 @@ public class PinContent {
 	public void addReplyList(PinReply pinReply) {
 		replyList.add(pinReply);
 	}
-	public ArrayList<String> getPictures() {
-		return pictures;
+	public int getPictures(int index) {
+		return pictures.get(index);
 	}
-	public void setPictures(ArrayList<String> pictures) {
-		this.pictures = pictures;
+	public void addPictures(int pictureIndex) {
+		pictures.add(pictureIndex);
 	}
-	
+	public int countPictures(){
+		return pictures.size();
+	}
 	
 }

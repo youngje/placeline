@@ -1,4 +1,4 @@
-package com.nhn.placeline.db;
+package com.nhn.placeline.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,12 +19,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//주 테이블
 		db.execSQL("CREATE TABLE member(userId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				                       "userName TEXT," +
-				                       "userPhone TEXT);");
+				                       "userPhone TEXT," +
+				                       "thumnail INTEGER);");
 		
-		db.execSQL("CREATE TABLE group(groupId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				                      "groupName TEXT, " +
-				                      "groupCreator INTEGER, " +
-				                      "groupCustom TEXT);");
+		db.execSQL("CREATE TABLE placegroup(groupId INTEGER PRIMARY KEY AUTOINCREMENT, groupName TEXT, groupCreator INTEGER, groupMapId INTEGER);");
 		
 		db.execSQL("CREATE TABLE pin(pinId INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				                    "pinName TEXT, " +
@@ -47,9 +45,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		//샘플 데이터 삽입
 		
-		//member
-		db.execSQL("insert into member (userId,userName,userPhone)" +
-				               "values ('abc123','김성호','010-8824-2666')");
+		/*//member
+		
 		//group
 		db.execSQL("insert into group(groupId,groupName,groupCreator,groupCustom)" +
 	                         "values ('1','NHN신입사원교육','abc123','1')");
@@ -65,17 +62,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//pinId > reply
 		db.execSQL("insert into pinIdToPicture(pinId,replyDate,replyCreator,replyContent)" +
                                       "values ('1','CURRENT_TIMESTAMP,'abc123','첫번째 댓글은 내가 담!')");
-		
+		*/
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS member");
-		db.execSQL("DROP TABLE IF EXISTS group");
-		db.execSQL("DROP TABLE IF EXISTS pin");
 		db.execSQL("DROP TABLE IF EXISTS userIdToReply");
-		db.execSQL("DROP TABLE IF EXISTS pinIdToReply");
 		db.execSQL("DROP TABLE IF EXISTS pinIdToPicture");
+		db.execSQL("DROP TABLE IF EXISTS pinIdToReply");
+		db.execSQL("DROP TABLE IF EXISTS pin");
+		db.execSQL("DROP TABLE IF EXISTS placegroup");
+		db.execSQL("DROP TABLE IF EXISTS member");
 		onCreate(db);
 	}
 }
