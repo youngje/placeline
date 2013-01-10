@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.Activity.R.id;
+import com.nhn.placeline.dao.DatabaseService;
+import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.PinContent;
 import com.nhn.placeline.vo.PinReply;
 import com.nhn.placeline.vo.User;
@@ -11,6 +13,7 @@ import com.nhn.placeline.vo.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,11 +29,16 @@ import android.widget.TextView.OnEditorActionListener;
 public class DetailedPinActivity extends Activity implements OnClickListener, OnEditorActionListener{
 
 	private ArrayList<PinReply> replyList;
-	private PinContent pinContent;
-	private User user1;
-	private User user2;
-	private User user3;
-	private User user4;
+	private ArrayList<Integer> pictures;
+//	private PinContent pinContent;
+//	private User user1;
+//	private User user2;
+//	private User user3;
+//	private User user4;
+	private int pinId;
+	private Pin pin;
+	
+	DatabaseService dbService;
 	
 	private LinearLayout replyItem;
 	private LinearLayout photoAlbum;
@@ -44,6 +52,9 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detailed_pin);
 		
+		dbService = new DatabaseService(this);
+		Intent intent = getIntent();
+		pinId = intent.getIntExtra("pinId", -1);
 		initInstance();
 		initViews();
 		displayPinInfo();
@@ -70,7 +81,7 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	}
 	
 	private void initInstance(){
-		user1 = new User("윤홍경", "010-6848-3855", R.drawable.user_1);
+		/*user1 = new User("윤홍경", "010-6848-3855", R.drawable.user_1);
 		user2 = new User("김성호", "010-6848-3855", R.drawable.user_2);
 		user3 = new User("백준선", "010-6848-3855", R.drawable.user_3);
 		user4 = new User("윤영제", "010-6848-3855", R.drawable.user_4);
@@ -87,7 +98,11 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		pinContent.addPictures(R.drawable.photo_1);
 		pinContent.addPictures(R.drawable.photo_2);
 		pinContent.addPictures(R.drawable.photo_3);
-		pinContent.addPictures(R.drawable.photo_4);
+		pinContent.addPictures(R.drawable.photo_4);*/
+		
+		pin = dbService.getPinById(pinId);
+		replyList = dbService.getReplyListByPinId(pin);
+		pictures = dbService.getPicturesIdByPin(pin);
 	}
 	
 	private void initViews(){
@@ -108,10 +123,10 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		TextView contentContent = (TextView) findViewById(id.content_content);
 		TextView contentDate = (TextView) findViewById(id.content_date);
 		
-		contentWriter.setText(pinContent.getWriter().getName());
-		contentDate.setText(pinContent.getDateToString());
-		contentContent.setText(pinContent.getContent());
-		pinTitle.setText(pinContent.getTitle());
+		contentWriter.setText(pin.getWriter().getName());
+		contentDate.setText(pin.getRegisteredDate());
+		contentContent.setText(pin.getPinContent());
+		pinTitle.setText(pin.getPinTitle());
 	}
 	
 	private void displayPhotos(){
@@ -119,10 +134,10 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 		View view;
 		ImageView photo;
 		
-		for(int i=0; i<pinContent.countPictures(); i++){
+		for(int i=0; i<pictures.size(); i++){
 			view = mInflater.inflate(R.layout.item_photo, null);
 			photo = (ImageView) view.findViewById(R.id.item_photo);
-			photo.setBackgroundResource(pinContent.getPictures(i));
+			photo.setBackgroundResource(pictures.get(i));
 			photoAlbum.addView(view);
 		}
 		
@@ -165,5 +180,11 @@ public class DetailedPinActivity extends Activity implements OnClickListener, On
 	private void sendReply(){
 		 Log.d("########## [DEBUG] ##########","onClick() - Button_SendReply button is clicked / Reply : " + editTextReply.getText());
 		 editTextReply.setText("");
+	}
+	
+	@Override 
+	public void onDestroy(){
+		super.onDestroy();
+		dbService.closeDb();
 	}
 }
