@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.constants.Constants;
-import com.nhn.placeline.dao.DatabaseConnector;
 import com.nhn.placeline.dao.DatabaseHelper;
+import com.nhn.placeline.dao.DatabaseService;
 import com.nhn.placeline.util.GroupAdapter;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.User;
@@ -23,8 +23,7 @@ import android.widget.GridView;
 
 public class GroupActivity extends Activity {
 	
-	private SQLiteDatabase db;
-	private DatabaseHelper dbHelper;
+	private DatabaseService dbService;
 	
 	private ArrayList<Group> groups;
 	private User user;
@@ -36,8 +35,7 @@ public class GroupActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_group);
 		
-		dbHelper = new DatabaseHelper(this);
-		db = dbHelper.getWritableDatabase();
+		dbService = new DatabaseService(this);
 		
 		initDataBase();
 		
@@ -72,22 +70,14 @@ public class GroupActivity extends Activity {
 	private void initDataBase() {
 		user = new User("윤영제", "016-9611-7061", R.drawable.user_4);
 		
-		addUserToDB(new User("윤영제", "016-9611-7061", R.drawable.user_4));
-		addUserToDB(new User("김성호", "010-8824-2666", R.drawable.user_2));
-		addUserToDB(new User("백준선", "010-6848-3855", R.drawable.user_3));
-		addUserToDB(new User("윤홍경", "010-9788-0411", R.drawable.user_1));
+		dbService.addUserToDB(new User("윤영제", "016-9611-7061", R.drawable.user_4));
+		dbService.addUserToDB(new User("김성호", "010-8824-2666", R.drawable.user_2));
+		dbService.addUserToDB(new User("백준선", "010-6848-3855", R.drawable.user_3));
+		dbService.addUserToDB(new User("윤홍경", "010-9788-0411", R.drawable.user_1));
 		
 		Group group = new Group("우리가족", user, R.drawable.group_map_image_1);
 		
-		addGroupToDB(group);
-	}
-	
-	public void addUserToDB(User user) {
-		db.execSQL("insert into member(userId, userName, userPhone, thumnail) values(?, '"+user.getName()+"','"+user.getPhoneNumber()+"','"+user.getThumnail()+"')");
-	}
-	
-	public void addGroupToDB(Group group) {
-		db.execSQL("insert into placegroup(groupId, groupName, groupCreator, groupMapId) values (?, '"+group.getName()+"','"+group.getCreator().getId()+"','"+group.getGroupMapId()+"')");
+		dbService.addGroupToDB(group);
 	}
 	
 	@Override
