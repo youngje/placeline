@@ -165,16 +165,14 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		Pin newPin1 = new Pin(0, user, 126.4085f, 33.2480f);
 		Pin newPin2 = new Pin(1, user, 126.4092f, 33.2480f);
 		Pin newPin3 = new Pin(2, user, 126.4087f, 33.2491f);
-		Pin newPin4 = new Pin(3, user, 126.4090f, 33.2484f);
-		
+		Pin newPin4 = new Pin(3, user, 126.4083f, 33.2484f);
+
 		pinList.add(newPin1);
 		pinList.add(newPin2);
 		pinList.add(newPin3);
 		pinList.add(newPin4);
 		
-		for(int i=0; i<pinList.size(); i++){
-			putPOIdataOverlay(pinList.get(i));
-		}
+		drawPins();
 	}
 	
 	
@@ -304,9 +302,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		}
 	 		else{
 	 			addPinOnOff = false;
-//	 			pathDataOverlay.setHidden(true); ()
-	 			undrawLineWithDataOverlay();
-	 			//////////////////////////////////////////////////////// 작업중
+	 			mOverlayManager.clearOverlays();
+	 			drawPins();
 	 		}
 		}
 	 	else if (button.getId() == R.id.imageview_friend){
@@ -381,6 +378,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	}
 
 	
+	private void drawPins(){
+		for(int i=0; i<pinList.size(); i++){
+			putPOIdataOverlay(pinList.get(i));
+		}
+	}
+	
 	// 마커 
 	private void putPOIdataOverlay(Pin pin) {
 
@@ -393,8 +396,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
 		poiDataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
-		poiDataOverlay.selectPOIitem(0, true);
-		poiDataOverlay.showAllPOIdata(0);
+//		poiDataOverlay.selectPOIitem(0, true);
+//		poiDataOverlay.showAllPOIdata(0);
 	}
 	
 	// 경로선 그리기
@@ -415,36 +418,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		pathData.endPathData();
 		pathDataOverlay.addPathData(pathData);
 		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
-		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
-		pathLineStyle.setLineColor(0xA04DD2, 0xff);
+		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYLINE);
+		pathLineStyle.setLineColor(0xA04DD2, 0x88);
 		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
 		pathData.setPathLineStyle(pathLineStyle);
-	}
-	
-	
-	// 경로선 그리기
-	private void undrawLineWithDataOverlay() {
-		// set path data points
-		NMapPathData pathData = new NMapPathData(pinList.size());
-		pathData.initPathData();
-		pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
 		
-		for(int i=0; i<pinList.size(); i++){
-			if(i == 0){
-				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), NMapPathLineStyle.TYPE_SOLID);
-			}
-			else{
-				pathData.addPathPoint(pinList.get(i).getxLocation(), pinList.get(i).getyLocation(), 0);
-			}
-		}
-		pathData.endPathData();
-		pathDataOverlay.addPathData(pathData);
-		NMapPathLineStyle pathLineStyle = new NMapPathLineStyle(mMapView.getContext());
-		pathLineStyle.setPataDataType(NMapPathLineStyle.DATA_TYPE_POLYGON);
-		pathLineStyle.setLineColor(0xA04DD2, 0xff);
-		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
-		pathData.setPathLineStyle(pathLineStyle);
-		pathDataOverlay.setHidden(true); 
+
+//		mMapViewerResourceProvider.getBitmap(R.drawable.photo_1);
+//		NGeoPoint nPoint = new NGeoPoint(126.4085f, 33.2480f);
+//		NMapPOIitem nMapPOIitem = new NMapPOIitem(nPoint, "PIN with CLICKABLE_ARROW", getResources().getDrawable(R.drawable.photo_1), null, 0);
 	}
 	
 	
@@ -795,6 +777,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		@Override
 		public NMapCalloutOverlay onCreateCalloutOverlay(NMapOverlay itemOverlay, NMapOverlayItem overlayItem,
 			Rect itemBounds) {
+			Log.d("########## [DEBUG] ##########", "NMapCalloutOverlay is called");
 
 			// handle overlapped items
 			if (itemOverlay instanceof NMapPOIdataOverlay) {
@@ -850,13 +833,16 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		@Override
 		public View onCreateCalloutOverlayView(NMapOverlay itemOverlay, NMapOverlayItem overlayItem, Rect itemBounds) {
+			Log.d("########## [DEBUG] ##########", "onCreateCalloutOverlayView is called");
 
 			if (overlayItem != null) {
 				// [TEST] 말풍선 오버레이를 뷰로 설정함
 				String title = overlayItem.getTitle();
-				if (title != null && title.length() > 5) {
-					return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds);
-				}
+				int pinId = findPinByLocation(overlayItem.getPoint());
+				Log.d("########## [DEBUG] ##########", "clicked location : " + overlayItem.getPoint().getLatitude() + " / " + overlayItem.getPoint().getLongitude());
+				Log.d("########## [DEBUG] ##########", "findPinByLocation(overlayItem.getPoint()): " + pinList.get(pinId).getyLocation() + " / " + pinList.get(pinId).getxLocation());
+				
+				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, R.drawable.user_1);
 			}
 
 			// null을 반환하면 말풍선 오버레이를 표시하지 않음
@@ -865,6 +851,34 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 	};
 
+	
+	private int findPinByLocation(NGeoPoint point){
+		int pinId = -1;
+		double gap = -1.0f;
+		double pointLat = 0f;
+		double pointLon = 0f;
+		double pinLat = 0f;
+		double pinLon = 0f;
+		
+		for(int i=0; i<pinList.size(); i++){
+			pointLat = point.getLatitude();
+			pointLon = point.getLongitude();
+			pinLat = pinList.get(i).getyLocation();
+			pinLon = pinList.get(i).getxLocation();
+//			Log.d("########## [DEBUG] ##########", "findPinByLocation is called - pointLat : " + pointLat + " / pointLon : " + pointLon);
+//			Log.d("########## [DEBUG] ##########", "findPinByLocation is called - [" + i + "] pinLat  : " + pinList.get(i).getyLocation() + " / pinLon : " + pinList.get(i).getxLocation());
+			if((gap < 0) || ((Math.abs(pointLat - pinLat) + Math.abs(pointLon - pinLon)) < gap)){
+				gap = Math.abs(pointLat - pinLat) + Math.abs(pointLon - pinLon);
+				pinId = i;
+//				Log.d("########## [DEBUG] ##########", "findPinByLocation is called - Math.abs(pointLat - pinLat) : " + Math.abs(pointLat - pinLat));
+//				Log.d("########## [DEBUG] ##########", "findPinByLocation is called - Math.abs(pointLon - pinLon) : " + Math.abs(pointLon - pinLon));
+//				Log.d("########## [DEBUG] ##########", "findPinByLocation is called - gap : " + gap + " / pinId : " + pinId);
+			}
+		}
+		return pinId;
+	}
+	
+	
 	/* Local Functions */
 
 	private void restoreInstanceState() {

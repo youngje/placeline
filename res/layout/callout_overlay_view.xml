@@ -24,6 +24,13 @@
 			android:gravity="center"
 			android:duplicateParentState="true">
 	        
+	         <ImageView
+		        android:id="@+id/callout_leftThumbnail"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="3.33dp"
+				/>
+	         
 			<TextView 
 			    android:id="@+id/callout_text"
 				android:layout_width="wrap_content"
