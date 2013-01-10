@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
-	
-	<RelativeLayout 
-	    android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:padding="5dp"
-	    >
-	   	<ImageView
-	   	    android:id="@+id/reply_photo"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        />
-	 	<TextView 
-	     	android:id="@+id/reply_writer"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="12sp"
-	        android:textStyle="bold"
-	        android:textColor = "#333333"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="80dp"
-	        />
- 		<TextView 
-	     	android:id="@+id/reply_date"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="10sp"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="250dp"
-	        />
-		<TextView 
-	     	android:id="@+id/reply_comment"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize = "10sp"
-	        android:textColor = "#333333"
-	        android:layout_marginTop="25dp"
-	        android:layout_marginLeft="80dp"
-	        />
-	</RelativeLayout>
-	
-	<ImageView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:src="@drawable/detailed_pin_photoalbum_underline"
-		android:layout_marginTop="5dp"
-		/>
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/reply_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/reply_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/reply_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="5dp"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/reply_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="25dp"
+            android:textColor="#333333"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/detailed_pin_photoalbum_underline"
+        tools:ignore="ContentDescription" />
+
 </LinearLayout>

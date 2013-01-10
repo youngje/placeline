@@ -11,7 +11,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class DatabaseService {
 	
@@ -41,11 +40,11 @@ public class DatabaseService {
 	}
 	
 	public void addPinToDB(Pin pin) {
-		db.execSQL("insert into pin(pinId, pinName,pinDate,pinX,pinY, groupId, pinThumnail) values(?,'"+pin.getPinTitle()+"', CURRENT_TIMESTAMP,'"+pin.getxLocation()+"','"+pin.getyLocation()+"',"+pin.getGroupId()+","+pin.getPinThumnail()+")");
+		db.execSQL("insert into pin(pinId, pinName,pinDate,pinX,pinY, groupId, writerId,pinThumnail) values(?,'"+pin.getPinTitle()+"', '"+pin.getRegisteredDate()+"','"+pin.getxLocation()+"','"+pin.getyLocation()+"',"+pin.getGroupId()+","+pin.getPinThumnail()+")");
 	}
 	
 	public void addReplyToDB(PinReply reply){
-		db.execSQL("insert into reply(replyId, pinId, replyDate, replyCreator, replyContent) values(?, "+reply.getPinId()+", CURRENT_TIMESTAMP, "+reply.getWriter().getId()+", '"+reply.getComments()+"')");
+		db.execSQL("insert into reply(replyId, pinId, replyDate, replyCreator, replyContent) values(?, "+reply.getPinId()+", '"+reply.getRegisteredDate()+"', "+reply.getWriter().getId()+", '"+reply.getComments()+"')");
 	}
 	
 	//관계테이블
@@ -60,7 +59,6 @@ public class DatabaseService {
 	//select 
 	public User getUserById(int userId) {
 		Cursor result = db.rawQuery("SELECT * FROM member WHERE userId='"+userId+"'", null);
-		Log.d("### DB Test", result.getCount()+"");
 		result.moveToFirst();
 		User user = new User(Integer.parseInt(result.getString(0)), result.getString(1), result.getString(2), Integer.parseInt(result.getString(3)));
 		result.close();
@@ -76,6 +74,20 @@ public class DatabaseService {
 		
 		return group;
 	}
+	
+	public Pin getPinById(int pinId){
+		Cursor result = db.rawQuery("SELECT * FROM pin WHERE pinId='"+pinId+"'", null);
+		result.moveToFirst();
+		Pin pin = new Pin(result.getInt(0), result.getInt(5), Float.parseFloat(result.getString(3)), Float.parseFloat(result.getString(4)), result.getString(2), getUserById(result.getInt(6)), result.getString(1), result.getInt(7));
+		result.close();
+		return pin;
+	}
+	
+	/*public PinReply getReplyById(int replyId){
+		Cursor result = db.rawQuery("SELECT * FROM reply WHERE replyId='"+replyId+"'", null);
+		result.moveToFirst();
+		PinReply reply = new PinReply();
+	}*/
 	
 	public ArrayList<User> getMembersByGroupId(int groupId){
 		ArrayList<User> members = new ArrayList<User>();
@@ -108,18 +120,16 @@ public class DatabaseService {
 		return groupList;
 	}
 
-	//member table set
-	/*
-		sample query for pinToPicture table (미완성)
-
-		insert into pinIdToPicture(pinId,picture) values ('1',null)
-
-		sample query for pinToReply table (미완성)
-
-		insert into pinIdToPicture(pinId,replyDate,replyCreator,replyContent) values ('1','CURRENT_TIMESTAMP,'abc123','첫번째 댓글은 내가 담!')
-
-
-		*/
+	/*public ArrayList<PinReply> replies getReplyListBy(Pin pin){
+		Cursor result = db.rawQuery("SELECT * FROM reply WHERE pinId='"+pin.getPinId()+"'", null);
+		
+		ArrayList<PinReply> replies = new ArrayList<PinReply>();
+		
+		result.moveToFirst();
+		while(!result.isAfterLast()){
+			replies.add()
+		}
+	}*/
 	
 	public void closeDb(){
 		db.close();

@@ -44,7 +44,8 @@
         </activity>
         <activity
             android:name="com.nhn.placeline.Activity.AddGroupActivity"
-            android:label="@string/title_activity_add_group" >
+            android:label="@string/title_activity_add_group"
+            android:theme="@android:style/Theme.NoTitleBar"  >
             </activity>
         <activity
             android:name="com.nhn.placeline.Activity.DetailedPinActivity"

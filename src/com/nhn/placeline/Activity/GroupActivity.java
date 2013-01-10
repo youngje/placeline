@@ -95,13 +95,13 @@ public class GroupActivity extends Activity {
 
 	public boolean onKeyDown(int KeyCode, KeyEvent event) {
 		if (KeyCode == KeyEvent.KEYCODE_BACK) {
-			displayDislog();
+			displayDialog();
 			return false;
 		}
 		return super.onKeyDown(KeyCode, event);
 	}
 	
-	public void displayDislog(){
+	public void displayDialog(){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setTitle("프로그램을 종료 하시겠습니까?");
 		alertDialog.setPositiveButton("종료",
