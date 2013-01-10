@@ -107,12 +107,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (4,3)");
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (6,3)");
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (7,3)");
-		
+		 
 		//pin
-		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'제주근처',CURRENT_TIMESTAMP,'126.4085f','33.2480f', '1', '1', '으하하하하하하하하하하하하하하', '"+R.drawable.photo_1+"')");
-		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'중문근처',CURRENT_TIMESTAMP,'126.4015f','33.2412f', '1', '2', '이게 뭔가요?', '"+R.drawable.photo_2+"')");
-		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'신라호텔',CURRENT_TIMESTAMP,'126.4025f','33.2490f', '1', '3', '여기 좋았음. 맛집 인정', '"+R.drawable.photo_3+"')");
-		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'부페부페',CURRENT_TIMESTAMP,'126.4056f','33.2435f', '1', '4', '다음엔 다 같이 오자 ', '"+R.drawable.photo_4+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'제주근처',CURRENT_TIMESTAMP,'126.4085f','33.2480f', '1', '1', '으하하하하하하하하하하하하하하', '"+R.drawable.photo_small_1+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'중문근처',CURRENT_TIMESTAMP,'126.4015f','33.2412f', '1', '2', '이게 뭔가요?', '"+R.drawable.photo_small_2+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'신라호텔',CURRENT_TIMESTAMP,'126.4025f','33.2490f', '1', '3', '여기 좋았음. 맛집 인정', '"+R.drawable.photo_small_3+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'부페부페',CURRENT_TIMESTAMP,'126.4056f','33.2435f', '1', '4', '다음엔 다 같이 오자 ', '"+R.drawable.photo_small_4+"')");
 		
 		//reply
 		db.execSQL("insert into reply(replyId, pinId, replyDate, replyCreator, replyContent) values(?, '1', '2013년 01월 05일', '1', '살아있네살아있네살아있네살아있네살아있네살아있네')");
@@ -123,10 +123,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("insert into reply(replyId, pinId, replyDate, replyCreator, replyContent) values(?, '1', '2013년 01월 06일', '3', '그랑죠 나와라')");
 		
 		//picture
-		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_1+"')");
-		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_2+"')");
-		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_3+"')");
-		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_4+"')");
+		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_big_1+"')");
+		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_big_2+"')");
+		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_big_3+"')");
+		db.execSQL("insert into pinIdToPicture(pinId, picture) values('1', '"+R.drawable.photo_big_4+"')");
 		
 		
 		/*"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'서울근처B',CURRENT_TIMESTAMP,'100','100','임시본문','1')"

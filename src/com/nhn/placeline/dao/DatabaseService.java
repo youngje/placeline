@@ -2,6 +2,7 @@ package com.nhn.placeline.dao;
 
 import java.util.ArrayList;
 
+import com.nhn.placeline.Activity.R;
 import com.nhn.placeline.vo.Group;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.PinReply;
@@ -41,7 +42,7 @@ public class DatabaseService {
 	}
 	
 	public void addPinToDB(Pin pin) {
-		db.execSQL("insert into pin(pinId, pinName,pinDate,pinX,pinY, groupId, writerId,pinThumnail) values(?,'"+pin.getPinTitle()+"', '"+pin.getRegisteredDate()+"','"+pin.getxLocation()+"','"+pin.getyLocation()+"',"+pin.getGroupId()+","+pin.getPinThumnail()+")");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'"+pin.getPinTitle().toString()+"',CURRENT_TIMESTAMP,'"+pin.getxLocation()+"f','"+pin.getyLocation()+"', 1, '"+pin.getWriter().getId()+"', "+pin.getWriter().getId()+", '"+pin.getPinThumnail()+"')");
 	}
 	
 	public void addReplyToDB(PinReply reply){

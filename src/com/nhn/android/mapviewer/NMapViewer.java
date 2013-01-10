@@ -412,22 +412,37 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			}
 		}
 		else if (button.getId() == R.id.button_writing_pin_send){
- 			if(editTextTitle.isFocused()){
- 				imm.hideSoftInputFromWindow(editTextTitle.getWindowToken(), 0);
- 			}
- 			else if(editTextContent.isFocused()){
- 				imm.hideSoftInputFromWindow(editTextContent.getWindowToken(), 0);
- 			}
-			Log.d("########## [DEBUG] ###########","button_writing_pin_send is clicked - title: " + editTextTitle.getText() + " / content: " + editTextContent.getText());
-			editTextTitle.setText("");
-			editTextContent.setText("");
-			writingBoard.setVisibility(View.GONE);
-			fullScreen.setVisibility(View.GONE);
-			mOverlayManager.clearOverlays();
-			drawPins();
- 			isWritingBoardOpen = false;
- 			isAddingPinExsist = false;
- 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
+			if((editTextTitle.getText().length() > 0 ) && (editTextContent.getText().length() > 0 )){
+				if(editTextTitle.isFocused()){
+	 				imm.hideSoftInputFromWindow(editTextTitle.getWindowToken(), 0);
+	 			}
+	 			else if(editTextContent.isFocused()){
+	 				imm.hideSoftInputFromWindow(editTextContent.getWindowToken(), 0);
+	 			} 
+	 			
+	 			NGeoPoint center = mMapController.getMapCenter();
+				float longtitude = (float)center.getLongitude();
+				float latitude = (float)center.getLatitude();
+				
+				Log.d("########## [DEBUG] ###########","button_writing_pin_send is clicked - title: " + editTextTitle.getText().toString()
+						+ " / content: " + editTextContent.getText() + " / " + groupId + " / " + user.getId() + " / " + longtitude + " / " + latitude);
+				
+				Pin newPin = new Pin(editTextTitle.getText().toString(), editTextContent.getText().toString(), groupId, user, longtitude, latitude, R.drawable.ic_launcher);
+				dbService.addPinToDB(newPin);
+				pinList = dbService.getPinListByGroupId(groupId);
+				editTextTitle.setText("");
+				editTextContent.setText("");
+				writingBoard.setVisibility(View.GONE);
+				fullScreen.setVisibility(View.GONE);
+				mOverlayManager.clearOverlays();
+				drawPins();
+	 			isWritingBoardOpen = false;
+	 			isAddingPinExsist = false;
+	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
+			}
+			else{ 
+				Toast.makeText(NMapViewer.this, "입력되지 않은 필드가 존재합니다.", Toast.LENGTH_SHORT).show();
+			}
 		}
 		else if (button.getId() == R.id.button_writing_pin_cancel){
  			if(editTextTitle.isFocused()){
