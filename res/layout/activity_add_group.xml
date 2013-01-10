@@ -43,7 +43,7 @@
         <TextView 
             android:layout_width="90dp"
             android:layout_height="50dp"
-            android:text="@string/addgroup_text_hint"
+            android:hint="@string/addgroup_text_hint"
             android:layout_centerHorizontal="true"
             android:textSize="22sp"
             android:gravity="center"

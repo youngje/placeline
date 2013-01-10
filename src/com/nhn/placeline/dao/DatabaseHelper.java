@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				                    "pinY TEXT, " +
 				                    "groupId INTEGER, "+
 				                    "writerId TEXT, " +
+				                    "pinContent TEXT, "+
 				                    "pinThumnail INTEGER);");
 
 		db.execSQL("CREATE TABLE reply(replyId INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -106,6 +107,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (4,3)");
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (6,3)");
 		db.execSQL("insert into userIdToGroupId(userId,groupId) values (7,3)");
+		
+		//pin
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'서울근처A',CURRENT_TIMESTAMP,'126.4085f','33.2480f', '1', '1', '으하하하하하하하하하하하하하하', '"+R.drawable.photo_1+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'서울근처A',CURRENT_TIMESTAMP,'126.4015f','33.2412f', '1', '2', '이게 뭔가요?', '"+R.drawable.photo_2+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'서울근처A',CURRENT_TIMESTAMP,'126.4025f','33.2490f', '1', '3', '여기 좋았음. 맛집 인정', '"+R.drawable.photo_3+"')");
+		db.execSQL("insert into pin(pinId,pinName,pinDate,pinX,pinY, groupId, writerId, pinContent, pinThumnail) values (?,'서울근처A',CURRENT_TIMESTAMP,'126.4056f','33.2435f', '1', '4', '다음엔 다 같이 오자 ', '"+R.drawable.photo_4+"')");
+		
+		/*"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'서울근처B',CURRENT_TIMESTAMP,'100','100','임시본문','1')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'서울근처C',CURRENT_TIMESTAMP,'100','100','임시본문','1')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'서울근처D',CURRENT_TIMESTAMP,'100','100','임시본문','1')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'올레길탐방A',CURRENT_TIMESTAMP,'100','100','임시본문','2')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'올레길탐방B',CURRENT_TIMESTAMP,'100','100','임시본문','2')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'올레길탐방C',CURRENT_TIMESTAMP,'100','100','임시본문','2')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'올레길탐방D',CURRENT_TIMESTAMP,'100','100','임시본문','2')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'서울근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'대전근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'대구근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'광주근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'부산근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
+		"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'제주근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"*/
+
 		
 		
 	}

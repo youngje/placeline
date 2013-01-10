@@ -20,6 +20,7 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("HandlerLeak")
 public class AddGroupActivity extends Activity {
@@ -60,9 +61,13 @@ public class AddGroupActivity extends Activity {
 		confirm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+					
 				newGroup = new Group(groupTitle.getText().toString(), user, groupImageColor);
 				Log.d("#######db", newGroup.toString());
+				if(newGroup.getName().isEmpty()) {
+					Toast.makeText(AddGroupActivity.this, "그룹 이름을 입력해 주세요", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				dbService.addGroupToDB(newGroup);
 				newGroup.setId(dbService.getGroupId());
 				dbService.addUserToGroup(user, newGroup);
@@ -137,9 +142,8 @@ public class AddGroupActivity extends Activity {
 					groupImageColor = R.drawable.group_map_image_3;
 					break;
 				case 10:
-					Log.d("test", msg.obj.toString());
 					if(msg.obj.toString().isEmpty()){
-						groupTitle.setText(R.string.addgroup_text_hint);
+						//groupTitle.setText(R.string.addgroup_text_hint);
 						groupTitle.setTextColor(0xffd1d1e2);
 					}
 					else{

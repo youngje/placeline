@@ -147,6 +147,8 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		friends = dbService.getMembersByGroupId(groupId);
 		
 		pinList = dbService.getPinListByGroupId(groupId);
+		
+		//initInstance();
 		drawPins();
 		
 		FriendsListAdapter friendAdapter = new FriendsListAdapter(this, R.layout.friend_list_partition, friends);
@@ -154,6 +156,20 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		listView.setAdapter(friendAdapter);
 	}
 	   
+	/*private void initInstance(){
+		Pin newPin1 = new Pin("한라산", 1, user, 126.4085f, 33.2480f, R.drawable.user_1);
+		Pin newPin2 = new Pin("그린팩토리", 1, user, 126.4092f, 33.2480f, R.drawable.user_2);
+		Pin newPin3 = new Pin("신라호텔", 1, user, 126.4087f, 33.2491f, R.drawable.user_3);
+		Pin newPin4 = new Pin("성산일출봉", 1, user, 126.4090f, 33.2484f, R.drawable.user_4);
+		
+		pinList.add(newPin1);
+		pinList.add(newPin2);
+		pinList.add(newPin3);
+		pinList.add(newPin4);
+		
+		drawPins();
+	}*/
+
 	
 	private void printCurrentLocation(){
 		NGeoPoint center = mMapController.getMapCenter();
@@ -233,9 +249,13 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		slideLeftAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_left);
 		slideRightAnim = AnimationUtils.loadAnimation(NMapViewer.this, R.anim.translate_right);
 		
+		
 		ShowFriendsListener animListener = new ShowFriendsListener();
 		slideLeftAnim.setAnimationListener(animListener);
 		slideRightAnim.setAnimationListener(animListener);
+		slideLeftAnim.setFillAfter(true);
+		slideRightAnim.setFillAfter(true);
+		
 		
 	}
 	
@@ -247,7 +267,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 			} else {
 				isFriendsListOpen = true;
 				friendslistLayout.bringToFront();
-				mapViewLayout.setTranslationX(390);
+				//mapViewLayout.setTranslationX(390);
 			}
 		}
 

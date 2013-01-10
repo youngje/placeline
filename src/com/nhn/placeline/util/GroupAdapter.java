@@ -48,12 +48,13 @@ public class GroupAdapter extends BaseAdapter {
 		
 		RelativeLayout.LayoutParams imageViewParam = new RelativeLayout.LayoutParams(165, 400);
 		imageViewParam.leftMargin = 30;
-		
+
 		ImageView imageView = new ImageView(mContext);
 		imageView.setImageResource(groups.get(position).getGroupMapId());
 		imageView.setLayoutParams(new GridView.LayoutParams(165, 400));
 		imageView.setId(Constants.GROUPMAP_IMAGE_ID);
 		imageView.setAdjustViewBounds(true);
+		
 		
 		RelativeLayout.LayoutParams textViewParam = new RelativeLayout.LayoutParams(153, 142);
 		textViewParam.leftMargin = 42;

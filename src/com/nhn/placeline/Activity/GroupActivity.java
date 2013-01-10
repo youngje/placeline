@@ -119,7 +119,7 @@ public class GroupActivity extends Activity {
 				finish();
 				
 			} else {
-				Toast.makeText(GroupActivity.this, "한 번 더 누르면 종료 됩니다.", Toast.LENGTH_LONG).show();
+				Toast.makeText(GroupActivity.this, "'뒤로'버튼을 한번 더 누르시면 종료 됩니다.", Toast.LENGTH_LONG).show();
 				mHandler.sendEmptyMessageDelayed(0, 2000);
 				isToastUp = true;
 			}
