@@ -238,7 +238,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 					showWritingPin();
 					mFloatingPOIdataOverlay.selectPOIitem(0, true);
 					mFloatingPOIdataOverlay.showAllPOIdata(0);
-					
+					isWriting = false;
 				}
 			}
 		};
@@ -364,6 +364,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		if(!ifConnectionPinsOn){
 	 			mOverlayManager.clearOverlays();
 	 			drawPins();
+	 			drawLineWithDataOverlay();
 	 			ifConnectionPinsOn = true;
 	 			isAddingPinExsist = false;
 	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
@@ -390,6 +391,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 		else{
 	 			mOverlayManager.clearOverlays();
 				drawPins();
+				isWriting = false;
 	 			isAddingPinExsist = false;
 	 			buttonAddPin.setBackgroundResource(R.drawable.ic_add_pin_default);
 	 		}
@@ -507,6 +509,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private void drawPins(){
 		for(int i=0; i<pinList.size(); i++){
 			putPOIdataOverlay(pinList.get(i));
+			Log.d("########## [DEBUG] ###########","drawPins() - pin["+i+"] thumbnail id :" + pinList.get(i).getPinThumnail());
 		}
 	}
 	
@@ -970,7 +973,6 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				isPinBoxOpen = true;
 				
 				if((pinId == -1) || (isWriting)){
-					isWriting = false;
 					return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, R.drawable.detailed_pin_add_photo, mHandler);
 				}
 				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, pinList.get(pinId).getPinThumnail(), mHandler);
