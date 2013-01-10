@@ -58,7 +58,11 @@ public class AddGroupActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//디비에 업로드 작업 추가
-				newGroup = new Group(groupTitle.getText().toString(), user, Integer.parseInt(imagePrev.getTag().toString()));
+				String temp = groupTitle.getText().toString();
+				int tempInt = Integer.parseInt(imagePrev.getTag().toString());
+				
+				newGroup = new Group(temp, user, tempInt);
+				
 				dbService.addGroupToDB(newGroup);
 				Intent intent = new Intent(AddGroupActivity.this, GroupActivity.class);
 				startActivity(intent);
