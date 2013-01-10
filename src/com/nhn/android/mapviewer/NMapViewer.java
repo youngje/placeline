@@ -74,6 +74,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private MapContainerView mMapContainerView;
 	
 	private LinearLayout friendslistLayout;
+	private LinearLayout writingBoard;
 	private Animation slideLeftAnim;
 	private Animation slideRightAnim;
 	
@@ -87,11 +88,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonAddPin;
 	private ImageView buttonFriendsList;
 	private ImageView buttonConnectPins;
+	private ImageView buttonWritePinSend;
+	private ImageView buttonWritePinCancel;
+	private ImageView fullScreen;
 	
 	private boolean isFlagMyLocationOn;
 	private boolean ifConnectionPinsOn;
 	private boolean isFriendsListOpen;
 	private boolean isPinBoxOpen;
+	private boolean isWritingBoardOpen;
 	
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
@@ -134,6 +139,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		mapViewLayout = (LinearLayout)findViewById(R.id.mapview_layout);
 		friendslistLayout =(LinearLayout)findViewById(R.id.friendslist);
+		writingBoard =(LinearLayout)findViewById(R.id.writing_board);
 		
 		friends = new ArrayList<User>();
 		Intent intent = getIntent();
@@ -198,6 +204,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		buttonConnectPins = (ImageView) findViewById(R.id.imageview_connectpins);
 		buttonConnectPins.setOnClickListener(this);
 		buttonConnectPins.setBackgroundResource(R.drawable.ic_connect_pins_default);
+		
+		buttonWritePinSend = (ImageView) findViewById(R.id.button_writing_pin_send);
+		buttonWritePinSend.setOnClickListener(this);
+		
+		buttonWritePinCancel = (ImageView) findViewById(R.id.button_writing_pin_cancel);
+		buttonWritePinCancel.setOnClickListener(this);
+		
+		fullScreen = (ImageView) findViewById(R.id.fullscreen);
+		fullScreen.setOnClickListener(this);
 	} 
 	
 	private void initMap(){
@@ -248,6 +263,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		ifConnectionPinsOn = false;
 		isFriendsListOpen = false;
 		isPinBoxOpen = false;
+		isWritingBoardOpen = false;
 //		Log.d("########## [DEBUG] ##########", "isPinBoxOpen : "+isPinBoxOpen);
 	}
 	
@@ -298,7 +314,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 			isFlagMyLocationOn = false;
 	 			button.setBackgroundResource(R.drawable.ic_my_location_default);
 	 		}
-	 		
+	 		 
 		}	
 	 	else if (button.getId() == R.id.imageview_connectpins){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_Connect_Pins button is clicked");
@@ -316,6 +332,15 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		}
 	 	else if (button.getId() == R.id.imageview_addpin){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
+	 		if(!isWritingBoardOpen){
+	 			testFloatingPOIdataOverlay();
+//	 			fullScreen.setVisibility(View.VISIBLE);
+//	 			writingBoard.setVisibility(View.VISIBLE);
+//	 			isWritingBoardOpen = true;
+	 		}
+	 		else{
+	 		}
+	 		
 		}
 	 	else if (button.getId() == R.id.imageview_friend){
 	 		// 영제 형 요기
@@ -330,6 +355,16 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				mapViewLayout.startAnimation(slideRightAnim);
 				friendslistLayout.setVisibility(View.VISIBLE);
 			}
+		}
+		else if (button.getId() == R.id.button_writing_pin_send){
+			writingBoard.setVisibility(View.GONE);
+			fullScreen.setVisibility(View.GONE);
+ 			isWritingBoardOpen = false;
+		}
+		else if (button.getId() == R.id.button_writing_pin_cancel){
+			writingBoard.setVisibility(View.GONE);
+			fullScreen.setVisibility(View.GONE);
+ 			isWritingBoardOpen = false;
 		}
 	}
 	
@@ -1190,6 +1225,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	 			mapViewLayout.bringToFront();
 	 			mapViewLayout.setTranslationX(0);
 	 			mapViewLayout.startAnimation(slideLeftAnim);
+	 			return false;
+			}
+			else if(isWritingBoardOpen){
+				writingBoard.setVisibility(View.GONE);
+				fullScreen.setVisibility(View.GONE);
+	 			isWritingBoardOpen = false;
 	 			return false;
 			}
 			else if(isPinBoxOpen){
