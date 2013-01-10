@@ -95,9 +95,16 @@
 			    android:id="@+id/imageview_friend"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:src="@layout/image_friend"
 			    android:layout_marginTop="5dp"
-			    android:layout_marginLeft="5dp"/>
+			    android:layout_marginLeft="5dp"
+			    />
+			<ImageView 
+			    android:id="@+id/imageview_connectpins"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="230dp"
+			    android:layout_marginTop="5dp"
+			    />
 			<ImageView 
 			    android:id="@+id/imageview_addpin"
 			    android:layout_width="wrap_content"

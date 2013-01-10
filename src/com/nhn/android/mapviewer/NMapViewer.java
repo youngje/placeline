@@ -73,7 +73,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private LinearLayout friendslistLayout;
 	private Animation slideLeftAnim;
 	private Animation slideRightAnim;
-	private boolean isFriendsListOpen = false;
+	
 	private View mapViewLayout;
 	
 	private ArrayList<User> friends;
@@ -83,9 +83,12 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private ImageView buttonCurrentLocation;
 	private ImageView buttonAddPin;
 	private ImageView buttonFriendsList;
+	private ImageView buttonConnectPins;
 	
-	private boolean flagMyLocationOnOff;
-	private boolean addPinOnOff;
+	private boolean isFlagMyLocationOn;
+	private boolean ifConnectionPinsOn;
+	private boolean isFriendsListOpen;
+	
 	private SharedPreferences mPreferences;
 	private NMapOverlayManager mOverlayManager;
 	private NMapMyLocationOverlay mMyLocationOverlay;
@@ -155,10 +158,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		pinList = new ArrayList<Pin>();
 		User user = new User("백준선", "010-6848-3855", R.drawable.photo_3);
-		Pin newPin1 = new Pin("한라산", 1, user, 126.4085f, 33.2480f, R.drawable.ic_launcher);
-		Pin newPin2 = new Pin("그린팩토리", 1, user, 126.4092f, 33.2480f, R.drawable.ic_launcher);
-		Pin newPin3 = new Pin("신라호텔", 1, user, 126.4087f, 33.2491f, R.drawable.ic_launcher);
-		Pin newPin4 = new Pin("성산일출봉", 1, user, 126.4090f, 33.2484f, R.drawable.ic_launcher);
+		Pin newPin1 = new Pin("한라산", 1, user, 126.4085f, 33.2480f, R.drawable.user_1);
+		Pin newPin2 = new Pin("그린팩토리", 1, user, 126.4092f, 33.2480f, R.drawable.user_2);
+		Pin newPin3 = new Pin("신라호텔", 1, user, 126.4087f, 33.2491f, R.drawable.user_3);
+		Pin newPin4 = new Pin("성산일출봉", 1, user, 126.4090f, 33.2484f, R.drawable.user_4);
 		
 		pinList.add(newPin1);
 		pinList.add(newPin2);
@@ -185,6 +188,11 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		buttonFriendsList = (ImageView) findViewById(R.id.imageview_friend);
 		buttonFriendsList.setOnClickListener(this);
+		buttonFriendsList.setBackgroundResource(R.drawable.ic_friend_default);
+		
+		buttonConnectPins = (ImageView) findViewById(R.id.imageview_connectpins);
+		buttonConnectPins.setOnClickListener(this);
+		buttonConnectPins.setBackgroundResource(R.drawable.ic_connect_pins_default);
 	} 
 	
 	private void initMap(){
@@ -208,7 +216,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		// use map controller to zoom in/out, pan and set map center, zoom level etc.
 		mMapController = mMapView.getMapController();
 
-		// create resource provider
+		// create resource provider 
 		mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
 
 		// set data provider listener
@@ -230,10 +238,10 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		// create my location overlay
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
-		
-		
-		flagMyLocationOnOff = false;
-		addPinOnOff = false;
+
+		isFlagMyLocationOn = false;
+		ifConnectionPinsOn = false;
+		isFriendsListOpen = false;
 	}
 	
 	public void slideFriendList() {
@@ -273,40 +281,45 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	public void onClick(View button) {
 	 	if (button.getId() == R.id.imageview_currentlocation){
 	 		Log.d("########## [DEBUG] ##########","onClick() - Button_GoToCurrentLocation button is clicked");
-	 		if(!flagMyLocationOnOff){
+	 		if(!isFlagMyLocationOn){
 	 			startMyLocation();	
-	 			flagMyLocationOnOff = true;
+	 			isFlagMyLocationOn = true;
 	 			button.setBackgroundResource(R.drawable.ic_my_location_clicked);
 	 		}
 	 		else{
 	 			stopMyLocation();
-	 			flagMyLocationOnOff = false;
+	 			isFlagMyLocationOn = false;
 	 			button.setBackgroundResource(R.drawable.ic_my_location_default);
 	 		}
 	 		
 		}	
-	 	else if (button.getId() == R.id.imageview_addpin){
-	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
-	 		printCurrentLocation();
-	 		
-	 		if(!addPinOnOff){
+	 	else if (button.getId() == R.id.imageview_connectpins){
+	 		Log.d("########## [DEBUG] ##########","onClick() - Button_Connect_Pins button is clicked");
+	 		if(!ifConnectionPinsOn){
 	 			drawLineWithDataOverlay();
-	 			addPinOnOff = true;
+	 			ifConnectionPinsOn = true;
+	 			button.setBackgroundResource(R.drawable.ic_connect_pins_clicked);
 	 		}
 	 		else{
-	 			addPinOnOff = false;
+	 			ifConnectionPinsOn = false;
 	 			mOverlayManager.clearOverlays();
 	 			drawPins();
+	 			button.setBackgroundResource(R.drawable.ic_connect_pins_default);
 	 		}
+		}
+	 	else if (button.getId() == R.id.imageview_addpin){
+	 		Log.d("########## [DEBUG] ##########","onClick() - Button_AddPin button is clicked");
 		}
 	 	else if (button.getId() == R.id.imageview_friend){
 	 		// 영제 형 요기
 	 		if(isFriendsListOpen) {
+	 			button.setBackgroundResource(R.drawable.ic_friend_default);
 	 			mapViewLayout.bringToFront();
 	 			mapViewLayout.setTranslationX(0);
 	 			mapViewLayout.startAnimation(slideLeftAnim);
 				
 			} else {
+				button.setBackgroundResource(R.drawable.ic_friend_clicked);
 				mapViewLayout.startAnimation(slideRightAnim);
 				friendslistLayout.setVisibility(View.VISIBLE);
 			}
@@ -384,7 +397,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		poiData.beginPOIdata(1);
 		
 //		Log.d("############", "X: "+pin.getxLocation()+" / Y: "+pin.getyLocation());
-		NMapPOIitem item = poiData.addPOIitem(pin.getxLocation(), pin.getyLocation(), "NEW", NMapPOIflagType.PIN, pin.getPinId());
+		NMapPOIitem item = poiData.addPOIitem(pin.getxLocation(), pin.getyLocation(), pin.getPinTitle(), NMapPOIflagType.PIN, pin.getPinId());
 		item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
 		
 		NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
@@ -415,11 +428,6 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		pathLineStyle.setLineColor(0xA04DD2, 0x88);
 		pathLineStyle.setFillColor(0xFFFFFF, 0x00);
 		pathData.setPathLineStyle(pathLineStyle);
-		
-
-//		mMapViewerResourceProvider.getBitmap(R.drawable.photo_1);
-//		NGeoPoint nPoint = new NGeoPoint(126.4085f, 33.2480f);
-//		NMapPOIitem nMapPOIitem = new NMapPOIitem(nPoint, "PIN with CLICKABLE_ARROW", getResources().getDrawable(R.drawable.photo_1), null, 0);
 	}
 	
 	
@@ -691,7 +699,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 
 		@Override
 		public void onTouchDown(NMapView mapView, MotionEvent ev) {
-
+			
 		}
 
 		@Override
@@ -808,8 +816,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				NMapPOIitem poiItem = (NMapPOIitem)overlayItem;
 
 				if (poiItem.showRightButton()) {
-					return new NMapCalloutCustomOldOverlay(itemOverlay, overlayItem, itemBounds,
-						mMapViewerResourceProvider);
+					return new NMapCalloutCustomOldOverlay(itemOverlay, overlayItem, itemBounds, mMapViewerResourceProvider);
 				}
 			}
 
@@ -834,8 +841,7 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 				int pinId = findPinByLocation(overlayItem.getPoint());
 				Log.d("########## [DEBUG] ##########", "clicked location : " + overlayItem.getPoint().getLatitude() + " / " + overlayItem.getPoint().getLongitude());
 				Log.d("########## [DEBUG] ##########", "findPinByLocation(overlayItem.getPoint()): " + pinList.get(pinId).getyLocation() + " / " + pinList.get(pinId).getxLocation());
-				
-				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, R.drawable.user_1);
+				return new NMapCalloutCustomOverlayView(NMapViewer.this, itemOverlay, overlayItem, itemBounds, pinList.get(pinId).getPinThumnail());
 			}
 
 			// null을 반환하면 말풍선 오버레이를 표시하지 않음

@@ -19,12 +19,12 @@
 	            android:id="@+id/detailed_pin_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textColor = "#FF0000FF"
+				android:textColor = "#424261"
 				android:textSize = "15sp"
-				android:textStyle = "italic"
+				android:textStyle="bold"
 				android:singleLine = "true"   
 				android:layout_marginLeft="30dp"
-				android:layout_marginTop="8dp"
+				android:layout_marginTop="7dp"
 				/>
 	    </RelativeLayout>
 	    
@@ -64,6 +64,7 @@
 		        android:id="@+id/content_content"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
+		        android:textColor = "#333333"
 	           	android:textSize="15sp"
 		        />
 		    
@@ -103,6 +104,7 @@
 		        android:textSize="15sp"
 		        android:layout_marginLeft="5dp"
 		        android:layout_marginTop="2dp"
+		        android:textColor = "#333333"
 	            />
 		</RelativeLayout>
 		
@@ -119,6 +121,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="댓글이 없습니다."
 		        android:textSize="15sp"
+		        android:textColor = "#333333"
 		        android:layout_marginTop="18dp"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginBottom="18dp"
@@ -144,10 +147,11 @@
 		        android:layout_height="30dp"
 		        android:hint="@string/reply_hint"
 		        android:textSize="17sp"
-		        android:width="250dp"
+		        android:textColor = "#333333"
+		        android:width="245dp"
 		        android:layout_centerHorizontal="true"
 		        android:background="#ffffff"
-		        android:layout_marginTop="6dp"
+		        android:layout_marginTop="5dp"
                 android:singleLine="true"
 		        />
 			 <TextView 
@@ -156,6 +160,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="전송"
 		        android:textSize="20sp"
+		        android:textColor = "#333333"
 		        android:layout_marginLeft="310dp"
 		        android:layout_marginTop="5dp"
 		        />
