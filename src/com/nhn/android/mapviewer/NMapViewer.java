@@ -9,9 +9,7 @@ package com.nhn.android.mapviewer;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -36,6 +34,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nhn.placeline.constants.Constants;
+import com.nhn.placeline.dao.DatabaseService;
 import com.nhn.placeline.util.FriendsListAdapter;
 import com.nhn.placeline.vo.Pin;
 import com.nhn.placeline.vo.User;
@@ -104,8 +103,11 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 	private NMapPathDataOverlay pathDataOverlay;
 
 	private ArrayList<Pin> pinList;
-	private String userId;
-	private String groupId;
+	private int userId;
+	private int groupId;
+	private User user;
+	
+	DatabaseService dbService;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -129,7 +131,6 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		initMap();
 		initButtons();
-		initInstance(); 
 		slideFriendList();
 		
 		mapViewLayout = (LinearLayout)findViewById(R.id.mapview_layout);
@@ -137,45 +138,22 @@ public class NMapViewer extends NMapActivity implements OnClickListener {
 		
 		friends = new ArrayList<User>();
 		Intent intent = getIntent();
-		//groupId = intent.getIntExtra("groupId", -1);
+		groupId = intent.getIntExtra("groupId", -1);
+		userId = intent.getIntExtra("userId", -1);
 		
-		getFriendsList(userId);
+		dbService = new DatabaseService(this);
+		
+		user = dbService.getUserById(userId);
+		friends = dbService.getMembersByGroupId(groupId);
+		
+		pinList = dbService.getPinListByGroupId(groupId);
+		drawPins();
+		
 		FriendsListAdapter friendAdapter = new FriendsListAdapter(this, R.layout.friend_list_partition, friends);
 		ListView listView = (ListView)findViewById(R.id.friendlist_view);
 		listView.setAdapter(friendAdapter);
 	}
 	   
-	
-	private void getFriendsList(String userId) {
-		//DB 작업 해야할 부분
-		friends.add(new User("윤영제", "016-9611-7061", R.drawable.user_4));
-		friends.add(new User("김성호", "016-9611-7061", R.drawable.user_2));
-		friends.add(new User("백준선", "016-9611-7061", R.drawable.user_3));
-		friends.add(new User("윤홍경", "016-9611-7061", R.drawable.user_1));
-	}
-
-
-	private void initInstance(){
-		Intent intent = getIntent();
-		userId = intent.getStringExtra("userId");
-		groupId = intent.getStringExtra("groupId");
-		Log.d("########## [DEBUG] ##########"," intent vars - userId : " + userId + " / groupId : " + groupId);
-		
-		pinList = new ArrayList<Pin>();
-		User user = new User("백준선", "010-6848-3855", R.drawable.photo_3);
-		Pin newPin1 = new Pin("한라산", 1, user, 126.4085f, 33.2480f, R.drawable.user_1);
-		Pin newPin2 = new Pin("그린팩토리", 1, user, 126.4092f, 33.2480f, R.drawable.user_2);
-		Pin newPin3 = new Pin("신라호텔", 1, user, 126.4087f, 33.2491f, R.drawable.user_3);
-		Pin newPin4 = new Pin("성산일출봉", 1, user, 126.4090f, 33.2484f, R.drawable.user_4);
-		
-		pinList.add(newPin1);
-		pinList.add(newPin2);
-		pinList.add(newPin3);
-		pinList.add(newPin4);
-		
-		drawPins();
-	}
-	
 	
 	private void printCurrentLocation(){
 		NGeoPoint center = mMapController.getMapCenter();
