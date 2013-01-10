@@ -19,7 +19,7 @@ public class SampleData {
 	query for group table of sample data(완성)	
 	
 	"insert into group(groupId,groupName,groupCreator,groupCustom) values (?,'매력학과5기','1','"+R.drawable.group_map_image_1+"')"
-	"insert into group(groupId,groupName,groupCreator,groupCustom) values (?,'NHN신입사원교육','2','"+R.drawable.group_map_image_2+"')"
+	"insert into group(groupId,groupName,groupCreator,groupCustom) values (?,'NHN신입교육','2','"+R.drawable.group_map_image_2+"')"
 	"insert into group(groupId,groupName,groupCreator,groupCustom) values (?,'라인동호회','6','"+R.drawable.group_map_image_3+"')"
 
 
@@ -41,23 +41,34 @@ public class SampleData {
 	"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'제주근처',CURRENT_TIMESTAMP,'100','100','임시본문','3')"
 
 
-	query for reply table of sample data
+	query for reply table of sample data(미완성-없어도 되지만 많이 있을 수록 좋은..?)
 	 
 	(매력학과5기 그룹의 핀들에 대한 댓글들)
 	"insert into pin(pinId,pinName,pinDate,pinX,pinY,pinContent,groupId) values (?,'1',CURRENT_TIMESTAMP,'3','굿굿')"
 
-	query for UserIdToGroupId table of sample data
+	(NHN신입교육 그룹의 핀들에 대한 댓글들)
 
-	insert into userIdToGroupId(userId,groupId) values ('1','1')
-	insert into userIdToGroupId(userId,groupId) values ('3','1')
-	insert into userIdToGroupId(userId,groupId) values ('4','1')
-	insert into userIdToGroupId(userId,groupId) values ('1','2')
-	insert into userIdToGroupId(userId,groupId) values ('2','2')
-	insert into userIdToGroupId(userId,groupId) values ('5','2')
-	insert into userIdToGroupId(userId,groupId) values ('6','2')
-	insert into userIdToGroupId(userId,groupId) values ('1','3')
-	insert into userIdToGroupId(userId,groupId) values ('4','3')
-	insert into userIdToGroupId(userId,groupId) values ('6','3')
-	insert into userIdToGroupId(userId,groupId) values ('7','3')
+	(라인동호회 그룹의 핀들에 대한 댓글들)
+
+
+	query for UserIdToGroupId table of sample data(완성)
+
+	"insert into userIdToGroupId(userId,groupId) values ('1','1')"
+	"insert into userIdToGroupId(userId,groupId) values ('3','1')"
+	"insert into userIdToGroupId(userId,groupId) values ('4','1')"
+	"insert into userIdToGroupId(userId,groupId) values ('1','2')"
+	"insert into userIdToGroupId(userId,groupId) values ('2','2')"
+	"insert into userIdToGroupId(userId,groupId) values ('5','2')"
+	"insert into userIdToGroupId(userId,groupId) values ('6','2')"
+	"insert into userIdToGroupId(userId,groupId) values ('1','3')"
+	"insert into userIdToGroupId(userId,groupId) values ('4','3')"
+	"insert into userIdToGroupId(userId,groupId) values ('6','3')"
+	"insert into userIdToGroupId(userId,groupId) values ('7','3')"
+	
+	
+	query for pinIdToPicture table of sample data(미완성-사진파일의 형식에 대하여 미확정)
+    
+    "insert into pinIdToPicture(pinId, picture) values ('"+pin.getPinId()+"', '"+picture+"')"
+	
 */
 }
