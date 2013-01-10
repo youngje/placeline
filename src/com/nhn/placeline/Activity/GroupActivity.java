@@ -61,7 +61,7 @@ public class GroupActivity extends Activity {
 					Intent intent = new Intent(GroupActivity.this,
 							AddGroupActivity.class);
 					intent.putExtra("userId", user.getId());
-					startActivity(intent);
+					startActivityForResult(intent, 1);
 				} else {
 					Intent intent = new Intent(GroupActivity.this,
 							NMapViewer.class);

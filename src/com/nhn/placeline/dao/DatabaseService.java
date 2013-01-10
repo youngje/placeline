@@ -83,11 +83,13 @@ public class DatabaseService {
 		return pin;
 	}
 	
-	/*public PinReply getReplyById(int replyId){
+	public PinReply getReplyById(int replyId){
 		Cursor result = db.rawQuery("SELECT * FROM reply WHERE replyId='"+replyId+"'", null);
 		result.moveToFirst();
-		PinReply reply = new PinReply();
-	}*/
+		PinReply reply = new PinReply(result.getInt(0), result.getInt(1), getUserById(result.getInt(3)), result.getString(4), result.getString(2));
+		result.close();
+		return reply;
+	}
 	
 	public ArrayList<User> getMembersByGroupId(int groupId){
 		ArrayList<User> members = new ArrayList<User>();
@@ -120,16 +122,19 @@ public class DatabaseService {
 		return groupList;
 	}
 
-	/*public ArrayList<PinReply> replies getReplyListBy(Pin pin){
-		Cursor result = db.rawQuery("SELECT * FROM reply WHERE pinId='"+pin.getPinId()+"'", null);
+	public ArrayList<PinReply> getReplyListByPinId(Pin pin) {
+		Cursor result = db.rawQuery("SELECT replyId FROM reply WHERE pinId='"+pin.getPinId()+"'", null);
 		
 		ArrayList<PinReply> replies = new ArrayList<PinReply>();
 		
 		result.moveToFirst();
 		while(!result.isAfterLast()){
-			replies.add()
+			replies.add(getReplyById(result.getInt(0)));
+			result.moveToNext();
 		}
-	}*/
+		result.close();
+		return replies;
+	}
 	
 	public void closeDb(){
 		db.close();
